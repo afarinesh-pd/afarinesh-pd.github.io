@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود به پنل شخصی | آموزشگاه زبان آفرینش</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #0f1117;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, -apple-system, sans-serif;
+            padding-top: 50px;
+        }
+
+        /* ۱. نوار ناوبر بالایی (ثابت در بالا) */
+        .top-flag-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: rgba(20, 22, 28, 0.95);
+            backdrop-filter: blur(10px);
+            color: #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 25px;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 13px;
+        }
+        .flags-container img {
+            width: 26px;
+            height: 18px;
+            object-fit: cover;
+            border-radius: 4px;
+            transition: transform 0.25s ease, filter 0.25s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .flags-container img:hover {
+            transform: translateY(-2px) scale(1.15);
+            filter: brightness(1.2);
+        }
+
+        /* ۲. کارت اصلی دو‌بخشی */
+        .main-wrapper {
+            display: flex;
+            max-width: 920px;
+            width: 92%;
+            min-height: 520px;
+            background: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            margin: 20px 0;
+        }
+
+        /* ۳. بخش موشن گرافیک سمت راست (IELTS قرمز زرشکی) */
+        .visual-side {
+            flex: 1.1;
+            background: linear-gradient(135deg, #2b0008 0%, #660019 45%, #800020 80%, #4a0011 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+        }
+
+        /* المان‌های متحرک موشن گرافیک */
+        .motion-circle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatAnim 8s infinite ease-in-out;
+        }
+
+        .circle-1 {
+            width: 280px;
+            height: 280px;
+            top: -60px;
+            right: -60px;
+            background: radial-gradient(circle, rgba(230, 28, 35, 0.35) 0%, rgba(128, 0, 32, 0) 70%);
+            animation-duration: 7s;
+        }
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -40px;
+            left: -40px;
+            background: radial-gradient(circle, rgba(255, 90, 120, 0.25) 0%, rgba(128, 0, 32, 0) 70%);
+            animation-duration: 10s;
+            animation-delay: -3s;
+        }
+        .circle-3 {
+            width: 120px;
+            height: 120px;
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            top: 20%;
+            left: 15%;
+            animation: rotateAnim 15s infinite linear;
+        }
+
+        .motion-grid {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.6;
+        }
+
+        .visual-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+.ielts-badge {
+            display: inline-block;
+            padding: 6px 18px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffccd5;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .ielts-title {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            margin: 0;
+            line-height: 1;
+            font-family: 'Arial Black', sans-serif;
+            background: linear-gradient(180deg, #ffffff 20%, #ff99ab 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(230, 28, 35, 0.7));
+            animation: glowPulse 3s infinite ease-in-out;
+        }
+
+        .ielts-desc {
+            font-size: 15px;
+            margin-top: 15px;
+            color: #ffe6eb;
+            font-weight: 600;
+        }
+
+        .pulse-line {
+            width: 50px;
+            height: 4px;
+            background: #ff3b47;
+            margin: 20px auto;
+            border-radius: 2px;
+            box-shadow: 0 0 12px #ff3b47;
+        }
+
+        .supervisor-tag {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.75);
+            margin-top: 5px;
+        }
+
+        /* کی‌فریم‌های انیمیشن */
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-18px) scale(1.05); }
+        }
+        @keyframes rotateAnim {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes glowPulse {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(230, 28, 35, 0.6)); }
+            50% { filter: drop-shadow(0 0 32px rgba(255, 100, 130, 0.95)); }
+        }
+
+        /* ۴. بخش فرم ورود سمت چپ */
+        .login-card-section {
+            flex: 1;
+            padding: 45px 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #2d3748;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e0;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #800020;
+            box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.15);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 13px;
+            font-size: 15px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #800020 0%, #b3002d 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 6px 18px rgba(128, 0, 32, 0.3);
+        }
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #660019 0%, #990026 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(128, 0, 32, 0.4);
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            margin-top: 22px;
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .back-home-btn:hover {
+            color: #800020;
+            text-decoration: underline;
+        }
+        /* پاسخگویی در موبایل */
+        @media (max-width: 768px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+            .visual-side {
+                padding: 35px 20px;
+            }
+            .ielts-title {
+                font-size: 54px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- هدر بالایی تثبیت‌شده در بالاترین نقطه صفحه -->
+    <div class="top-flag-bar">
+        <span>ورود به پنل شخصی | آموزشگاه آفرینش</span>
+        <div class="flags-container" style="display: flex; gap: 10px; align-items: center;">
+            <img src="https://flagcdn.com/w40/ir.png" alt="فارسی" title="فارسی" onclick="changeLanguage('fa', 'rtl')">
+            <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" onclick="changeLanguage('en', 'ltr')">
+            <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" title="Deutsch" onclick="changeLanguage('de', 'ltr')">
+            <img src="https://flagcdn.com/w40/tr.png" alt="Türkçe" title="Türkçe" onclick="changeLanguage('tr', 'ltr')">
+            <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" onclick="changeLanguage('fr', 'ltr')">
+            <img src="https://flagcdn.com/w40/cn.png" alt="中文" title="Chinese" onclick="changeLanguage('zh-CN', 'ltr')">
+        </div>
+    </div>
+
+    <!-- بدنه کارت ورود و بخش گرافیکی -->
+    <div class="main-wrapper">
+        
+        <!-- بخش سمت راست: موشن گرافیک و برندینگ آیلتس (قرمز زرشکی) -->
+        <div class="visual-side">
+            <div class="motion-grid"></div>
+            <div class="motion-circle circle-1"></div>
+            <div class="motion-circle circle-2"></div>
+            <div class="motion-circle circle-3"></div>
+
+            <div class="visual-content">
+                <span class="ielts-badge">Specialized Academy</span>
+                <h1 class="ielts-title">IELTS</h1>
+                <div class="pulse-line"></div>
+                <p class="ielts-desc">دوره اختصاصی آمادگی آزمون آیلتس</p>
+                <p class="supervisor-tag">تحت نظارت مستقیم سوپروایزر: خانم پریا پوراحمد</p>
+            </div>
+        </div>
+
+        <!-- بخش سمت چپ: فرم ورود -->
+        <div class="login-card-section">
+            <h2 style="margin-bottom: 6px; font-size: 22px; color: #1a202c;">ورود به پنل شخصی</h2>
+            <p style="color: #718096; font-size: 13px; margin-bottom: 30px;">ویژه مدیریت و زبان‌آموزان آفرینش</p>
+            
+            <form id="adminLoginForm" autocomplete="off">
+                <div class="form-group" style="margin-bottom: 18px; text-align: right;">
+                    <label for="username" style="font-size: 13px; font-weight: bold;">نام کاربری</label>
+                    <input type="text" id="username" class="form-input" autocomplete="new-username" required placeholder="نام کاربری را وارد کنید">
+                </div>
+                <div class="form-group" style="margin-bottom: 25px; text-align: right;">
+                    <label for="password" style="font-size: 13px; font-weight: bold;">رمز عبور</label>
+                    <input type="password" id="password" class="form-input" autocomplete="new-password" required placeholder="رمز عبور را وارد کنید">
+                </div>
+                <button type="submit" class="submit-btn">ورود به سامانه</button>
+            </form>
+
+            <a href="index.html" class="back-home-btn">
+                🏠 بازگشت به صفحه اصلی سایت
+            </a>
+        </div>
+
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

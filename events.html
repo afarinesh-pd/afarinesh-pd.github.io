@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ایونت‌ها و کارگاه‌های تخصصی | آموزشگاه زبان آفرینش</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Modern Event Cards Layout */
+        .events-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .event-card {
+            background: #ffffff;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            margin-bottom: 45px;
+            display: flex;
+            flex-direction: row;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #f0f0f2;
+        }
+
+        .event-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .event-image-wrap {
+            flex: 1;
+            min-width: 380px;
+            max-width: 450px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .event-card:hover .event-image-wrap img {
+            transform: scale(1.05);
+        }
+
+        .event-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #e61c23;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(230, 28, 35, 0.3);
+        }
+
+        .event-details {
+            flex: 2;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .event-title {
+            font-size: 22px;
+            color: #1d1d1f;
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .event-description {
+            color: #515154;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .event-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-bottom: 25px;
+            background: #f9f9fb;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .feature-item {
+            font-size: 13px;
+            color: #2c2c2e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f0f0f2;
+            padding-top: 18px;
+        }
+
+        .event-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #e61c23;
+        }
+
+        /* Responsive Breakpoint for Mobile */
+        @media (max-width: 850px) {
+            .event-card {
+                flex-direction: column;
+            }
+            .event-image-wrap {
+                min-width: 100%;
+                max-width: 100%;
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- هدر بالایی: پرچم‌های چندزبانه تعاملی -->
+    <div class="top-flag-bar">
+        <span>ایونت های آموزشگاه آفرینش</span>
+        <div class="flags-container" style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+            <img src="https://flagcdn.com/w40/ir.png" alt="فارسی" title="فارسی (Persian)" onclick="changeLanguage('fa', 'rtl')">
+        <!-- انگلیسی (بریتانیا) -->
+            <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" onclick="changeLanguage('en', 'ltr')">
+        <!-- آلمانی -->
+            <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" title="Deutsch" onclick="changeLanguage('de', 'ltr')">
+        <!-- ترکی استانبولی -->
+            <img src="https://flagcdn.com/w40/tr.png" alt="Türkçe" title="Türkçe" onclick="changeLanguage('tr', 'ltr')">
+        <!-- فرانسوی -->
+            <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" onclick="changeLanguage('fr', 'ltr')">
+        <!-- چینی -->
+            <img src="https://flagcdn.com/w40/cn.png" alt="中文" title="آکادمی چینی (Chinese)" onclick="changeLanguage('zh', 'ltr')">
+        </div>
+    </div>
+
+    <!-- Header Navigation Bar -->
+    <nav class="main-navbar">
+        <a href="index.html" class="logo-area">
+            <img src="assets/images/logo.jpg" alt="لوگو ملل">
+            <span>آموزشگاه آفرینش</span>
+        </a>
+        <button class="hamburger-btn" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">خانه</a></li>
+            <li><a href="classes.html">کلاس‌های زبان</a></li>
+            <li><a href="exams.html">آزمون‌ها</a></li>
+            <li><a href="olympiad.html">المپیاد</a></li>
+            <li><a href="achievements.html">دستاوردها</a></li>
+            <li><a href="events.html" class="active">ایونت‌ها</a></li>
+            <li><a href="azmoon-intro.html" data-i18n="azmoon">آزمونک</a></li>
+            <li><a href="contact.html">مشاوره و تماس</a></li>
+        </ul>
+        <div class="nav-btns">
+            <a href="admin-login.html" class="btn btn-secondary">ورود به پنل شخصی</a>
+            <a href="register.html" class="btn btn-primary">ثبت‌نام آنلاین</a>
+        </div>
+    </nav>
+
+    <!-- Main Page Header Banner -->
+    <div style="background: linear-gradient(135deg, #1d1d1f, #2c2c2e); color: white; padding: 60px 20px; text-align: center;">
+        <h1 style="font-size: 32px; margin-bottom: 10px;">🌟ایونت‌ها و ورکشاپ‌های آکادمیک آفرینش</h1>
+        <p style="color: #aeaeaf; font-size: 15px; max-width: 700px; margin: 0 auto;">
+            تجربه‌ای متفاوت از یادگیری زبان انگلیسی در قالب هنر، بازی و گپ‌وگفت‌های دوستانه در محیط‌های جذاب و صمیمی.
+        </p>
+    </div>
+
+    <!-- Events Content Section -->
+    <main class="events-container">
+
+        <!-- EVENT 1: Art & English Workshop -->
+        <!-- Image Name: art-english-workshop.jpg -->
+        <article class="event-card">
+            <div class="event-image-wrap">
+                <img src="assets/images/art-english-workshop.jpg" alt="ورکشاپ هنر و نقاشی انگلیسی">
+                <span class="event-badge">🎨 محبوب‌ترین ورکشاپ</span>
+            </div>
+            <div class="event-details">
+                <div>
+                    <h2 class="event-title">ورکشاپ خلاقیت، هنر و نقاشی به زبان انگلیسی (Art & English)</h2>
+                    <p class="event-description">
+                        یک روز فوق‌العاده پر از رنگ و خلاقیت! در این ایونت ویژه، کودکان و نوجوانان همراه با خلق بوم‌های نقاشی زیبا، اصطلاحات هنری، ترکیب رنگ‌ها و توصیف احساسات و تصویرسازی را تماماً به زبان انگلیسی فرامی‌گیرند. این رویداد باعث تقویت هوش دیداری و افزایش شگفت‌انگیز اعتمادبه‌نفس در صحبت کردن می‌شود.
+                    </p>
+                    <div class="event-features">
+                        <div class="feature-item">🎨 <strong>موضوع:</strong> بوم‌نقاشی و رنگ‌آمیزی</div>
+                        <div class="feature-item">👧 <strong>رده سنی:</strong> کودکان و نوجوانان</div>
+                        <div class="feature-item">📜 <strong>دست‌آورد:</strong> ارائه بوم شخص به زبان‌آموز</div>
+                    </div>
+                </div>
+                <div class="event-footer">
+                    <div class="event-price">هنر و انگلیسی !!!!</div>
+                    <a href="contact.html" class="btn btn-primary" style="padding: 10px 22px;">ثبت نام برای ایونت های بعدی</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- EVENT 2: Kids Board Games & Fun English Conversation -->
+        <!-- Image Name: kids-game-fun.jpg -->
+        <article class="event-card">
+            <div class="event-image-wrap">
+                <img src="assets/images/kids-game-fun.jpg" alt="ایونت بازی‌های فکری کودکان">
+                <span class="event-badge">🎲 شاد و تعاملی</span>
+            </div>
+            <div class="event-details">
+                <div>
+                    <h2 class="event-title">بازی‌های فکری و مکالمه گروهی کودکان (Fun & English Board Games)</h2>
+                    <p class="event-description">
+                        یادگیری زبان بدون خستگی! در این برنامه، زبان‌آموزان خردسال و کودک در قالب بازی‌های فکری گروهی، پازل‌های کلمه‌سازی، کارت‌بازی‌های مهارتی و مسابقات هیجان‌انگیز، مکالمه انگلیسی را به‌صورت کاملاً طبیعی و کاربردی تمرین می‌کنند. فضای شاد این کارگاه، هرگونه خجالت در صحبت کردن را از بین می‌برد.
+                    </p>
+                    <div class="event-features">
+                        <div class="feature-item">🧩 <strong>موضوع:</strong> بازی فکری و کارگروهی</div>
+                        <div class="feature-item">🎈 <strong>رده سنی:</strong> ۴ تا ۱۰ سال</div>
+                        <div class="feature-item">🧠 <strong>هدف:</strong> تقویت هوش اجتماعی و واژگان</div>
+                        <div class="feature-item">🎁 <strong>همراه با:</strong> جوایز و گیفت‌های یادبود</div>
+                    </div>
+                </div>
+                <div class="event-footer">
+                    <div class="event-price">ویژه زبان‌آموزان کودک</div>
+                    <a href="contact.html" class="btn btn-primary" style="padding: 10px 22px;">ثبت نام برای ایونت های بعدی</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- EVENT 3: Teen Friendly Cafe Discussion -->
+        <!-- Image Name: teen-free-discussion.jpg -->
+        <article class="event-card">
+            <div class="event-image-wrap">
+                <img src="assets/images/teen-free-discussion.jpg" alt="ایونت مکالمه نوجوانان">
+                <span class="event-badge">☕ چت روم صمیمی</span>
+            </div>
+            <div class="event-details">
+                <div>
+                    <h2 class="event-title">دورهمی مکالمه‌محور نوجوانان (Teen Free Discussion)</h2>
+                    <p class="event-description">
+                        یک گپ‌وگفت داغ و دوستانه در دورهمی ویژه نوجوانان! در این ایونت، درباره جذاب‌ترین موضوعات روز مانند فیلم و انیمیشن، موسیقی، تکنولوژی و سرگرمی به زبان انگلیسی بحث و گفتگو می‌کنیم. هدایت جلسه توسط اساتید مسلط انجام می‌شود تا اصطلاحات عامیانه (Slangs) و لهجه نیتیو زبان‌آموزان تقویت شود.
+                    </p>
+                    <div class="event-features">
+                        <div class="feature-item">🗣 <strong>موضوع:</strong> چالش‌ها و موضوعات جذاب روز</div>
+                        <div class="feature-item">🎒 <strong>رده سنی:</strong> ۱۱ تا ۱۷ سال</div>
+                        <div class="feature-item">☕ <strong>پذیرایی:</strong> نوشیدنی و میان‌وعده کافه‌ای</div>
+                        <div class="feature-item">🚀 <strong>هدف:</strong> روان‌سازی صحبت بدون وقفه</div>
+                    </div>
+                </div>
+                <div class="event-footer">
+                    <div class="event-price">همراه با پذیرایی کامل</div>
+                    <a href="contact.html" class="btn btn-primary" style="padding: 10px 22px;">ثبت نام برای ایونت های بعدی</a>
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="main-footer">
+        <div class="footer-bottom">
+            &copy; ۲۰۲۶ تمامی حقوق متعلق به آموزشگاه زبان‌های خارجی آفرینش می‌باشد.
+        </div>
+    </footer>
+
+</body>
+</html>

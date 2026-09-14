@@ -1,0 +1,390 @@
+{
+  "levels": [
+    {
+      "levelId": "Pre A1",
+      "levelName": "Pre A1 - مبتدی پایه",
+      "categories": {
+        "grammar": [
+          {"id": "g1", "question": "She _ a doctor.", "options": ["am", "is", "are", "be"], "correct": 1},
+          {"id": "g2", "question": "They _ to school every day.", "options": ["goes", "go", "going", "gone"], "correct": 1},
+          {"id": "g3", "question": "I have _ apple in my bag.", "options": ["a", "an", "the", "two"], "correct": 1},
+          {"id": "g4", "question": "Where _ you live?", "options": ["does", "do", "is", "are"], "correct": 1},
+          {"id": "g5", "question": "This is _ book.", "options": ["my", "me", "I", "mine"], "correct": 0},
+          {"id": "g6", "question": "Look at _! They are playing football.", "options": ["they", "them", "their", "theirs"], "correct": 1},
+          {"id": "g7", "question": "_ any milk in the fridge?", "options": ["Is there", "Are there", "There is", "There are"], "correct": 0},
+          {"id": "g8", "question": "He _ speak English very well.", "options": ["can", "is", "does", "has"], "correct": 0},
+          {"id": "g9", "question": "We usually eat dinner _ 7:00 PM.", "options": ["on", "in", "at", "to"], "correct": 2},
+          {"id": "g10", "question": "Yesterday, I _ a new shirt.", "options": ["buy", "bought", "buying", "buys"], "correct": 1}
+        ],
+        "vocabulary": [
+          {"id": "v1", "question": "What color is the sky on a clear day?", "options": ["Red", "Blue", "Green", "Yellow"], "correct": 1},
+          {"id": "v2", "question": "Which animal produces milk?", "options": ["Cow", "Dog", "Cat", "Bird"], "correct": 0},
+          {"id": "v3", "question": "Your father's brother is your _.", "options": ["Aunt", "Cousin", "Uncle", "Nephew"], "correct": 2},
+          {"id": "v4", "question": "What do you use to tell the time?", "options": ["Pen", "Clock", "Book", "Chair"], "correct": 1},
+          {"id": "v5", "question": "The day after Monday is _.", "options": ["Sunday", "Wednesday", "Tuesday", "Thursday"], "correct": 2},
+          {"id": "v6", "question": "We eat breakfast in the _.", "options": ["Morning", "Afternoon", "Evening", "Night"], "correct": 0},
+          {"id": "v7", "question": "Opposite of 'Big' is _.", "options": ["Tall", "Small", "Long", "Fast"], "correct": 1},
+          {"id": "v8", "question": "A person who teaches students is a _.", "options": ["Doctor", "Teacher", "Pilot", "Chef"], "correct": 1},
+          {"id": "v9", "question": "You wear shoes on your _.", "options": ["Hands", "Feet", "Ears", "Head"], "correct": 1},
+          {"id": "v10", "question": "Which room do you sleep in?", "options": ["Kitchen", "Bathroom", "Bedroom", "Garden"], "correct": 2}
+        ],
+        "spelling": [
+          {"id": "s1", "question": "Choose the correct spelling:", "options": ["Teachar", "Teacher", "Teecher", "Techere"], "correct": 1},
+          {"id": "s2", "question": "Choose the correct spelling:", "options": ["School", "Skool", "Schoole", "Schole"], "correct": 0},
+          {"id": "s3", "question": "Choose the correct spelling:", "options": ["Friend", "Freind", "Frind", "Frend"], "correct": 0},
+          {"id": "s4", "question": "Choose the correct spelling:", "options": ["Welcom", "Welcome", "Wellcome", "Welcommed"], "correct": 1},
+          {"id": "s5", "question": "Choose the correct spelling:", "options": ["Apple", "Aple", "Appel", "Appl"], "correct": 0},
+          {"id": "s6", "question": "Choose the correct spelling:", "options": ["Familly", "Family", "Fammily", "Famile"], "correct": 1},
+          {"id": "s7", "question": "Choose the correct spelling:", "options": ["Yellow", "Yelow", "Yellwo", "Yelloe"], "correct": 0},
+          {"id": "s8", "question": "Choose the correct spelling:", "options": ["Doctor", "Docter", "Doktor", "Docctor"], "correct": 0},{"id": "s9", "question": "Choose the correct spelling:", "options": ["Sunday", "Sundy", "Sonday", "Sunnday"], "correct": 0},
+          {"id": "s10", "question": "Choose the correct spelling:", "options": ["Animal", "Annimal", "Animalle", "Anemil"], "correct": 0}
+        ],
+        "reading": {
+          "passage": "Tom is eight years old. He lives in London with his parents and his little sister, Lily. Tom goes to Green Park Elementary School. Every morning, he wakes up at 7:00 AM, eats breakfast, and walks to school with his mother. His favorite subject at school is Art because he loves drawing pictures of animals. On weekends, Tom and his family visit his grandparents in the countryside. They have a big garden with three cats and a dog.",
+          "questions": [
+            {"id": "r1", "question": "How old is Tom?", "options": ["Six", "Seven", "Eight", "Nine"], "correct": 2},
+            {"id": "r2", "question": "Where does Tom live?", "options": ["Paris", "London", "New York", "Tokyo"], "correct": 1},
+            {"id": "r3", "question": "Who is Lily?", "options": ["His mother", "His teacher", "His sister", "His grandmother"], "correct": 2},
+            {"id": "r4", "question": "What time does Tom wake up?", "options": ["6:00 AM", "6:30 AM", "7:00 AM", "8:00 AM"], "correct": 2},
+            {"id": "r5", "question": "How does Tom get to school?", "options": ["By bus", "By car", "He walks", "By train"], "correct": 2},
+            {"id": "r6", "question": "What is Tom's favorite subject?", "options": ["Math", "English", "Art", "Science"], "correct": 2},
+            {"id": "r7", "question": "Why does he like Art?", "options": ["He likes numbers", "He loves drawing animals", "He likes music", "His teacher is nice"], "correct": 1},
+            {"id": "r8", "question": "Where do his grandparents live?", "options": ["In London", "In the countryside", "At school", "In a park"], "correct": 1},
+            {"id": "r9", "question": "How many cats do his grandparents have?", "options": ["One", "Two", "Three", "Four"], "correct": 2},
+            {"id": "r10", "question": "When does Tom visit his grandparents?", "options": ["Every day", "On Mondays", "On weekends", "In the evening"], "correct": 2}
+          ]
+        }
+      }
+    },
+    {
+      "levelId": "A1",
+      "levelName": "A1 - مقدماتی",
+      "categories": {
+        "grammar": [
+          {"id": "g1", "question": "While I _ my homework, the phone rang.", "options": ["do", "was doing", "did", "have done"], "correct": 1},
+          {"id": "g2", "question": "This car is _ than mine.", "options": ["fast", "faster", "more fast", "fastest"], "correct": 1},
+          {"id": "g3", "question": "Have you ever _ to Madrid?", "options": ["be", "was", "been", "went"], "correct": 2},
+          {"id": "g4", "question": "I don't have _ money left.", "options": ["many", "some", "any", "no"], "correct": 2},
+          {"id": "g5", "question": "If it rains tomorrow, we _ stay at home.", "options": ["will", "would", "are", "did"], "correct": 0},
+          {"id": "g6", "question": "You _ wear a helmet when riding a motorbike.", "options": ["must", "can", "may", "might"], "correct": 0},
+          {"id": "g7", "question": "She enjoys _ books in her free time.", "options": ["read", "reading", "to read", "reads"], "correct": 1},
+          {"id": "g8", "question": "There aren't _ apples in the basket.", "options": ["much", "many", "little", "some"], "correct": 1},
+          {"id": "g9", "question": "He is the _ boy in the classroom.", "options": ["tallest", "taller", "most tall", "tall"], "correct": 0},
+          {"id": "g10", "question": "They _ live in Paris, but now they live in Rome.", "options": ["use to", "used to", "using to", "uses to"], "correct": 1}],
+        "vocabulary": [
+          {"id": "v1", "question": "A place where planes land and take off is an _.", "options": ["Station", "Airport", "Harbor", "Garage"], "correct": 1},
+          {"id": "v2", "question": "Someone who cuts your hair is a _.", "options": ["Baker", "Hairdresser", "Dentist", "Mechanic"], "correct": 1},
+          {"id": "v3", "question": "Opposite of 'Expensive' is _.", "options": ["Cheap", "Rich", "Costly", "Valuable"], "correct": 0},
+          {"id": "v4", "question": "You need a _ to travel to a foreign country.", "options": ["Ticket", "Passport", "Receipt", "Menu"], "correct": 1},
+          {"id": "v5", "question": "The meal you eat in the middle of the day is _.", "options": ["Breakfast", "Dinner", "Lunch", "Snack"], "correct": 2},
+          {"id": "v6", "question": "The season when leaves fall from trees is _.", "options": ["Spring", "Summer", "Autumn", "Winter"], "correct": 2},
+          {"id": "v7", "question": "A book used for looking up word meanings is a _.", "options": ["Novel", "Dictionary", "Magazine", "Newspaper"], "correct": 1},
+          {"id": "v8", "question": "If you are sick, you go to see a _.", "options": ["Doctor", "Lawyer", "Engineer", "Singer"], "correct": 0},
+          {"id": "v9", "question": "A building where historical objects are displayed is a _.", "options": ["Library", "Museum", "Cinema", "Bank"], "correct": 1},
+          {"id": "v10", "question": "The sister of your husband or wife is your _.", "options": ["Sister-in-law", "Niece", "Aunt", "Mother-in-law"], "correct": 0}
+        ],
+        "spelling": [
+          {"id": "s1", "question": "Choose the correct spelling:", "options": ["Beutiful", "Beautiful", "Beautifull", "Beautifuell"], "correct": 1},
+          {"id": "s2", "question": "Choose the correct spelling:", "options": ["Resturant", "Restaurant", "Resterant", "Restraunt"], "correct": 1},
+          {"id": "s3", "question": "Choose the correct spelling:", "options": ["Becaus", "Because", "Bcause", "Becose"], "correct": 1},
+          {"id": "s4", "question": "Choose the correct spelling:", "options": ["Weather", "Wether", "Waether", "Weether"], "correct": 0},
+          {"id": "s5", "question": "Choose the correct spelling:", "options": ["Diffrent", "Different", "Differant", "Diferent"], "correct": 1},
+          {"id": "s6", "question": "Choose the correct spelling:", "options": ["Buisness", "Business", "Busines", "Bizness"], "correct": 1},
+          {"id": "s7", "question": "Choose the correct spelling:", "options": ["Tomorrow", "Tommorow", "Tomorow", "Tommorro"], "correct": 0},
+          {"id": "s8", "question": "Choose the correct spelling:", "options": ["Daughter", "Dauther", "Daughtere", "Dawghter"], "correct": 0},
+          {"id": "s9", "question": "Choose the correct spelling:", "options": ["Language", "Langwage", "Languge", "Langauge"], "correct": 0},
+          {"id": "s10", "question": "Choose the correct spelling:", "options": ["Hospital", "Hospitel", "Hosptal", "Hospitall"], "correct": 0}
+        ],
+        "reading": {
+          "passage": "Last summer, Maria went on a vacation to Italy with her best friend, Anna. They stayed in a small hotel in Florence for five days. Every morning, they enjoyed hot coffee and fresh croissants at a cozy local cafe. Maria loves art and history, so they visited famous places like the Uffizi Gallery and took photos at the Ponte Vecchio bridge. One afternoon, they joined a cooking class where a chef taught them how to make authentic Italian pasta from scratch. Maria said it was the best dish she had ever tasted.",
+          "questions": [
+            {"id": "r1", "question": "Where did Maria go last summer?", "options": ["France", "Spain", "Italy", "Greece"], "correct": 2},
+            {"id": "r2", "question": "Who traveled with Maria?", "options": ["Her sister", "Her friend Anna", "Her parents", "Her brother"], "correct": 1},{"id": "r3", "question": "How long did they stay in Florence?", "options": ["Three days", "Five days", "One week", "Two weeks"], "correct": 1},
+            {"id": "r4", "question": "What did they eat for breakfast?", "options": ["Eggs and toast", "Coffee and croissants", "Fruit and yogurt", "Pancakes"], "correct": 1},
+            {"id": "r5", "question": "What are Maria's interests?", "options": ["Sports and music", "Art and history", "Shopping and dancing", "Nature and hiking"], "correct": 1},
+            {"id": "r6", "question": "Which gallery did they visit?", "options": ["Louvre Museum", "Uffizi Gallery", "Prado Museum", "Tate Modern"], "correct": 1},
+            {"id": "r7", "question": "Where did they take photos?", "options": ["At the hotel", "At Ponte Vecchio", "In the cafe", "At the airport"], "correct": 1},
+            {"id": "r8", "question": "What kind of class did they join?", "options": ["Painting class", "Language class", "Cooking class", "Photography class"], "correct": 2},
+            {"id": "r9", "question": "What did they learn to make in the class?", "options": ["Pizza", "Pasta", "Gelato", "Bread"], "correct": 1},
+            {"id": "r10", "question": "What was Maria's opinion on the dish?", "options": ["It was too salty", "It was okay", "It was the best she ever tasted", "She didn't like it"], "correct": 2}
+          ]
+        }
+      }
+    },
+    {
+      "levelId": "A2",
+      "levelName": "A2 - مقدماتی پیشرفته",
+      "categories": {
+        "grammar": [
+          {"id": "g1", "question": "If I _ enough money, I would buy a brand new car.", "options": ["have", "had", "would have", "will have"], "correct": 1},
+          {"id": "g2", "question": "The parcel _ delivered yesterday afternoon.", "options": ["was", "is", "has been", "were"], "correct": 0},
+          {"id": "g3", "question": "She told me that she _ ready for the interview.", "options": ["is", "was", "will be", "has been"], "correct": 1},
+          {"id": "g4", "question": "By the time we arrived, the movie _ already started.", "options": ["has", "had", "was", "would"], "correct": 1},
+          {"id": "g5", "question": "I am interested _ learning new foreign languages.", "options": ["on", "at", "in", "for"], "correct": 2},
+          {"id": "g6", "question": "He didn't succeed _ passing the final exam.", "options": ["in", "on", "at", "to"], "correct": 0},
+          {"id": "g7", "question": "You haven't finished your homework yet, _?", "options": ["did you", "have you", "haven't you", "don't you"], "correct": 1},
+          {"id": "g8", "question": "She works as a manager, _ she?", "options": ["isn't", "doesn't", "hasn't", "don't"], "correct": 1},
+          {"id": "g9", "question": "This is the hospital _ I was born.", "options": ["which", "that", "where", "when"], "correct": 2},
+          {"id": "g10", "question": "I suggest _ a break before continuing.", "options": ["taking", "to take", "take", "took"], "correct": 0}
+        ],
+        "vocabulary": [
+          {"id": "v1", "question": "To delay doing something until a later time means to _.", "options": ["Postpone", "Cancel", "Accelerate", "Confirm"], "correct": 0},
+          {"id": "v2", "question": "An opinion or reaction given to someone about their work is _.", "options": ["Feedback", "Complaint", "Gossip", "Rumor"], "correct": 0},
+          {"id": "v3", "question": "Someone who is open-minded and willing to listen to others is _.", "options": ["Stubborn", "Receptive", "Arrogant", "Selfish"], "correct": 1},
+          {"id": "v4", "question": "To reduce the amount or size of something is to _ it.", "options": ["Increase", "Decrease", "Expand", "Maintain"], "correct": 1},
+          {"id": "v5", "question": "A person who witnesses a crime or accident is a _.", "options": ["Victim", "Witness", "Suspect", "Judge"], "correct": 1},{"id": "v6", "question": "A document giving details of your education and previous jobs is a _.", "options": ["Diploma", "CV", "Certificate", "Ticket"], "correct": 1},
+          {"id": "v7", "question": "To recover from an illness or a difficult experience is to get _ it.", "options": ["Over", "Through", "Off", "Away"], "correct": 0},
+          {"id": "v8", "question": "Something that happens once every year is described as _.", "options": ["Monthly", "Annual", "Weekly", "Decennial"], "correct": 1},
+          {"id": "v9", "question": "The feeling of being extremely tired after hard work is _.", "options": ["Exhaustion", "Boredom", "Excitement", "Confusion"], "correct": 0},
+          {"id": "v10", "question": "To convert waste materials into reusable objects is to _.", "options": ["Pollute", "Recycle", "Destroy", "Consume"], "correct": 1}
+        ],
+        "spelling": [
+          {"id": "s1", "question": "Choose the correct spelling:", "options": ["Enviroment", "Environment", "Envirement", "Envirment"], "correct": 1},
+          {"id": "s2", "question": "Choose the correct spelling:", "options": ["Goverment", "Government", "Govrenment", "Government"], "correct": 1},
+          {"id": "s3", "question": "Choose the correct spelling:", "options": ["Knowlege", "Knowledge", "Knowlegee", "Knowlage"], "correct": 1},
+          {"id": "s4", "question": "Choose the correct spelling:", "options": ["Acommodate", "Accommodation", "Acommodation", "Accomodation"], "correct": 1},
+          {"id": "s5", "question": "Choose the correct spelling:", "options": ["Neccessary", "Necessary", "Necassary", "Necessery"], "correct": 1},
+          {"id": "s6", "question": "Choose the correct spelling:", "options": ["Separate", "Seperate", "Separait", "Seperait"], "correct": 0},
+          {"id": "s7", "question": "Choose the correct spelling:", "options": ["Receive", "Recieve", "Receve", "Receeev"], "correct": 0},
+          {"id": "s8", "question": "Choose the correct spelling:", "options": ["Definately", "Definitely", "Definitly", "Definatly"], "correct": 1},
+          {"id": "s9", "question": "Choose the correct spelling:", "options": ["Occasion", "Ocasion", "Occassion", "Occation"], "correct": 0},
+          {"id": "s10", "question": "Choose the correct spelling:", "options": ["Schedule", "Sdule", "Shedul", "Shedulle"], "correct": 0}
+        ],
+        "reading": {
+          "passage": "Smartphones have revolutionized how people communicate in modern society. Twenty years ago, telephones were used mostly for making voice calls and sending basic text messages. Today, a single smartphone functions as a portable computer, a high-resolution camera, a navigation device, and a gateway to instant global social networks. While these advances have undoubtedly made life more convenient, researchers warn that excessive screen time can lead to negative consequences, such as disrupted sleep patterns, reduced physical activity, and increased feelings of social isolation among teenagers.",
+          "questions": [
+            {"id": "r1", "question": "What is the primary topic of the text?", "options": ["The history of computers", "How smartphones changed communication", "How to fix broken phones", "The price of modern technology"], "correct": 1},
+            {"id": "r2", "question": "How were telephones used twenty years ago?", "options": ["For video editing", "Mainly for voice calls and basic texts", "For GPS navigation", "For online banking"], "correct": 1},
+            {"id": "r3", "question": "According to the text, a modern smartphone acts like a portable _.", "options": ["Television", "Computer", "Radio", "Printer"], "correct": 1},
+            {"id": "r4", "question": "What benefit of smartphones is mentioned?", "options": ["Lower cost", "Increased convenience", "Cheaper phone bills", "Better battery life"], "correct": 1},{"id": "r5", "question": "What warning do researchers give?", "options": ["Phones break easily", "Excessive screen time has risks", "Social media will close down", "Cameras are too sharp"], "correct": 1},
+            {"id": "r6", "question": "Which issue related to sleep is mentioned?", "options": ["Sleeping too much", "Disrupted sleep patterns", "Nightmares", "Sleepwalking"], "correct": 1},
+            {"id": "r7", "question": "What happens to physical activity due to screen time?", "options": ["It increases", "It stays the same", "It is reduced", "It becomes dangerous"], "correct": 2},
+            {"id": "r8", "question": "Who is particularly affected by social isolation according to the text?", "options": ["Elderly people", "Teenagers", "Office workers", "Children under five"], "correct": 1},
+            {"id": "r9", "question": "The word 'revolutionary' in context means _.", "options": ["Slowly changing", "Completely transforming", "Stopping completely", "Causing harm"], "correct": 1},
+            {"id": "r10", "question": "What device feature is NOT explicitly listed in the text?", "options": ["High-resolution camera", "Navigation device", "Solar charger", "Portable computer"], "correct": 2}
+          ]
+        }
+      }
+    },
+    {
+      "levelId": "B1",
+      "levelName": "B1 - متوسط",
+      "categories": {
+        "grammar": [
+          {"id": "g1", "question": "Had I known about the party, I _ attended.", "options": ["would have", "will have", "had", "have"], "correct": 0},
+          {"id": "g2", "question": "He insisted on _ for the entire dinner bill.", "options": ["pay", "paying", "to pay", "paid"], "correct": 1},
+          {"id": "g3", "question": "Not only _ the exam, but she also got the highest mark.", "options": ["she passed", "did she pass", "she had passed", "passed she"], "correct": 1},
+          {"id": "g4", "question": "You had better _ your doctor before starting this exercise plan.", "options": ["consult", "to consult", "consulting", "consulted"], "correct": 0},
+          {"id": "g5", "question": "The report needs _ before the end of the day.", "options": ["finishing", "to finish", "finish", "finished"], "correct": 0},
+          {"id": "g6", "question": "Hardly _ entered the house when the lights went out.", "options": ["he had", "had he", "did he", "he did"], "correct": 1},
+          {"id": "g7", "question": "I would rather you _ tell anyone about this secret.", "options": ["don't", "didn't", "not", "won't"], "correct": 1},
+          {"id": "g8", "question": "Despite _ hard, he failed to secure the promotion.", "options": ["he worked", "working", "of working", "work"], "correct": 1},
+          {"id": "g9", "question": "The company, _ profits doubled this quarter, is expanding.", "options": ["which", "whose", "where", "that"], "correct": 1},
+          {"id": "g10", "question": "She acts as if she _ everything about the project.", "options": ["knows", "knew", "has known", "is knowing"], "correct": 1}
+        ],
+        "vocabulary": [
+          {"id": "v1", "question": "To give up a job or position formally is to _.", "options": ["Resign", "Promote", "Recruit", "Retire"], "correct": 0},
+          {"id": "v2", "question": "Something that is clear and easy to understand is _.", "options": ["Ambiguous", "Lucid", "Obscure", "Vague"], "correct": 1},
+          {"id": "v3", "question": "To make something better or more advanced is to _ it.", "options": ["Upgrade", "Deteriorate", "Neglect", "Abandon"], "correct": 0},
+          {"id": "v4", "question": "A general agreement among a group of people is called a _.", "options": ["Conflict", "Consensus", "Dispute", "Debate"], "correct": 1},
+          {"id": "v5", "question": "To prevent something bad from happening is to _ it.", "options": ["Avert", "Trigger", "Foster", "Induce"], "correct": 0},{"id": "v6", "question": "A solution that temporarily solves a problem is a _ fix.", "options": ["Permanent", "Quick", "Definitive", "Lasting"], "correct": 1},
+          {"id": "v7", "question": "To encourage the growth or development of something is to _ it.", "options": ["Hinder", "Foster", "Suppress", "Abolish"], "correct": 1},
+          {"id": "v8", "question": "Extremely surprising or impressive news can be described as _.", "options": ["Astonishing", "Mundane", "Tedious", "Ordinary"], "correct": 0},
+          {"id": "v9", "question": "The state of being accountable for something is _.", "options": ["Responsibility", "Indifference", "Reluctance", "Innocence"], "correct": 0},
+          {"id": "v10", "question": "A situation requiring a choice between equally undesirable alternatives is a _.", "options": ["Dilemma", "Solution", "Benefit", "Advantage"], "correct": 0}
+        ],
+        "spelling": [
+          {"id": "s1", "question": "Choose the correct spelling:", "options": ["Exaggerate", "Exagerate", "Exaggerait", "Exagurate"], "correct": 0},
+          {"id": "s2", "question": "Choose the correct spelling:", "options": ["Garantee", "Guarantee", "Garanty", "Guaranty"], "correct": 1},
+          {"id": "s3", "question": "Choose the correct spelling:", "options": ["Rythm", "Rhythm", "Rhythim", "Rithm"], "correct": 1},
+          {"id": "s4", "question": "Choose the correct spelling:", "options": ["Privilege", "Priviledge", "Privelege", "Privlege"], "correct": 0},
+          {"id": "s5", "question": "Choose the correct spelling:", "options": ["Conscience", "Conscience", "Consciense", "Consience"], "correct": 0},
+          {"id": "s6", "question": "Choose the correct spelling:", "options": ["Maintenance", "Maintainance", "Maintenence", "Maintenanse"], "correct": 0},
+          {"id": "s7", "question": "Choose the correct spelling:", "options": ["Pronunciation", "Pronounciation", "Pronunsiation", "Pronunciasion"], "correct": 0},
+          {"id": "s8", "question": "Choose the correct spelling:", "options": ["Questionnaire", "Questionaire", "Questionare", "Questionnair"], "correct": 0},
+          {"id": "s9", "question": "Choose the correct spelling:", "options": ["Embarrass", "Embaras", "Embarass", "Emberrass"], "correct": 0},
+          {"id": "s10", "question": "Choose the correct spelling:", "options": ["Hierarchy", "Heirarchy", "Hierachy", "Hierarcy"], "correct": 0}
+        ],
+        "reading": {
+          "passage": "Global climate change poses one of the most serious ecological threats of the 21st century. Rising global temperatures have led to accelerating glacier melting, elevated sea levels, and unpredictable weather events such as intense heatwaves and severe flooding. Environmental experts stress that reducing reliance on fossil fuels and transitioning toward renewable energy sources—such as solar, wind, and hydroelectric power—is vital. Furthermore, international treaties like the Paris Agreement aim to unite nations in limiting global warming to below 2 degrees Celsius compared to pre-industrial levels.",
+          "questions": [
+            {"id": "r1", "question": "What is identified as a major ecological threat in the 21st century?", "options": ["Deforestation", "Global climate change", "Overpopulation", "Plastic waste"], "correct": 1},
+            {"id": "r2", "question": "What is a direct consequence of rising global temperatures?", "options": ["Lower sea levels", "Glacier melting", "Decreased rainfall", "Cooler summers"], "correct": 1},
+            {"id": "r3", "question": "Which weather event is explicitly mentioned in the passage?", "options": ["Hurricanes", "Heatwaves", "Tornadoes", "Blizzards"], "correct": 1},
+            {"id": "r4", "question": "What do experts suggest replacing fossil fuels with?", "options": ["Nuclear power", "Renewable energy sources", "Coal energy", "Natural gas"], "correct": 1},{"id": "r5", "question": "Which of the following is listed as renewable energy?", "options": ["Oil", "Solar power", "Natural gas", "Diesel"], "correct": 1},
+            {"id": "r6", "question": "What is the primary goal of the Paris Agreement mentioned?", "options": ["To ban all vehicles", "To limit global warming below 2°C", "To stop industrial production", "To clean ocean plastic"], "correct": 1},
+            {"id": "r7", "question": "The baseline temperatures mentioned in the agreement refer to _ levels.", "options": ["Current", "Pre-industrial", "Post-war", "Future projected"], "correct": 1},
+            {"id": "r8", "question": "The word 'elevated' in the text means _.", "options": ["Lowered", "Increased / raised", "Stable", "Measured"], "correct": 1},
+            {"id": "r9", "question": "Transitioning to green energy requires reducing reliance on _.", "options": ["Fossil fuels", "Solar panels", "Windmills", "Hydroelectric dams"], "correct": 0},
+            {"id": "r10", "question": "What tone does the passage convey regarding climate change?", "options": ["Indifferent", "Urgent and serious", "Humorous", "Skeptical"], "correct": 1}
+          ]
+        }
+      }
+    },
+    {
+      "levelId": "B2",
+      "levelName": "B2 - متوسط پیشرفته",
+      "categories": {
+        "grammar": [
+          {"id": "g1", "question": "Under no circumstances _ leave the room without permission.", "options": ["you should", "should you", "you ought", "must you to"], "correct": 1},
+          {"id": "g2", "question": "It is high time we _ taking environmental issues seriously.", "options": ["start", "started", "have started", "will start"], "correct": 1},
+          {"id": "g3", "question": "So exhausted _ that he fell asleep at his desk.", "options": ["he was", "was he", "did he feel", "he felt"], "correct": 1},
+          {"id": "g4", "question": "The criminal is believed _ the country using a fake passport.", "options": ["to leave", "having left", "to have left", "leaving"], "correct": 2},
+          {"id": "g5", "question": "I would rather you _ make so much noise while I am working.", "options": ["don't", "didn't", "not to", "won't"], "correct": 1},
+          {"id": "g6", "question": "Try _ he might, he could not solve the complex riddle.", "options": ["as", "though", "like", "even"], "correct": 0},
+          {"id": "g7", "question": "Little _ know about the surprise that awaited her.", "options": ["she did", "did she", "she had", "had she"], "correct": 1},
+          {"id": "g8", "question": "Suppose you _ the lottery, what would you do first?", "options": ["win", "won", "had won", "have won"], "correct": 1},
+          {"id": "g9", "question": "Were it not for your assistance, we _ failed miserably.", "options": ["would have", "will have", "have", "had"], "correct": 0},
+          {"id": "g10", "question": "The project was completed on time, _ was a great relief.", "options": ["that", "which", "what", "where"], "correct": 1}
+        ],
+        "vocabulary": [
+          {"id": "v1", "question": "An event that serves as an introduction to something more important is a _.", "options": ["Prequel", "Prelude", "Postscript", "Sequel"], "correct": 1},
+          {"id": "v2", "question": "Something that exists everywhere simultaneously is described as _.", "options": ["Ubiquitous", "Scarce", "Transient", "Elusive"], "correct": 0},
+          {"id": "v3", "question": "To express deep sorrow or regret about something is to _ it.", "options": ["Lament", "Exult", "Sanction", "Endorse"], "correct": 0},
+          {"id": "v4", "question": "Behavior that is deceptive and intended to mislead others is _.", "options": ["Duplicity", "Candor", "Integrity", "Fidelity"], "correct": 0},{"id": "v5", "question": "To restore something to a former better state is to _ it.", "options": ["Rehabilitate", "Deteriorate", "Subvert", "Erode"], "correct": 0},
+          {"id": "v6", "question": "A person who is hesitant and unwilling to act is _.", "options": ["Reluctant", "Eager", "Prompt", "Decisive"], "correct": 0},
+          {"id": "v7", "question": "Something lasting for a very short time is _.", "options": ["Ephemeral", "Perpetual", "Enduring", "Ceaseless"], "correct": 0},
+          {"id": "v8", "question": "To make a bad situation less severe or painful is to _ it.", "options": ["Mitigate", "Aggravate", "Exacerbate", "Provoke"], "correct": 0},
+          {"id": "v9", "question": "Open and honest expression of thoughts is described as _.", "options": ["Candor", "Hypocrisy", "Evasion", "Deceit"], "correct": 0},
+          {"id": "v10", "question": "To officially approve or permit an action is to _ it.", "options": ["Sanction", "Prohibit", "Forbid", "Condemn"], "correct": 0}
+        ],
+        "spelling": [
+          {"id": "s1", "question": "Choose the correct spelling:", "options": ["Bureaucracy", "Beureaucracy", "Bureaucracy", "Burocracy"], "correct": 0},
+          {"id": "s2", "question": "Choose the correct spelling:", "options": ["Entrepreneur", "Entreprenuer", "Entreprenur", "Enterpreneur"], "correct": 0},
+          {"id": "s3", "question": "Choose the correct spelling:", "options": ["Conscientious", "Conscientous", "Conscientus", "Consientious"], "correct": 0},
+          {"id": "s4", "question": "Choose the correct spelling:", "options": ["Mischievous", "Mischievious", "Mischivous", "Mischevous"], "correct": 0},
+          {"id": "s5", "question": "Choose the correct spelling:", "options": ["Surveillance", "Surveilance", "Surveillence", "Surveylance"], "correct": 0},
+          {"id": "s6", "question": "Choose the correct spelling:", "options": ["Acknowledge", "Acknowlege", "Accknowledge", "Aknowledge"], "correct": 0},
+          {"id": "s7", "question": "Choose the correct spelling:", "options": ["Fascinating", "Fascinatting", "Facinating", "Fascinateng"], "correct": 0},
+          {"id": "s8", "question": "Choose the correct spelling:", "options": ["Pharaoh", "Pharoah", "Faroh", "Pharao"], "correct": 0},
+          {"id": "s9", "question": "Choose the correct spelling:", "options": ["Sovereignty", "Sovereinty", "Sovreignty", "Soverignty"], "correct": 0},
+          {"id": "s10", "question": "Choose the correct spelling:", "options": ["Camouflage", "Camoflage", "Camouflag", "Camoflaj"], "correct": 0}
+        ],
+        "reading": {
+          "passage": "Psychological resilience—the capacity to adapt successfully to adversity, trauma, or significant stress—has gained substantial attention in behavioral science. Far from being an innate trait possessed by a fortunate few, resilience involves behaviors, thoughts, and actions that can be learned and developed over time. Key factors contributing to psychological resilience include strong interpersonal relationships, emotional self-regulation, realistic goal setting, and cognitive reframing. Cognitive reframing allows individuals to view stressful circumstances as manageable challenges rather than insurmountable obstacles.",
+          "questions": [
+            {"id": "r1", "question": "How is psychological resilience defined in the text?", "options": ["An innate physical strength", "The capacity to adapt to adversity", "An incurable mental condition", "The ability to avoid all stress"], "correct": 1},
+            {"id": "r2", "question": "Does the passage suggest resilience is purely inherited?", "options": ["Yes, only a fortunate few have it", "No, it can be learned and developed", "It depends on age", "Science has no answer"], "correct": 1},{"id": "r3", "question": "Which factor contributes to developing resilience?", "options": ["Isolation", "Strong interpersonal relationships", "Avoiding all goals", "Suppressing thoughts"], "correct": 1},
+            {"id": "r4", "question": "What is cognitive reframing?", "options": ["Ignoring stress completely", "Viewing stress as a manageable challenge", "Blaming others for problems", "Changing jobs frequently"], "correct": 1},
+            {"id": "r5", "question": "The word 'adversity' in context means _.", "options": ["Good fortune", "Hardship or difficulty", "Physical health", "Intelligence"], "correct": 1},
+            {"id": "r6", "question": "Resilience involves behaviors that can be _ over time.", "options": ["Forgotten", "Learned", "Destroyed", "Measured easily"], "correct": 1},
+            {"id": "r7", "question": "The phrase 'insurmountable obstacles' refers to challenges that are _.", "options": ["Very easy", "Impossible to overcome", "Fun to solve", "Temporary"], "correct": 1},
+            {"id": "r8", "question": "Which field of study has focused on resilience according to the passage?", "options": ["Astronomy", "Behavioral science", "Architecture", "Economics"], "correct": 1},
+            {"id": "r9", "question": "What role does goal setting play in resilience?", "options": ["It is harmful", "Realistic goal setting helps foster resilience", "Goals should be unrealistic", "Goal setting is irrelevant"], "correct": 1},
+            {"id": "r10", "question": "What is the overall message of the passage?", "options": ["Stress is permanent", "Resilience is a trainable psychological skill", "Relationships cause trauma", "Adversity cannot be managed"], "correct": 1}
+          ]
+        }
+      }
+    },
+    {
+      "levelId": "C1",
+      "levelName": "C1 - پیشرفته",
+      "categories": {
+        "grammar": [
+          {"id": "g1", "question": "Seldom _ such an astounding display of intellectual brilliance.", "options": ["we witnessed", "have we witnessed", "we have witnessed", "witnessed we"], "correct": 1},
+          {"id": "g2", "question": "Were the board _ to approve the proposal, implementation would begin immediately.", "options": ["is", "was", "to", "be"], "correct": 2},
+          {"id": "g3", "question": "Whatever _ the outcome, we must remain committed to our core values.", "options": ["be", "is", "was", "were"], "correct": 0},
+          {"id": "g4", "question": "Not until the late hours of the night _ the crucial decree.", "options": ["signed the council", "did the council sign", "the council signed", "had signed the council"], "correct": 1},
+          {"id": "g5", "question": "So complex _ the mathematical proof that only a handful of scholars understood it.", "options": ["was", "is", "did", "were"], "correct": 0},
+          {"id": "g6", "question": "It is imperative that every candidate _ present at the auditorium by 8 AM.", "options": ["is", "be", "was", "should be"], "correct": 1},
+          {"id": "g7", "question": "Having _ thoroughly thoroughly analyzed, the strategy was approved.", "options": ["been", "being", "be", "was"], "correct": 0},
+          {"id": "g8", "question": "Scarcely _ stepped onto the podium when the audience erupted in applause.", "options": ["he had", "had he", "did he", "he did"], "correct": 1},
+          {"id": "g9", "question": "Should you _ any further clarification, do not hesitate to contact our desk.", "options": ["requiring", "require", "required", "to require"], "correct": 1},
+          {"id": "g10", "question": "Much as I _ his determination, I cannot endorse his reckless methods.", "options": ["admire", "admired", "am admiring", "was admiring"], "correct": 0}
+        ],
+        "vocabulary": [
+          {"id": "v1", "question": "To speak in an evasive manner to avoid declaring a clear stance is to _.", "options": ["Equivocate", "Articulate", "Elucidate", "Proclaim"], "correct": 0},{"id": "v2", "question": "An extreme or unnatural paleness of the skin caused by illness or distress is _.", "options": ["Pallor", "Radiance", "Flush", "Complexion"], "correct": 0},
+          {"id": "v3", "question": "Showing great care, attention, and effort in performing tasks is _.", "options": ["Diligent", "Negligent", "Cursory", "Sloppy"], "correct": 0},
+          {"id": "v4", "question": "A state of complete disorder and confusion is known as _.", "options": ["Anarchy", "Harmony", "Sovereignty", "Symmetry"], "correct": 0},
+          {"id": "v5", "question": "To make a formal accusation against a public official for misconduct is to _.", "options": ["Impeach", "Absolve", "Vindicate", "Exonerate"], "correct": 0},
+          {"id": "v6", "question": "A subtle difference in meaning, expression, or sound is a _.", "options": ["Nuance", "Cliché", "Truism", "Generalization"], "correct": 0},
+          {"id": "v7", "question": "Existing in a dormant state and capable of developing in the future is _.", "options": ["Latent", "Overt", "Manifest", "Patent"], "correct": 0},
+          {"id": "v8", "question": "To express condemnation or disapproval publicly is to _.", "options": ["Denounce", "Extol", "Laud", "Commend"], "correct": 0},
+          {"id": "v9", "question": "Characterized by severe self-discipline and abstention from indulgences is _.", "options": ["Ascetic", "Hedonistic", "Sybaritic", "Decadent"], "correct": 0},
+          {"id": "v10", "question": "To cause feelings of resentment or bitterness over a period is to _.", "options": ["Fester", "Soothe", "Mollify", "Assuage"], "correct": 0}
+        ],
+        "spelling": [
+          {"id": "s1", "question": "Choose the correct spelling:", "options": ["Onomatopoeia", "Onomatopeia", "Onomatopoeia", "Onomatopea"], "correct": 0},
+          {"id": "s2", "question": "Choose the correct spelling:", "options": ["Idiosyncrasy", "Idiosyncracy", "Idiocyncrasy", "Idiosincrasy"], "correct": 0},
+          {"id": "s3", "question": "Choose the correct spelling:", "options": ["Miscellaneous", "Miscellanous", "Miscelleneous", "Miscelaneous"], "correct": 0},
+          {"id": "s4", "question": "Choose the correct spelling:", "options": ["Chrysanthemum", "Chrysenthemum", "Cryssanthemum", "Chrysathemum"], "correct": 0},
+          {"id": "s5", "question": "Choose the correct spelling:", "options": ["Pharaoh", "Pharoah", "Faroah", "Pharaoh"], "correct": 0},
+          {"id": "s6", "question": "Choose the correct spelling:", "options": ["Sacrilegious", "Sacreligious", "Sacriligious", "Sacreligous"], "correct": 0},
+          {"id": "s7", "question": "Choose the correct spelling:", "options": ["Indictment", "Indictment", "Inditement", "Indictement"], "correct": 0},
+          {"id": "s8", "question": "Choose the correct spelling:", "options": ["Liquefy", "Liquify", "Lequify", "Liquephy"], "correct": 0},
+          {"id": "s9", "question": "Choose the correct spelling:", "options": ["Millennium", "Millenium", "Milennium", "Milenium"], "correct": 0},
+          {"id": "s10", "question": "Choose the correct spelling:", "options": ["Supersede", "Supercede", "Superseed", "Superside"], "correct": 0}
+        ],
+        "reading": {
+          "passage": "Artificial Intelligence (AI) algorithms have crossed the threshold from technical automation into realms requiring nuanced ethical oversight. In deep learning architectures, neural networks make millions of mathematical adjustments across hidden layers, producing outcomes whose precise decision-making pathways remain opaque even to their original programmers—a phenomenon termed the 'black box' problem. As these automated systems are deployed in judicial sentencing, loan approvals, and medical diagnostics, addressing algorithmic bias and establishing transparent accountability frameworks become paramount imperatives for policy makers worldwide.","questions": [
+            {"id": "r1", "question": "What milestone have AI algorithms reached according to the passage?", "options": ["Replacing human consciousness", "Crossing into realms requiring ethical oversight", "Failing completely in industry", "Eliminating all societal bias"], "correct": 1},
+            {"id": "r2", "question": "What is the 'black box' problem in neural networks?", "options": ["Hardware overheating", "Opaque decision-making pathways", "High costs of power", "Lack of storage space"], "correct": 1},
+            {"id": "r3", "question": "Who finds the inner workings of some AI systems opaque?", "options": ["Only end users", "Even their original programmers", "Government inspectors only", "No one, they are transparent"], "correct": 1},
+            {"id": "r4", "question": "Which domain of application is explicitly mentioned in the passage?", "options": ["Space exploration", "Judicial sentencing", "Art restoration", "Deep sea diving"], "correct": 1},
+            {"id": "r5", "question": "What imperative is highlighted for policy makers worldwide?", "options": ["Banning AI completely", "Establishing transparent accountability frameworks", "Increasing AI hardware prices", "Stopping medical diagnostics"], "correct": 1},
+            {"id": "r6", "question": "The term 'opaque' in this context means _.", "options": ["Crystal clear", "Difficult to see through or understand", "Brightly lit", "Inexpensive"], "correct": 1},
+            {"id": "r7", "question": "Algorithmic bias poses a challenge in which process?", "options": ["Loan approvals", "Manual labor", "Paper manufacturing", "Solar harvesting"], "correct": 0},
+            {"id": "r8", "question": "Deep learning architectures rely on _ across hidden layers.", "options": ["Manual switches", "Millions of mathematical adjustments", "Voice commands", "Analog signals"], "correct": 1},
+            {"id": "r9", "question": "What tone does the passage adopt regarding AI integration?", "options": ["Alarmist", "Analytical and cautious", "Dismissive", "Celebratory"], "correct": 1},
+            {"id": "r10", "question": "The word 'paramount' in context is closest in meaning to _.", "options": ["Minor", "Of supreme importance", "Irrelevant", "Optional"], "correct": 1}
+          ]
+        }
+      }
+    },
+    {
+      "levelId": "C2",
+      "levelName": "C2 - تسلط کامل",
+      "categories": {
+        "grammar": [
+          {"id": "g1", "question": "Be that as it _, we must proceed with the original strategic mandate.", "options": ["may", "can", "is", "might"], "correct": 0},
+          {"id": "g2", "question": "Were it not _ the timely intervention of the central bank, systemic failure would have occurred.", "options": ["for", "with", "by", "of"], "correct": 0},
+          {"id": "g3", "question": "In vain _ to persuade the board to reconsider the hostile takeover.", "options": ["he attempted", "did he attempt", "attempted he", "he did attempt"], "correct": 1},
+          {"id": "g4", "question": "Strange _ it may sound, the empirical evidence supports the unorthodox theory.", "options": ["though", "as", "like", "even"], "correct": 1},
+          {"id": "g5", "question": "Far _ it from me to criticize your managerial decisions, but caution is warranted.", "options": ["be", "is", "were", "should be"], "correct": 0},
+          {"id": "g6", "question": "Suffice it to _, the project met all regulatory requirements ahead of schedule.", "options": ["say", "tell", "speak", "state"], "correct": 0},
+          {"id": "g7", "question": "The manuscript was discovered in an obscure monastery, _ forgotten for centuries.", "options": ["having been", "being", "having", "was"], "correct": 0},
+          {"id": "g8", "question": "Not one instance of procedural non-compliance _ documented during the audit.", "options": ["was", "were", "have been", "are"], "correct": 0},{"id": "g9", "question": "Come what _, the organization will uphold its ethical standards.", "options": ["may", "will", "can", "might"], "correct": 0},
+          {"id": "g10", "question": "It is required that the executive board _ convened immediately.", "options": ["be", "is", "will be", "was"], "correct": 0}
+        ],
+        "vocabulary": [
+          {"id": "v1", "question": "To treat something sacred with irreverence or disrespect is to _ it.", "options": ["Desecrate", "Consecrate", "Venerate", "Exalt"], "correct": 0},
+          {"id": "v2", "question": "A situation marked by extreme hardship or ruinous turmoil is a _.", "options": ["Cataclysm", "Panacea", "Windfall", "Bonanza"], "correct": 0},
+          {"id": "v3", "question": "Characterized by pompous or bombastic speech intended to impress is _.", "options": ["Grandiloquent", "Laconic", "Succinct", "Reticent"], "correct": 0},
+          {"id": "v4", "question": "To clear someone from blame or suspicion completely is to _ them.", "options": ["Exonerate", "Incriminate", "Implicate", "Indict"], "correct": 0},
+          {"id": "v5", "question": "Exhibiting wisdom and good judgment in practical matters is being _.", "options": ["Prudent", "Impashionate", "Injudicious", "Rash"], "correct": 0},
+          {"id": "v6", "question": "A state of emotional numbness or complete lack of interest is _.", "options": ["Apathy", "Fervor", "Empathy", "Zeal"], "correct": 0},
+          {"id": "v7", "question": "To render something ineffective or completely nullify it is to _ it.", "options": ["Negate", "Validate", "Ratify", "Substantiate"], "correct": 0},
+          {"id": "v8", "question": "A person who claims to have skills or knowledge they do not possess is a _.", "options": ["Charlatan", "Virtuoso", "Savant", "Doyen"], "correct": 0},
+          {"id": "v9", "question": "Incapable of being corrected, reformed, or improved is _.", "options": ["Incorrigible", "Malleable", "Pliable", "Tractable"], "correct": 0},
+          {"id": "v10", "question": "To express opinions or statements in a dogmatic, authoritative manner is to _.", "options": ["Pontificate", "Deliberate", "Hesitate", "Vacillate"], "correct": 0}
+        ],
+        "spelling": [
+          {"id": "s1", "question": "Choose the correct spelling:", "options": ["Pneumonoultramicroscopicsilicovolcanoconiosis", "Pneumonoultramicroscopicsilicovolcanoconiosis", "Pneumonoultramicroscopicsilico-volcanoconiosis", "Pneumonoultramicroscopic-silicovolcanoconiosis"], "correct": 0},
+          {"id": "s2", "question": "Choose the correct spelling:", "options": ["Anachronistic", "Anachronestick", "Anacronistic", "Anachronistick"], "correct": 0},
+          {"id": "s3", "question": "Choose the correct spelling:", "options": ["Incomprehensibility", "Incomprehensebility", "Incomprehensibiliy", "Incomprehensableity"], "correct": 0},
+          {"id": "s4", "question": "Choose the correct spelling:", "options": ["Punctilious", "Punctillious", "Punctelious", "Punctileous"], "correct": 0},
+          {"id": "s5", "question": "Choose the correct spelling:", "options": ["Magnanimous", "Magnanimos", "Magnanamous", "Magnannimous"], "correct": 0},
+          {"id": "s6", "question": "Choose the correct spelling:", "options": ["Pusillanimous", "Pusilanimous", "Pusillanimos", "Pussillanimous"], "correct": 0},
+          {"id": "s7", "question": "Choose the correct spelling:", "options": ["Verisimilitude", "Verisimilitud", "Verissimilitude", "Verrisimilitude"], "correct": 0},
+          {"id": "s8", "question": "Choose the correct spelling:", "options": ["Vicissitude", "Vississitude", "Vicissitud", "Viccissitude"], "correct": 0},
+          {"id": "s9", "question": "Choose the correct spelling:", "options": ["Syllogism", "Silogism", "Syllogisme", "Syllogizm"], "correct": 0},{"id": "s10", "question": "Choose the correct spelling:", "options": ["Surreptitious", "Sureptitious", "Surrepticious", "Surreptiteous"], "correct": 0}
+        ],
+        "reading": {
+          "passage": "Epistemological discourse in post-modern philosophy frequently interrogates the foundationalist premise that objective truth can be apprehended independently of socio-linguistic constructs. Proponents of radical constructivism contend that reality is not an external realm waiting to be discovered, but rather an ongoing narrative forged through discursive practices and cultural paradigms. Critics, however, argue that relinquishing the concept of an objective reality risks slipping into moral and intellectual relativism, thereby undermining the scientific method and eroding the philosophical underpinnings of universal human rights.",
+          "questions": [
+            {"id": "r1", "question": "What foundational premise does post-modern philosophy interrogate?", "options": ["That truth is purely subjective", "That objective truth can be apprehended independently of socio-linguistic constructs", "That language is irrelevant to thought", "That science replaces philosophy"], "correct": 1},
+            {"id": "r2", "question": "According to radical constructivism, reality is _.", "options": ["An objective external realm", "An ongoing narrative forged through discursive practices", "A static physical structure", "An illusion created by mathematics"], "correct": 1},
+            {"id": "r3", "question": "What concern do critics raise regarding the abandonment of objective reality?", "options": ["It increases scientific grants", "It risks slipping into moral and intellectual relativism", "It solves all political debates", "It makes language simpler"], "correct": 1},
+            {"id": "r4", "question": "What framework is threatened by philosophical relativism according to critics?", "options": ["The scientific method", "Feudal governance", "Digital computing", "Architectural design"], "correct": 0},
+            {"id": "r5", "question": "The word 'interrogates' in this context means _.", "options": ["Accepts blindly", "Critically examines or questions", "Translates into Latin", "Ignores completely"], "correct": 1},
+            {"id": "r6", "question": "Radical constructivists argue reality is shaped by cultural _.", "options": ["Genetics", "Paradigms", "Geography", "Climate"], "correct": 1},
+            {"id": "r7", "question": "Which concepts are linked in the text as being at risk?", "options": ["Universal human rights and the scientific method", "Sports and music", "Taxation and commerce", "Astronomy and astrology"], "correct": 0},
+            {"id": "r8", "question": "The term 'epistemological' relates to the philosophical study of _.", "options": ["Knowledge and truth", "Physical matter", "Ancient art", "Insects"], "correct": 0},
+            {"id": "r9", "question": "The tone of the passage is best described as _.", "options": ["Academic and theoretical", "Emotional and biased", "Casual and colloquial", "Poetic and lyrical"], "correct": 0},
+            {"id": "r10", "question": "What does the word 'relinquishing' mean in context?", "options": ["Giving up or abandoning", "Strengthening", "Inventing", "Selling"], "correct": 0}
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثبت‌نام آنلاین و تعیین سطح | آموزشگاه آفرینش</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .wizard-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            padding: 35px 30px;
+            border-top: 5px solid var(--primary, #e61c23);
+        }
+        .step-card {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .step-card.active {
+            display: block;
+        }
+        .quiz-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1a202c;
+            text-align: center;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        .quiz-subtitle {
+            font-size: 14px;
+            color: #718096;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .btn-choice-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-choice {
+            flex: 1;
+            min-width: 220px;
+            padding: 18px 20px;
+            border-radius: 14px;
+            border: 2px solid #edf2f7;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 700;
+            font-size: 15px;
+            color: #2d3748;
+        }
+        .btn-choice:hover {
+            border-color: var(--primary, #e61c23);
+            background: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(230,28,35,0.12);
+        }
+        .btn-choice.yes-btn:hover { color: #e61c23; }
+        .btn-choice.no-btn:hover { color: #0071e3; border-color: #0071e3; box-shadow: 0 8px 20px rgba(0,113,227,0.12); }
+        
+        /* Grid Layout for Full Registration Form */
+        .form-grid-custom {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        .form-group-full {
+            grid-column: 1 / -1;
+        }
+        .form-group label {
+            font-size: 13px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #2d3748;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e0;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .placement-type-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .type-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fff;
+        }
+        .type-card.selected {
+            border-color: #0071e3;
+            background: #f0f7ff;
+        }
+        .badge-step {
+            display: inline-block;
+            background: rgba(230,28,35,0.1);
+            color: #e61c23;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-light-section">
+    <!-- هدر بالایی: پرچم‌های چندزبانه تعاملی -->
+    <div class="top-flag-bar">
+        <span>پذیرش و ثبت‌نام الکترونیکی ترم جدید - آموزشگاه آفرینش</span>
+        <div class="flags-container" style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+            <img src="https://flagcdn.com/w40/ir.png" alt="فارسی" title="فارسی (Persian)" onclick="changeLanguage('fa', 'rtl')">
+            <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" onclick="changeLanguage('en', 'ltr')">
+            <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" title="Deutsch" onclick="changeLanguage('de', 'ltr')">
+            <img src="https://flagcdn.com/w40/tr.png" alt="Türkçe" title="Türkçe" onclick="changeLanguage('tr', 'ltr')">
+            <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" onclick="changeLanguage('fr', 'ltr')">
+            <img src="https://flagcdn.com/w40/cn.png" alt="中文" title="آکادمی چینی (Chinese)" onclick="changeLanguage('zh', 'ltr')">
+        </div>
+    </div>
+
+    <!-- نوار ناوبری اصلی (لینک تعیین سطح حذف شد) -->
+    <nav class="main-navbar">
+        <a href="index.html" class="logo-area">
+            <img src="assets/images/logo.jpg" alt="لوگو آفرینش">
+            <span>آموزشگاه آفرینش</span>
+        </a>
+        <button class="hamburger-btn" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">خانه</a></li>
+            <li><a href="classes.html">کلاس‌های زبان</a></li>
+            <li><a href="exams.html">آزمون‌ها</a></li>
+            <li><a href="olympiad.html">المپیاد</a></li>
+            <li><a href="achievements.html">دستاوردها</a></li>
+            <li><a href="events.html">ایونت‌ها</a></li>
+            <li><a href="azmoon-intro.html" data-i18n="azmoon">آزمونک</a></li>
+            <li><a href="contact.html">مشاوره و تماس</a></li>
+        </ul>
+        <div class="nav-btns">
+            <a href="admin-login.html" class="btn btn-secondary">ورود به پنل شخصی</a>
+            <a href="register.html" class="btn btn-primary active">ثبت‌نام آنلاین</a>
+        </div>
+    </nav>
+
+    <!-- محتوای تعاملی گام‌به‌گام -->
+    <div class="wizard-container">
+
+        <!-- گام ۱: پرسش سابقه یادگیری زبان -->
+        <div class="step-card active" id="step1">
+            <div style="text-align: center;">
+                <span class="badge-step">گام ۱ از ۲</span>
+                <h2 class="quiz-title">🎓 سابقه یادگیری زبان انگلیسی</h2>
+                <p class="quiz-subtitle">آیا قبلاً در کانون‌های زبان یا آموزشگاه‌های دیگر مشغول به یادگیری زبان انگلیسی بوده‌اید؟</p>
+                
+                <div class="btn-choice-group">
+                    <button class="btn-choice yes-btn" onclick="handlePriorExperience(true)">
+                        ✅ بله، سابقه یادگیری دارم
+                    </button>
+                    <button class="btn-choice no-btn" onclick="handlePriorExperience(false)">
+                        🌱 خیر، مبتدی / بدون سابقه هستم
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- گام ۲: پرسش تعیین سطح در آفرینش -->
+        <div class="step-card" id="step2">
+            <div style="text-align: center;">
+                <span class="badge-step">گام ۲ از ۲</span>
+                <h2 class="quiz-title">🔍 بررسی وضعیت تعیین سطح در آفرینش</h2>
+                <p class="quiz-subtitle">آیا قبلاً توسط سوپروایزرهای آموزشگاه زبان آفرینش تعیین سطح شده‌اید؟</p>
+                
+                <div class="btn-choice-group">
+                    <button class="btn-choice yes-btn" onclick="handleAfarineshPlacement(true)">
+                        ✅ بله، تعیین سطح شده‌ام
+                    </button>
+                    <button class="btn-choice no-btn" onclick="handleAfarineshPlacement(false)">
+                        📋 خیر، نیاز به تعیین سطح دارم
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- گام ۳-الف: فرم رزرو تعیین سطح (تلفنی / حضوری) -->
+        <div class="step-card" id="stepPlacementForm">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <span class="badge-step" style="background: rgba(0,113,227,0.1); color: #0071e3;">درخواست تعیین سطح رایگان</span>
+                <h2 style="font-size: 20px; font-weight: 800; color: #1a202c;">فرم رزرو تعیین سطح آفرینش</h2>
+                <p style="font-size: 13px; color: #718096; margin-top: 5px;">جهت انتخاب دوره دقیق و متناسب، لطفاً اطلاعات زیر را تکمیل فرمایید تا سوپروایزر با شما تماس بگیرد.</p>
+            </div>
+
+            <form id="placementRequestForm">
+                <div style="margin-bottom: 18px;">
+                    <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 8px;">نوع تعیین سطح مدنظر:</label>
+                    <div class="placement-type-box">
+                        <label class="type-card selected" id="cardPhone" onclick="selectPlacementType('تلفنی')">
+                            <input type="radio" name="placementTypeRadio" value="تلفنی" checked style="display:none;">
+                            <div style="font-size: 22px; margin-bottom: 5px;">📞</div>
+                            <div style="font-weight: bold; font-size: 14px;">تلفنی</div>
+                            <div style="font-size: 11px; color: #718096; margin-top: 3px;">۵ الی ۷ دقیقه تماس</div>
+                        </label>
+
+                        <label class="type-card" id="cardInPerson" onclick="selectPlacementType('حضوری')">
+                            <input type="radio" name="placementTypeRadio" value="حضوری" style="display:none;">
+                            <div style="font-size: 22px; margin-bottom: 5px;">🏢</div>
+                            <div style="font-weight: bold; font-size: 14px;">حضوری</div>
+                            <div style="font-size: 11px; color: #718096; margin-top: 3px;">مراجعه به آموزشگاه</div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-grid-custom">
+                    <div class="form-group">
+                        <label>نام و نام خانوادگی زبان‌آموز *</label>
+                        <input type="text" id="plName" required placeholder="مثال: علی محمدی">
+                    </div>
+
+                    <div class="form-group">
+                        <label>شماره تماس همراه *</label>
+                        <input type="tel" id="plPhone" required placeholder="09123456789">
+                    </div>
+
+                    <div class="form-group">
+                        <label>کد ملی *</label>
+                        <input type="text" id="plNationalCode" required placeholder="کد ملی ۱۰ رقمی">
+                    </div>
+
+                    <div class="form-group">
+                        <label>رده سنی زبان‌آموز *</label>
+                        <select id="plAgeGroup" required>
+                            <option value="کودکان (۳ تا ۷ سال)">کودکان (۳ تا ۷ سال)</option>
+                            <option value="نوجوانان (۱۰ تا ۱۶ سال)">نوجوانان (۱۰ تا ۱۶ سال)</option>
+                            <option value="بزرگسالان">بزرگسالان (تخصصی / آیلتس)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 13px; font-size: 15px; background: #0071e3; margin-top: 20px;">
+                    ✉️ ثبت و ارسال درخواست تعیین سطح به پنل مدیریت
+                </button>
+            </form>
+        </div>
+
+        <!-- گام ۳-ب: فرم ثبت‌نام کامل و تفصیلی با تمام ۱۰ فیلد -->
+        <div class="step-card" id="stepRegistrationForm">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <span class="badge-step">ثبت‌نام آنلاین و تشکیل پرونده</span>
+                <h2 style="font-size: 20px; font-weight: 800; color: #1a202c;">فرم مشخصات فراگیر / زبان‌آموز آفرینش</h2>
+                <p style="font-size: 13px; color: #718096; margin-top: 5px;">لطفاً اطلاعات زیر را با دقت و بر اساس مدارک شناسایی وارد نمایید.</p>
+            </div>
+
+            <form id="melalRegisterForm">
+                <div class="form-grid-custom">
+                    <div class="form-group">
+                        <label for="firstName">نام زبان‌آموز *</label>
+                        <input type="text" id="firstName" required placeholder="مثال: علی">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName">نام خانوادگی *</label>
+                        <input type="text" id="lastName" required placeholder="مثال: محمدی">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fatherName">نام پدر *</label>
+                        <input type="text" id="fatherName" required placeholder="نام پدر">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nationalId">شماره شناسنامه / کد ملی *</label>
+                        <input type="text" id="nationalId" required placeholder="کد ملی ۱۰ رقمی">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthDate">تاریخ تولد *</label>
+                        <input type="text" id="birthDate" required placeholder="مثال: ۱۳۸۸/۰۵/۲۰">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="education">میزان تحصیلات *</label>
+                        <input type="text" id="education" required placeholder="مثال: سوم ابتدایی، دیپلم و...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="schoolName">نام مدرسه / دانشگاه *</label>
+                        <input type="text" id="schoolName" required placeholder="نام محل تحصیل فعلی">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">شماره تلفن (همراه/منزل) *</label>
+                        <input type="tel" id="phone" required placeholder="۰۹xxxxxxxxx">
+                    </div>
+
+                    <div class="form-group-full form-group">
+                        <label for="ageCategory">انتخاب رده سنی و شهریه ترم (یک ترم کامل) *</label>
+                        <select id="ageCategory" required style="background: white;">
+                            <option value="" disabled selected>-- لطفا رده سنی خود را انتخاب کنید --</option>
+                            <option value="kids">کودکان (کیدز) - ۱,۴۸۰,۰۰۰ تومان</option>
+                            <option value="teens">نوجوانان (تینز) - ۱,۵۸۰,۰۰۰ تومان</option>
+                            <option value="adults">بزرگسالان (ادالت) - ۱,۶۸۰,۰۰۰ تومان</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group-full form-group">
+                        <label for="address">آدرس دقیق منزل *</label>
+                        <textarea id="address" rows="3" required placeholder="شهر، خیابان، کوچه، پلاک..."></textarea>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 25px;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 16px;">
+                        💳 ثبت پرونده و ارسال درخواست ثبت‌نام
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- فوتر اصلی -->
+    <footer class="main-footer">
+        <div class="footer-bottom" style="border: none; padding: 0;">
+            &copy; ۲۰۲۶ تمامی حقوق مادی و معنوی متعلق به آموزشگاه زبان آفرینش می‌باشد.
+        </div>
+    </footer>
+    <script src="assets/js/script.js"></script>
+    <script>
+        let selectedPlacementType = 'تلفنی';
+
+        function showStep(stepId) {
+            document.querySelectorAll('.step-card').forEach(el => el.classList.remove('active'));
+            document.getElementById(stepId).classList.add('active');
+        }
+
+        function handlePriorExperience(hasExp) {
+            if (!hasExp) {
+                showStep('stepRegistrationForm');
+            } else {
+                showStep('step2');
+            }
+        }
+
+        function handleAfarineshPlacement(isPlaced) {
+            if (isPlaced) {
+                showStep('stepRegistrationForm');
+            } else {
+                showStep('stepPlacementForm');
+            }
+        }
+
+        function selectPlacementType(type) {
+            selectedPlacementType = type;
+            if (type === 'تلفنی') {
+                document.getElementById('cardPhone').classList.add('selected');
+                document.getElementById('cardInPerson').classList.remove('selected');
+            } else {
+                document.getElementById('cardInPerson').classList.add('selected');
+                document.getElementById('cardPhone').classList.remove('selected');
+            }
+        }
+    </script>
+</body>
+</html>

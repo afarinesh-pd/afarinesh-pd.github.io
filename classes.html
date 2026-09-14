@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیست کلاس‌ها و برنامه‌ریزی | آموزشگاه آفرینش</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* 👑 استایل جدید، باز و دلباز نوار پرچم‌ها بالای صفحه */
+        .top-flag-bar {
+            background: #1a202c;
+            color: #f7fafc;
+            padding: 14px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary);
+        }
+        .flags-container {
+            display: flex;
+            gap: 16px; /* فاصله اصولی بین پرچم‌ها */
+            align-items: center;
+        }
+        .flags-container img {
+            width: 34px; /* بزرگ‌تر و شیک‌تر شدن پرچم‌ها */
+            height: auto;
+            border-radius: 6px; /* لبه‌های گرد مدرن */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .flags-container img:hover {
+            transform: scale(1.2) translateY(-2px); /* افکت موشن جذاب */
+        }
+
+        /* استایل فیلترها و مودال */
+        .filter-bar {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            -webkit-backdrop-filter: none;
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: var(--radius);
+            max-width: 550px;
+            width: 90%;
+            text-align: right;
+            animation: fadeInUp 0.4s ease;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+        .modal-bullets {
+            margin: 15px 20px;
+            padding: 0;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+        .modal-bullets li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- هدر بالایی: پرچم‌های چندزبانه تعاملی -->
+    <div class="top-flag-bar">
+        <span> کلاس ها و ترم های آموزشگاه آفرینش</span>
+        <div class="flags-container" style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+            <img src="https://flagcdn.com/w40/ir.png" alt="فارسی" title="فارسی (Persian)" onclick="changeLanguage('fa', 'rtl')">
+        <!-- انگلیسی (بریتانیا) -->
+            <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" onclick="changeLanguage('en', 'ltr')">
+        <!-- آلمانی -->
+            <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" title="Deutsch" onclick="changeLanguage('de', 'ltr')">
+        <!-- ترکی استانبولی -->
+            <img src="https://flagcdn.com/w40/tr.png" alt="Türkçe" title="Türkçe" onclick="changeLanguage('tr', 'ltr')">
+        <!-- فرانسوی -->
+            <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" onclick="changeLanguage('fr', 'ltr')">
+        <!-- چینی -->
+            <img src="https://flagcdn.com/w40/cn.png" alt="中文" title="آکادمی چینی (Chinese)" onclick="changeLanguage('zh', 'ltr')">
+        </div>
+    </div>
+
+
+    <nav class="main-navbar">
+        <a href="index.html" class="logo-area">
+            <img src="assets/images/logo.jpg" alt="لوگو ملل">
+            <span>آموزشگاه آفرینش</span>
+        </a>
+        <button class="hamburger-btn" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">خانه</a></li>
+            <li><a href="classes.html" class="active">کلاس‌های زبان</a></li>
+            <li><a href="exams.html">آزمون‌ها</a></li>
+            <li><a href="olympiad.html">المپیاد</a></li>
+            <li><a href="achievements.html">دستاوردها</a></li>
+            <li><a href="events.html">ایونت‌ها</a></li>
+            <li><a href="azmoon-intro.html" data-i18n="azmoon">آزمونک</a></li>
+            <li><a href="contact.html">مشاوره و تماس</a></li>
+        </ul>
+        <div class="nav-btns">
+            <a href="admin-login.html" class="btn btn-secondary">ورود به پنل شخصی</a>
+            <a href="register.html" class="btn btn-primary">ثبت‌نام آنلاین</a>
+        </div>
+    </nav>
+
+    <section class="section-padding">
+        <h2 class="section-title">برنامه هفتگی و دوره‌های آفرینش</h2>
+        
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterClasses('all', event)">همه کلاس‌ها</button>
+            <button class="filter-btn" onclick="filterClasses('kids', event)">کودکان</button>
+            <button class="filter-btn" onclick="filterClasses('teens', event)">نوجوانان</button>
+            <button class="filter-btn" onclick="filterClasses('adults', event)">بزرگسالان (تخصصی)</button>
+        </div>
+
+        <div class="grid-container" id="classesGrid">
+            
+            <!-- کارت کودکان (املاً اصلاح و تراز شد) -->
+            <div class="modern-card class-card kids">
+                <span style="color: var(--primary); font-size: 13px; font-weight: bold; display: block; margin-bottom: 8px;">کودکان | کلاس گروهی </span>
+                <h3 style="margin: 10px 0; font-size: 20px; font-weight: 800;">دوره شاد مکالمه کودکان</h3>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px; line-height:1.6;">آموزش همزمان چهار مهارت با متد مولتی‌سنسوری بدون خستگی و پایش مداوم سوپروایزرها.</p>
+                <button class="btn btn-secondary" style="width:100%;" onclick="openClassModal('kids')">توضیحات بیشتر و مشخصات دوره</button>
+            </div>
+
+            <!-- کارت نوجوانان -->
+            <div class="modern-card class-card teens">
+                <span style="color: var(--primary); font-size: 13px; font-weight: bold; display: block; margin-bottom: 8px;">نوجوانان | فشرده عمومی</span>
+                <h3 style="margin: 10px 0; font-size: 20px; font-weight: 800;">ترمیک نوجوانان (Teens)</h3>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px; line-height:1.6;">تقویت مکالمه روان و گرامر کاربردی در قالب کارگروهی سنین ۱۰ تا ۱۶ سال.</p>
+                <button class="btn btn-secondary" style="width:100%;" onclick="openClassModal('teens')">توضیحات بیشتر و مشخصات دوره</button>
+            </div>
+
+            <!-- کارت بزرگسالان -->
+            <div class="modern-card class-card adults">
+                <span style="color: var(--primary); font-size: 13px; font-weight: bold; display: block; margin-bottom: 8px;">بزرگسالان | خصوصی فشرده</span>
+                <h3 style="margin: 10px 0; font-size: 20px; font-weight: 800;">مکالمه بزرگسالان و آیلتس</h3>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px; line-height:1.6;">دوره تخصصی آمادگی مکالمه روانی و تکنیک‌های نمره‌آوری آزمون مهاجرتی.</p>
+                <button class="btn btn-secondary" style="width:100%;" onclick="openClassModal('adults')">توضیحات بیشتر و مشخصات دوره</button>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="modal" id="classModal">
+        <div class="modal-content">
+            <h3 id="modalTitle" style="color: var(--primary); margin-bottom: 20px; text-align: center;">توضیحات بیشتر دوره</h3>
+            <div id="modalBody"></div>
+            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 25px;">
+                <a href="register.html" class="btn btn-primary">ثبت‌نام در این کلاس</a>
+                <button class="btn btn-secondary" onclick="closeClassModal()">بستن اطلاعات</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-bottom" style="border: none; padding: 0;">&copy; ۲۰۲۶ تمامی حقوق متعلق به آموزشگاه زبان آفرینش می‌باشد.</div>
+    </footer>
+
+    <script>
+        function filterClasses(category, e) {
+            const cards = document.querySelectorAll('.class-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if(e && e.target) { e.target.classList.add('active'); }
+
+            cards.forEach(card => {
+                if(category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function openClassModal(type) {
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            if(type === 'kids') {
+                title.innerText = "توضیحات بیشتر: کلاس گروهی ۳ تا ۷ سال";
+                body.innerHTML = `<ul class="modal-bullets"><li>• دو جلسه 90 دقیقه‌ای در هفته</li><li>• تدریس به روش Multi-sensory</li><li>• آموزش نوآورانه جذاب و علمی</li><li>• برگزاری کلاس‌های خصوصی و گروهی</li><li>• برگزاری کلاس‌های آنلاین و حضوری</li><li>• تقویت چهار مهارت اصلی زبان</li><li>• اساتید باتجربه در آموزش کودک</li><li>• پایش روند آموزشی توسط سوپروایزرها</li><li>• منابع آموزشی به‌روز و استاندارد</li></ul><p style="padding-right:20px; font-size:14px; color:var(--text-muted);">👨‍🏫 مدرس ارشد دوره: سرکار خانم پوراحمد</p>`;
+            } else if(type === 'teens') {
+                title.innerText = "توضیحات بیشتر: دوره نوجوانان";
+                body.innerHTML = `<ul class="modal-bullets"><li>• منابع آموزشی: Family & Friends / Big English</li><li>• تمرکز بر تقویت مهارت مکالمه و اعتماد به نفس صحبت در جمع</li><li>• آماده‌سازی برای آزمون‌های کمبریج نوجوانان</li><li>• پایش مداوم پیشرفت تحصیلی توسط سوپروایزر</li></ul><p style="padding-right:20px; font-size:14px; color:var(--text-muted);">👨‍🏫 مدرس ارشد دوره: سرکار خانم پوراحمد</p>`;
+            } else {
+                title.innerText = "توضیحات بیشتر: مکالمه بزرگسالان و آیلتس";
+                body.innerHTML = `<ul class="modal-bullets"><li>• منابع آموزشی: Evolve, American English File, Mindset</li><li>• دوره‌های فشرده تخصصی و نیمه‌خصوصی</li><li>• تمرکز بر تکنیک‌های آزمون‌های بین‌المللی و مصاحبه کاری</li><li>• برگزاری آزمون‌های شبیه‌ساز منظم (Mock Exam)</li></ul><p style="padding-right:20px; font-size:14px; color:var(--text-muted);">👨‍🏫 مدرس ارشد دوره: سرکار خانم پوراحمد</p>`;
+            }
+            document.getElementById('classModal').style.display = 'flex';
+        }
+        function closeClassModal() { document.getElementById('classModal').style.display = 'none'; }
+    </script>
+</body>
+</html>

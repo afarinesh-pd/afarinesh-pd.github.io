@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دپارتمان المپیادهای جهانی زبان | آموزشگاه زبان آفرینش</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* 👑 استایل هدر لوکس و دلباز نوار پرچم‌ها بالای صفحه */
+        .top-flag-bar {
+            background: #1a202c;
+            color: #f7fafc;
+            padding: 14px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary);
+        }
+        .flags-container {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .flags-container img {
+            width: 34px;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .flags-container img:hover {
+            transform: scale(1.2) translateY(-2px);
+        }
+
+        /* استایل اختصاصی بخش المپیادهای جهانی */
+        .olympiad-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            margin-bottom: 35px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary);
+            transition: var(--transition);
+        }
+        .olympiad-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+        .olympiad-badge {
+            background: #fff5f5;
+            color: var(--primary);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .olympiad-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+        }
+        .meta-box {
+            font-size: 14px;
+            color: #334155;
+            line-height: 1.6;
+        }
+        .olympiad-sub {
+            color: #1e293b;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .olympiad-text {
+            line-height: 1.9;
+            color: #475569;
+            font-size: 15px;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        .step-list {
+            margin: 15px 25px;
+            padding: 0;
+            line-height: 1.8;
+            color: #334155;
+        }
+        .step-list li {
+            margin-bottom: 10px;
+            list-style-type: square;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- هدر بالایی: پرچم‌های چندزبانه تعاملی -->
+    <div class="top-flag-bar">
+        <span>مرکز تخصصی آماده‌سازی المپیادهای بین‌المللی زبان انگلیسی (با همکاری اردوش)</span>
+        <div class="flags-container" style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+            <img src="https://flagcdn.com/w40/ir.png" alt="فارسی" title="فارسی (Persian)" onclick="changeLanguage('fa', 'rtl')">
+        <!-- انگلیسی (بریتانیا) -->
+            <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" onclick="changeLanguage('en', 'ltr')">
+        <!-- آلمانی -->
+            <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" title="Deutsch" onclick="changeLanguage('de', 'ltr')">
+        <!-- ترکی استانبولی -->
+            <img src="https://flagcdn.com/w40/tr.png" alt="Türkçe" title="Türkçe" onclick="changeLanguage('tr', 'ltr')">
+        <!-- فرانسوی -->
+            <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" onclick="changeLanguage('fr', 'ltr')">
+        <!-- چینی -->
+            <img src="https://flagcdn.com/w40/cn.png" alt="中文" title="آکادمی چینی (Chinese)" onclick="changeLanguage('zh', 'ltr')">
+        </div>
+    </div>
+
+    <nav class="main-navbar">
+        <a href="index.html" class="logo-area">
+            <img src="assets/images/logo.jpg" alt="لوگو ملل">
+            <span>آموزشگاه آفرینش</span>
+        </a>
+
+        <button class="hamburger-btn" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">خانه</a></li>
+            <li><a href="classes.html">کلاس‌های زبان</a></li>
+            <li><a href="exams.html">آزمون‌ها</a></li>
+            <li><a href="olympiad.html" class="active">المپیاد</a></li>
+            <li><a href="achievements.html">دستاوردها</a></li>
+            <li><a href="events.html">ایونت‌ها</a></li>
+            <li><a href="azmoon-intro.html" data-i18n="azmoon">آزمونک</a></li>
+            <li><a href="contact.html">مشاوره و تماس</a></li>
+        </ul>
+        <div class="nav-btns">
+            <a href="admin-login.html" class="btn btn-secondary">ورود به پنل شخصی</a>
+            <a href="register.html" class="btn btn-primary">ثبت‌نام آنلاین</a>
+        </div>
+    </nav>
+
+    <section class="section-padding bg-light-section">
+        <div class="section-title">
+            <h2>دپارتمان المپیادهای بین‌المللی و جهانی زبان آفرینش</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-top: 10px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6;">آکادمی زبان ملل با همکاری بسترهای رسمی هدایت استعدادهای بین‌المللی (موسسه اردوش)، بستری تخصصی برای آماده‌سازی، ثبت‌نام و اعزام زبان‌آموزان به بزرگترین مسابقات جهانی زبان انگلیسی فراهم آورده است.</p>
+        </div>
+
+        <div style="max-width: 1000px; margin: 0 auto; padding: 0 20px;">
+            
+            <!-- ۱. المپیاد جهانی KGL -->
+            <div class="olympiad-card" style="border-top-color: #e53e3e;">
+                <span class="olympiad-badge">KGL International English Olympiad</span>
+                <h3 style="font-size: 24px; color: var(--text-dark); margin: 0 0 15px 0; font-weight: 800;">المپیاد جهانی زبان انگلیسی KGL (کی‌جی‌ال)</h3>
+                
+                <p class="olympiad-text">
+                    المپیاد جهانی KGL یکی از معتبرترین و سریع‌الرشدترین رویدادهای رقابتی زبان انگلیسی در سراسر جهان است که هر ساله با شرکت بیش از ۷۰ کشور دنیا برگزار می‌شود. این المپیاد توسط بنیاد توسعه آزمون‌های بین‌المللی هدایت شده و در ایران از طریق بستر اردوش سازماندهی می‌شود. هدف KGL سنجش دقیق دانش زبانی، مهارت‌های کاربردی و افزایش انگیزه یادگیری در یک اتمسفر کاملاً رقابتی و جهانی است. مدال‌آوران این المپیاد از امتیازات ویژه‌ای در رزومه‌های علمی خود برخوردار می‌شوند.
+                </p>
+
+                <div class="olympiad-meta">
+                    <div class="meta-box">👥 <strong>رده سنی داوطلبان:</strong> ۶ تا ۱۸ سال (دانش‌آموزان سطوح A1 تا B2)</div>
+                    <div class="meta-box">🌍 <strong>محل برگزاری فینال جهانی:</strong> یکی از کشورهای اتحادیه اروپا (معمولاً یونان)</div>
+                    <div class="meta-box">📜 <strong>نوع مدرک:</strong> گواهینامه معتبر جهانی از بریتانیا و اتحادیه اروپا</div>
+                </div>
+
+                <div class="olympiad-sub">🎯 ساختار و مراحل مسابقات جهانی KGL:</div>
+                <ul class="step-list">
+                    <li><strong>مرحله اول (کشوری):</strong> به صورت هماهنگ در سراسر ایران برگزار شده و شامل سوالات تستی چهارگزینه‌ای در سطوح استاندارد CEFR است.</li>
+                    <li><strong>مرحله دوم (ملی):</strong> برگزیدگان مرحله اول در یک رقابت فشرده‌تر شرکت می‌کنند تا نفرات برتر و کاندیداهای اعزام بین‌المللی مشخص شوند.</li>
+                    <li><strong>مرحله سوم (فینال بزرگ جهانی):</strong> برترین‌های هر کشور با هزینه کامل بنیاد یا تسهیلات ویژه به اروپا اعزام شده و در یک رویداد چند روزه فرهنگی-علمی برای کسب مدال طلا، نقره و برنز جهانی رقابت می‌کنند.</li>
+                </ul>
+            </div>
+
+
+            <!-- ۲. المپیاد جهانی HIPPO -->
+            <div class="olympiad-card" style="border-top-color: #3182ce;">
+                <span class="olympiad-badge" style="background: #ebf8ff; color: #3182ce;">Hippo "English Without Borders"</span>
+                <h3 style="font-size: 24px; color: var(--text-dark); margin: 0 0 15px 0; font-weight: 800;">المپیاد جهانی زبان انگلیسی هیپو (HIPPO)</h3>
+                
+                <p class="olympiad-text">
+                    المپیاد جهانی هیپو (HIPPO) با شعار "انگلیسی بدون مرز" بزرگ‌ترین رقابت دانش‌آموزی زبان در دنیاست. این مسابقات مأموریت دارد تا جوانان و نوجوانان نقاط مختلف جهان را به وسیله زبان مشترک انگلیسی به یکدیگر نزدیک کند. این المپیاد تحت نظارت سازمان جهانی Hippo و با همکاری دانشگاه‌های معتبری مانند دانشگاه پیزا ایتالیا برگزار می‌شود. سطح سوالات فوق‌العاده استاندارد بوده و نه تنها دانش گرامر، بلکه هوش کلامی و درک مطلب پیشرفته را به چالش می‌کشد.
+                </p>
+
+                <div class="olympiad-meta">
+                    <div class="meta-box">⏱ <strong>نوع آزمون‌ها:</strong> ترکیبی (تستی، تشریحی و نگارش تخصصی)</div>
+                    <div class="meta-box">🇮🇹 <strong>محل برگزاری فینال جهانی:</strong> شهر رم یا لیدو دی یسولو (ایتالیا)</div>
+                    <div class="meta-box">🏅 <strong>جوایز جهانی:</strong> بورسیه‌های تحصیلی، تبلت، لپ‌تاپ و دوره‌های آموزشی در اروپا</div>
+                </div>
+
+                <div class="olympiad-sub">💎 مزیت شرکت در المپیاد Hippo چیست؟</div>
+                <p class="olympiad-text">
+                    تمام شرکت‌کنندگانی که به مرحله نیمه‌نهایی یا فینال می‌رسند، مدارک بین‌المللی رسمی از موسسه بین‌المللی ارزیابی زبان Gatehouse Awards بریتانیا دریافت می‌کنند. فینال این مسابقات در ایتالیا یک شانس بی‌نظیر برای تعامل با دانش‌آموزان نخبه بیش از ۵۰ کشور دنیاست.
+                </p>
+            </div>
+
+
+            <!-- ۳. مسابقات تخصصی و المپیاد بین‌المللی SIL -->
+            <div class="olympiad-card" style="border-top-color: #38a169;">
+                <span class="olympiad-badge" style="background: #e6fffa; color: #38a169;">SIL / International Language & Logic Challenges</span>
+                <h3 style="font-size: 24px; color: var(--text-dark); margin: 0 0 15px 0; font-weight: 800;">مسابقات و المپیاد بین‌المللی ساختار زبان و تفکر منطقی (SIL)</h3>
+                
+                <p class="olympiad-text">
+                    مسابقات بین‌المللی هوش زبانی و ساختارشناسی (مانند چالش‌های تخصصی SIL، مسابقات چندزبانه زون‌های بین‌المللی و المپیادهای مرتبط با سازمان‌های جهانی ریاضیات و زبان دپارتمان اردوش) تفاوتی بنیادین با آزمون‌های کلیشه‌ای دارند. در این چالش‌ها، هدف سنجش صرفاً حفظ بودن لغات نیست؛ بلکه توانایی رمزگشایی کلامی، تحلیل ساختارهای ناشناخته زبان، هوش منطقی-کلامی و تفکر انتقادی دانش‌آموز ارزیابی می‌شود.
+                </p>
+
+                <div class="olympiad-meta">
+                    <div class="meta-box">🧩 <strong>رویکرد آزمون:</strong> معماهای زبان‌شناختی و تحلیل ساختار مکانیکی زبان</div>
+                    <div class="meta-box">💡 <strong>پیش‌نیاز علمی:</strong> نیازمند هوش تحلیلی بالا و درک عمیق قواعد زبان است</div>
+                    <div class="meta-box">🏆 <strong>تایم لاین مسابقات:</strong> برگزاری سالانه طبق تقویم رسمی دپارتمان بین‌المللی اردوش</div>
+                </div>
+
+                <div class="olympiad-sub">📈 نقش آکادمی ملل در موفقیت شما:</div>
+                <p class="olympiad-text" style="margin-bottom: 0;">
+                    ما در آموزشگاه ملل با برگزاری **کمپ‌های تخصصی حل مسئله و تحلیل نمونه سوالات المپیادهای جهانی KGL، Hippo و مسابقات SIL**، تکنیک‌های مدیریت زمان و تفکر فرامعنایی را به دانش‌آموزان آموزش می‌دهیم تا با آمادگی ۱۰۰ درصدی در این رقابت‌های جهانی شرکت کنند و افتخارآفرین باشند.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-bottom" style="border: none; padding: 0;">&copy; ۲۰۲۶ تمامی حقوق مادی و معنوی متعلق به آموزشگاه زبان آفرینش می‌باشد.</div>
+    </footer>
+
+</body>
+</html>

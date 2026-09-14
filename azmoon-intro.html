@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آموزشگاه زبان های خارجی آفرینش | آزمونک تعیین سطح</title>
+    <!-- فراخوانی استایل اصلی پروژه -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        /* استایل اختصاصی کارت آزمونک */
+        .azmoon-card {
+            max-width: 750px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+        .alert-red {
+            color: #d32f2f;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            border: 2px dashed #d32f2f;
+            padding: 14px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+        .info-box {
+            background: #eef6ff;
+            border-right: 5px solid #0071e3;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .level-option {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .level-option:hover {
+            background: #f8f9fa;
+            border-color: #0071e3;
+        }
+        .level-option input {
+            margin-left: 12px;
+            transform: scale(1.2);
+        }
+        .btn-pay {
+            width: 100%;
+            background: #27ae60;
+            color: white;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.2s;
+        }
+        .btn-pay:hover {
+            background: #219150;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- هدر بالایی: پرچم‌های چندزبانه -->
+    <div class="top-flag-bar">
+        <span data-i18n="welcome">به آکادمی تخصصی زبان آفرینش خوش آمدید</span>
+        <div class="flags-container" style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+            <img src="https://flagcdn.com/w40/ir.png" alt="فارسی" title="فارسی (Persian)" onclick="changeLanguage('fa', 'rtl')">
+            <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" onclick="changeLanguage('en', 'ltr')">
+            <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" title="Deutsch" onclick="changeLanguage('de', 'ltr')">
+            <img src="https://flagcdn.com/w40/tr.png" alt="Türkçe" title="Türkçe" onclick="changeLanguage('tr', 'ltr')">
+            <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" onclick="changeLanguage('fr', 'ltr')">
+            <img src="https://flagcdn.com/w40/cn.png" alt="中文" title="آکادمی چینی (Chinese)" onclick="changeLanguage('zh', 'ltr')">
+        </div>
+    </div>
+
+    <!-- ناف‌بار اصلی شیشه‌ای (دقیقاً بر اساس چیدمان پروژه شما) -->
+    <nav class="main-navbar">
+        <a href="index.html" class="logo-area">
+            <img src="assets/images/logo.jpg" alt="لوگو ملل">
+            <span>آموزشگاه آفرینش</span>
+        </a>
+        <button class="hamburger-btn" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html" data-i18n="home">خانه</a></li>
+            <li><a href="classes.html" data-i18n="classes">کلاس‌های زبان</a></li>
+            <li><a href="exams.html" data-i18n="exams">آزمون‌ها</a></li>
+            <li><a href="olympiad.html" data-i18n="olympiad">المپیاد</a></li>
+            <li><a href="achievements.html" data-i18n="achievements">دستاوردها</a></li>
+            <li><a href="events.html" data-i18n="events">ایونت‌ها</a></li>
+            <li><a href="azmoon-intro.html" class="active" data-i18n="azmoon">آزمونک</a></li>
+            <li><a href="contact.html" data-i18n="contact">مشاوره و تماس</a></li>
+        </ul>
+        <div class="nav-btns">
+            <a href="admin-login.html" class="btn btn-secondary" data-i18n="loginBtn">ورود به پنل شخصی</a>
+            <a href="register.html" class="btn btn-primary" data-i18n="registerBtn">ثبت‌نام آنلاین</a>
+        </div>
+    </nav>
+
+    <!-- کارت آزمونک -->
+    <div class="azmoon-card">
+        <h2 style="text-align: center; color: #0071e3; margin-top: 0;">🎯 سامانه هوشمند آزمونک تعیین سطح زبان</h2>
+        
+        <div class="info-box">
+            <p style="margin-top:0;">والدین گرامی، این آزمون تخصصی برای ارزیابی دقیق سطح دانش انگلیسی فرزند شما طراحی شده است. آزمون شامل <strong>40 سوال تستی</strong> در 4 بخش (گرامر، ریدینگ، واژگان و املا) می‌باشد.</p>
+            <ul style="padding-right: 20px;">
+                <li><strong>مدت زمان آزمون:</strong> 40 دقیقه (بلافاصله پس از پرداخت)</li>
+                <li><strong>هزینه شرکت در آزمون:</strong> 200,000 تومان</li>
+            </ul>
+            <p style="color: #c0392b; font-weight: bold; margin-bottom:0;">⚠️ حتماً پیش از پرداخت مطمئن شوید فرزندتان 40 دقیقه وقت آزاد برای پاسخگویی دارد.</p>
+        </div>
+
+        <div class="alert-red">
+            🚨 این آزمون هر ماه آپدیت می‌شود
+        </div>
+
+        <h3 style="font-size: 16px; margin-bottom: 15px;">لطفاً سطحی که می‌خواهید امتحان دهید را مشخص کنید:</h3>
+        <form id="levelForm">
+            <label class="level-option"><input type="radio" name="level" value="Pre A1" checked> <span><strong>Pre A1:</strong> مبتدی پایه (شناخت الفبا، اعداد و کلمات بسیار ساده)</span></label>
+            <label class="level-option"><input type="radio" name="level" value="A1"> <span><strong>A1:</strong> مقدماتی (جملات بسیار ساده و مکالمات اولیه روزمره)</span></label>
+            <label class="level-option"><input type="radio" name="level" value="A2"> <span><strong>A2:</strong> مقدماتی پیشرفته (ارتباط در موقعیت‌های ساده و متداول)</span></label>
+            <label class="level-option"><input type="radio" name="level" value="B1"> <span><strong>B1:</strong> متوسط (درک نقاط اصلی گفتگوهای کاری، درسی و سفر)</span></label>
+            <label class="level-option"><input type="radio" name="level" value="B2"> <span><strong>B2:</strong> متوسط پیشرفته (ارتباط روان با افراد بومی و درک متون پیچیده)</span></label>
+            <label class="level-option"><input type="radio" name="level" value="C1"> <span><strong>C1:</strong> پیشرفته (تسلط بر مفاهیم پیچیده و بیان بی‌وقفه افکار)</span></label>
+            <label class="level-option"><input type="radio" name="level" value="C2"> <span><strong>C2:</strong> تسلط کامل (درک و بیان دقیق در حد زبان مادری)</span></label>
+
+            <button type="button" class="btn-pay" onclick="startPayment()">💳 پرداخت 200,000 تومان و شروع آنلاین آزمون</button>
+        </form>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+    <script>
+    function startPayment() {
+        const selectedLevel = document.querySelector('input[name="level"]:checked').value;
+        alert("درگاه پرداخت شبیه‌سازی شد.\nپرداخت 200,000 تومان موفقیت‌آمیز بود!");
+        window.location.href = `azmoon-test.html?level=${encodeURIComponent(selectedLevel)}`;
+    }
+    </script>
+</body>
+</html>

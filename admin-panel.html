@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل شخصی آموزشگاه آفرینش </title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .admin-container { padding: 40px 5%; }
+        .admin-header {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #1d1d1f; color: white; padding: 20px 30px;
+            border-radius: var(--radius, 12px); margin-bottom: 30px;
+        }
+        .table-wrapper {
+            background: white; padding: 25px; border-radius: var(--radius, 12px);
+            box-shadow: var(--shadow, 0 4px 15px rgba(0,0,0,0.05)); overflow-x: auto; margin-bottom: 40px;
+        }
+        table { width: 100%; border-collapse: collapse; text-align: right; }
+        th, td { padding: 14px 12px; border-bottom: 1px solid var(--border-color, #e2e8f0); font-size: 14px; }
+        th { background-color: #f8fafc; color: #1a202c; font-weight: 700; }
+        tr:hover { background-color: #f9f9fa; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); display: none;
+            justify-content: center; align-items: center; z-index: 1000; padding: 20px;
+        }
+        .modal-card {
+            background: white; width: 100%; max-width: 550px;
+            border-radius: 12px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 20px;
+        }
+        .close-btn { background: #ff3b30; color: white; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-confirm { background: #34c759; color: white; padding: 5px 10px; font-size: 12px; border-radius: 6px; border: none; cursor: pointer; margin-left: 5px; }
+    </style>
+</head>
+<body class="bg-light-section">
+
+    <!-- هدر بالایی: پرچم‌های چندزبانه تعاملی -->
+    <div class="top-flag-bar">
+        <span> پنل شخصی | آموزشگاه آفرینش</span>
+        <div class="flags-container" style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+            <img src="https://flagcdn.com/w40/ir.png" alt="فارسی" title="فارسی (Persian)" onclick="changeLanguage('fa', 'rtl')">
+        <!-- انگلیسی (بریتانیا) -->
+            <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" onclick="changeLanguage('en', 'ltr')">
+        <!-- آلمانی -->
+            <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" title="Deutsch" onclick="changeLanguage('de', 'ltr')">
+        <!-- ترکی استانبولی -->
+            <img src="https://flagcdn.com/w40/tr.png" alt="Türkçe" title="Türkçe" onclick="changeLanguage('tr', 'ltr')">
+        <!-- فرانسوی -->
+            <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" onclick="changeLanguage('fr', 'ltr')">
+        <!-- چینی -->
+            <img src="https://flagcdn.com/w40/cn.png" alt="中文" title="آکادمی چینی (Chinese)" onclick="changeLanguage('zh', 'ltr')">
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <!-- هدر بالای پنل شخصی -->
+        <div class="admin-header">
+            <div>
+                <h2 style="font-size: 22px;">پنل شخصی آفرینش</h2>
+                <p style="font-size: 13px; color: #aeaeaf; margin-top: 5px;">مدیر ارشد مجموعه: <span style="color: #e61c23; font-weight: bold;">سرکار خانم پریا پوراحمد</span></p>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <a href="index.html" class="btn" style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.2);">🏠 صفحه اصلی</a>
+                <a href="events.html" target="_blank" class="btn" style="background: #0071e3; color: white;">مدیریت ایونت‌ها 🚀</a>
+                <button id="logoutBtn" class="btn btn-primary" style="background: #ff3b30;">خروج از سیستم</button>
+            </div>
+        </div>
+
+        <!-- جدول ۱: لیست ثبت نامی‌های جدید -->
+        <div class="table-wrapper">
+            <h3 style="margin-bottom: 20px; font-weight: 800; color: #e61c23;">⏳ لیست ثبت‌نام‌های جدید (در انتظار بررسی و تأیید)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>نام و نام خانوادگی</th>
+                        <th>شماره تماس</th>
+                        <th>کد ملی</th>
+                        <th>دوره ثبت‌نامی</th>
+                        <th>شهریه</th>
+                        <th>تاریخ ثبت‌نام</th>
+                        <th>جزئیات کامل</th>
+                        <th>تأیید ثبت‌نام</th>
+                        <th>حذف</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTableBody"></tbody>
+            </table>
+        </div>
+        
+
+        <!-- بخش لیست افراد در انتظار تمدید ترم -->
+<div class="card" style="margin-top: 25px; border: 1px solid #f5c6cb; border-top: 4px solid #d9534f; background-color: #fff8f8; border-radius: 12px; padding: 20px;">
+    <h3 style="color: #d9534f; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; font-size: 18px;">
+        🔴 افراد در انتظار جهت تمدید ثبت‌نام
+    </h3>
+    <div style="overflow-x: auto;">
+        <table class="data-table" style="width: 100%; border-collapse: collapse; text-align: right;">
+            <thead>
+                <tr style="background-color: #f8d7da; color: #721c24;">
+                    <th style="padding: 10px;">ردیف</th>
+                    <th style="padding: 10px;">نام و نام خانوادگی</th>
+                    <th style="padding: 10px;">شماره تماس</th>
+                    <th style="padding: 10px;">دوره / رده</th>
+                    <th style="padding: 10px;">شهریه</th>
+                    <th style="padding: 10px;">تاریخ درخواست</th>
+                    <th style="padding: 10px;">عملیات</th>
+                </tr>
+            </thead>
+            <tbody id="renewalTableBody">
+                <!-- کدهای این بخش به صورت پویا توسط JS پر می‌شود -->
+            </tbody>
+        </table>
+    </div>
+</div>
+        <!-- جدول ۲: لیست افراد تایید شده -->
+        <!-- جدول ۲: لیست افراد تایید شده -->
+        <div class="table-wrapper" style="border-top: 4px solid #34c759;">
+            <h3 style="margin-bottom: 20px; font-weight: 800; color: #34c759;">✅ لیست زبان‌آموزان تأییدشده و فعال</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>نام و نام خانوادگی</th>
+                        <th>نام کاربری پنل</th>
+                        <th>رمز عبور</th>
+                        <th>دوره ثبت‌نامی</th>
+                        <th>شهریه</th>
+                        <th>تاریخ تأیید</th>
+                        <th>جزئیات پرونده</th>
+                        <th>تاریخچه ثبت‌نام</th>
+                        <th>افزودن نمره</th> <!-- ستون جدید -->
+                        <th>حذف</th>
+                    </tr>
+                </thead>
+                <tbody id="approvedTableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- جدول ۳: تعیین سطح -->
+        <div class="table-wrapper">
+            <h3 style="margin-bottom: 20px; font-weight: 800; color: #0071e3;">📋 نوبت‌های تعیین سطح درخواست‌شده</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>نام و نام خانوادگی</th>
+                        <th>شماره تماس</th>
+                        <th>کد ملی</th>
+                        <th>نوع تعیین سطح</th>
+                        <th>رده سنی</th>
+                        <th>تاریخ درخواست</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody id="placementTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- مودال نمایش پرونده -->
+    <div id="studentModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="color: #1a202c; font-size: 18px;">📄 جزئیات کامل پرونده زبان‌آموز</h3>
+                <button class="close-btn" onclick="closeModal()">✕ بستن</button>
+            </div>
+            <div id="modalBodyDetails"></div>
+        </div>
+    </div>
+
+    <!-- مودال اختصاصی ساخت پنل شخصی و تعیین نام‌کاربری/رمزعبور -->
+    <div id="createCredentialsModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="color: #1a202c; font-size: 18px;">🔑 ساخت پنل شخصی زبان‌آموز</h3>
+                <button class="close-btn" onclick="closeCredModal()">✕ بستن</button>
+            </div>
+            <form id="credForm">
+                <input type="hidden" id="targetStudentId">
+                <p style="font-size:13px; color:#718096; margin-bottom:15px;">برای زبان‌آموز <strong id="targetStudentName" style="color:#e61c23;"></strong> نام کاربری و رمز عبور جهت ورود به پنل شخصی تعیین کنید:</p>
+                <div style="margin-bottom: 12px;">
+                    <label style="font-size:13px; font-weight:bold;">نام کاربری پنل:</label>
+                    <input type="text" id="newStudentUsername" required style="width:100%; padding:8px; margin-top:5px; border-radius:6px; border:1px solid #ccc;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size:13px; font-weight:bold;">رمز عبور پنل:</label>
+                    <input type="text" id="newStudentPassword" required style="width:100%; padding:8px; margin-top:5px; border-radius:6px; border:1px solid #ccc;">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%; background:#34c759;">تأیید نهایی و ساخت پنل شخصی</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- مودال اختصاصی ثبت نمره آزمون کلاسی -->
+    <div id="addGradeModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="color: #1a202c; font-size: 18px;">📝 ثبت نمره آزمون کلاسی</h3>
+                <button class="close-btn" onclick="closeGradeModal()">✕ بستن</button>
+            </div>
+            <form id="gradeForm">
+                <input type="hidden" id="gradeStudentId">
+                <p style="font-size:13px; color:#718096; margin-bottom:15px;">ثبت نمره برای زبان‌آموز: <strong id="gradeStudentName" style="color:#0071e3;"></strong></p>
+                <div style="margin-bottom: 12px;">
+                    <label style="font-size:13px; font-weight:bold;">نام آزمون:</label>
+                    <input type="text" id="examName" required placeholder="مثلاً: آزمون فاینال Midterm 1" style="width:100%; padding:8px; margin-top:5px; border-radius:6px; border:1px solid #ccc;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size:13px; font-weight:bold;">نمره دانش‌آموز:</label>
+                    <input type="text" id="examScore" required placeholder="مثلاً: ۱۹.۵ از ۲۰ یا ۹۵٪" style="width:100%; padding:8px; margin-top:5px; border-radius:6px; border:1px solid #ccc;">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%; background:#0071e3;">تأیید و ارسال نمره</button>
+            </form>
+        </div>
+    </div>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

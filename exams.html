@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دانشنامه و راهنمای جامع آزمون‌های بین‌المللی | آموزشگاه زبان آفرینش</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* 👑 استایل جدید و دلباز نوار پرچم‌ها بالای صفحه */
+        .top-flag-bar {
+            background: #1a202c;
+            color: #f7fafc;
+            padding: 14px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary);
+        }
+        .flags-container {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .flags-container img {
+            width: 34px;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .flags-container img:hover {
+            transform: scale(1.2) translateY(-2px);
+        }
+
+        /* استایل اختصاصی برای بخش توضیحات مفصل آزمون‌ها */
+        .exam-detailed-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            border-right: 5px solid var(--primary);
+        }
+        .exam-badge {
+            background: #fff3f3;
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .exam-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .meta-item {
+            font-size: 14px;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        .exam-section-title {
+            color: #2d3748;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .exam-paragraphs {
+            line-height: 1.9;
+            color: #4a5568;
+            font-size: 15px;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- نوار پرچم نوسازی شده -->
+    <div class="top-flag-bar">
+        <span>مرجع تخصصی برگزاری و آمادگی آزمون‌های بین‌المللی - آموزشگاه آفرینش</span>
+        <div class="flags-container" style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+            <img src="https://flagcdn.com/w40/ir.png" alt="فارسی" title="فارسی (Persian)" onclick="changeLanguage('fa', 'rtl')">
+        <!-- انگلیسی (بریتانیا) -->
+            <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" onclick="changeLanguage('en', 'ltr')">
+        <!-- آلمانی -->
+            <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" title="Deutsch" onclick="changeLanguage('de', 'ltr')">
+        <!-- ترکی استانبولی -->
+            <img src="https://flagcdn.com/w40/tr.png" alt="Türkçe" title="Türkçe" onclick="changeLanguage('tr', 'ltr')">
+        <!-- فرانسوی -->
+            <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" onclick="changeLanguage('fr', 'ltr')">
+        <!-- چینی -->
+            <img src="https://flagcdn.com/w40/cn.png" alt="中文" title="آکادمی چینی (Chinese)" onclick="changeLanguage('zh', 'ltr')">
+        </div>
+    </div>
+
+    <nav class="main-navbar">
+        <a href="index.html" class="logo-area">
+            <img src="assets/images/logo.jpg" alt="لوگو ملل">
+            <span>آموزشگاه آفرینش</span>
+        </a>
+        <button class="hamburger-btn" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">خانه</a></li>
+            <li><a href="classes.html">کلاس‌های زبان</a></li>
+            <li><a href="exams.html" class="active">آزمون‌ها</a></li>
+            <li><a href="olympiad.html">المپیاد</a></li>
+            <li><a href="achievements.html">دستاوردها</a></li>
+            <li><a href="events.html">ایونت‌ها</a></li>
+            <li><a href="azmoon-intro.html" data-i18n="azmoon">آزمونک</a></li>
+            <li><a href="contact.html">مشاوره و تماس</a></li>
+        </ul>
+        <div class="nav-btns">
+            <a href="admin-login.html" class="btn btn-secondary">ورود به پنل شخصی</a>
+            <a href="register.html" class="btn btn-primary">ثبت‌نام آنلاین</a>
+        </div>
+    </nav>
+
+    <section class="section-padding bg-light-section">
+        <div class="section-title">
+            <h2>دپارتمان و دانشنامه آزمون‌های تخصصی آفرینش</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-top: 10px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.6;">اگر قصد مهاجرت، ادامه تحصیل در مقطع دکتری یا تدریس حرفه‌ای زبان را دارید، شناخت ساختار آزمون‌ها اولین گام موفقیت شماست. در این بخش جزئیات دقیق هر آزمون را بررسی کرده‌ایم.</p>
+        </div>
+
+        <div style="max-width: 1000px; margin: 0 auto; padding: 0 20px;">
+            
+            <!-- ۱. راهنمای جامع آزمون MSRT -->
+            <div class="exam-detailed-card">
+                <span class="exam-badge">آزمون‌های ملی تحصیلات تکمیلی</span>
+                <h3 style="font-size: 24px; color: var(--text-dark); margin: 0 0 15px 0; font-weight: 800;">آزمون MSRT چیست؟ + منابع آزمون ام اس آر تی + شرح آزمون MCHE</h3>
+                
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1000&auto=format&fit=crop" alt="MSRT Exam" style="width: 100%; max-height: 350px; object-fit: cover; border-radius: var(--radius); margin-bottom: 20px;">
+                
+                <p class="exam-paragraphs">
+                    آزمون MSRT (Ministry of Science, Research and Technology) یک آزمون زبان انگلیسی است که توسط "سازمان امور دانشجویان" وابسته به وزارت علوم، تحقیقات و فناوری برگزار می‌شود. این آزمون به منظور سنجش مهارت‌های زبان انگلیسی دانشجویان و داوطلبان مقاطع تحصیلات تکمیلی و دکتری داخل کشور طراحی شده است. MSRT حدوداً ۱۰ بار در سال و در اکثر شهرهای بزرگ ایران برگزار می‌شود. از این آزمون، به عنوان آزمون تافل کوچک نیز یاد می‌شود و منابع آن با منابع آزمون Paper-based TOEFL یکسان است. این مدرک برای تمامی دانشگاه‌های زیر نظر وزارت علوم، وزارت بهداشت و دانشگاه آزاد دارای اعتبار رسمی است.
+                </p>
+
+                <div class="exam-meta-grid">
+                    <div class="meta-item">⏱ <strong>مدت زمان آزمون:</strong> ۱۱۰ دقیقه</div>
+                    <div class="meta-item">📝 <strong>تعداد سوالات:</strong> ۱۰۰ سوال چهارگزینه‌ای</div>
+                    <div class="meta-item">🎯 <strong>نمره قبولی معمول:</strong> ۵۰ به بالا (از ۱۰۰)</div>
+                    <div class="meta-item">❌ <strong>نمره منفی:</strong> ندارد</div>
+                </div>
+
+                <div class="exam-section-title">📊 ساختار و بخش‌های آزمون MSRT:</div>
+                <p class="exam-paragraphs">
+                    این آزمون از سه بخش اصلی تشکیل شده است: ۱. <strong>شنیداری (Listening Comprehension):</strong> شامل ۳۰ سوال است که توانایی درک مکالمات روزمره و آکادمیک را می‌سنجد. ۲. <strong>ساختار و گرامر (Structure and Written Expression):</strong> شامل ۳۰ سوال گرامری تخصصی است. ۳. <strong>درک مطلب (Reading Comprehension):</strong> شامل ۴۰ سوال بر اساس متون علمی و دانشگاهی است.
+                </p>
+
+                <div class="exam-section-title">📚 منابع اصلی آزمون:</div>
+                <p class="exam-paragraphs">
+                    کتاب‌های تافل بارونز (Barron's TOEFL)، کتاب گرامر بتی آذر (Betty Azar)، ۵۰۴ واژه کاملاً ضروری و کتاب کلمات ضروری تافل (Essential Words for the TOEFL) از منابع کلیدی هستند که در دوره‌های فشرده آکادمی ملل با تکنیک‌های تست‌زنی سریع آموزش داده می‌شوند.
+                </p>
+            </div>
+
+
+            <!-- ۲. راهنمای جامع آزمون IELTS -->
+            <div class="exam-detailed-card" style="border-right-color: #3182ce;">
+                <span class="exam-badge" style="background: #ebf8ff; color: #3182ce;">آزمون‌های بین‌المللی مهاجرت</span>
+                <h3 style="font-size: 24px; color: var(--text-dark); margin: 0 0 15px 0; font-weight: 800;">آزمون IELTS (نظام بین‌المللی ارزشیابی زبان انگلیسی)</h3>
+                
+                <p class="exam-paragraphs">
+                    آزمون آیلتس معتبرترین آزمون بین‌المللی زبان در سراسر جهان است که جهت مهاجرت‌های کاری، تحصیلی و اقامتی به کشورهای انگلیسی‌زبان (کانادا، استرالیا، بریتانیا و آمریکا) الزامی است. این آزمون به دو صورت <strong>Academic</strong> (برای متقاضیان دانشگاه) و <strong>General Training</strong> (برای متقاضیان شغلی و اقامتی) برگزار می‌شود و هر چهار مهارت اصلی را به طور دقیق ارزیابی می‌کند.
+                </p>
+
+                <div class="exam-meta-grid">
+                    <div class="meta-item">⏱ <strong>مدت زمان آزمون:</strong> حدود ۲ ساعت و ۴۵ دقیقه</div>
+                    <div class="meta-item">📈 <strong dir="ltr">باند نمره‌دهی:</strong> از ۰ تا ۹ (نمره نیم هم دارد)</div>
+                    <div class="meta-item">📅 <strong>اعتبار مدرک:</strong> ۲ سال از زمان صدور کارنامه</div>
+                    <div class="meta-item">💻 <strong>شیوه برگزاری:</strong> کتبی (Paper) یا کامپیوتری (CD)</div>
+                </div>
+
+                <div class="exam-section-title">🔍 بخش‌های چهارگانه آیلتس:</div>
+                <p class="exam-paragraphs">
+                    ۱. **شنیداری (Listening):** ۴۰ سوال در ۴ بخش (۳۰ دقیقه). ۲. **خواندن (Reading):** ۳ متن بلند با ۴۰ سوال تفهیمی (۶۰ دقیقه). ۳. **نگارش (Writing):** دو تسک مجزا شامل تحلیل نمودار/نامه و یک مقاله استدلالی (۶۰ دقیقه). ۴. **گفتاری (Speaking):** مصاحبه حضوری یا آنلاین با ممتحن نیتیو شامل ۳ بخش تخصصی (۱۱ تا ۱۴ دقیقه). در آکادمی ملل، آزمون‌های آزمایشی منظم (Mock) همراه با تصحیح دقیق بر اساس معیارهای کمبریج برگزار می‌شود.
+                </p>
+            </div>
+
+
+            <!-- ۳. راهنمای جامع آزمون TOEFL iBT -->
+            <div class="exam-detailed-card" style="border-right-color: #38a169;">
+                <span class="exam-badge" style="background: #e6fffa; color: #38a169;">آزمون‌های آکادمیک جهانی</span>
+                <h3 style="font-size: 24px; color: var(--text-dark); margin: 0 0 15px 0; font-weight: 800;">آزمون TOEFL iBT (تافل اینترنتی)</h3>
+                
+                <p class="exam-paragraphs">
+                    تافل آزمونی کاملاً آکادمیک است که توسط موسسه آمریکایی ETS برگزار می‌شود. بر خلاف آیلتس، این آزمون کاملاً به صورت اینترنتی و با سیستم کامپیوتری و هدست اجرا می‌شود. تافل انتخاب اول کسانی است که تمایل به دریافت پذیرش (Apply) و بورسیه از دانشگاه‌های برتر ایالات متحده آمریکا و کانادا را دارند. ساختار جدید تافل بسیار فشرده‌تر و بهینه‌تر از سال‌های گذشته شده است.
+                </p>
+
+                <div class="exam-meta-grid">
+                    <div class="meta-item">⏱ <strong>مدت زمان آزمون جدید:</strong> کمتر از ۲ ساعت</div>
+                    <div class="meta-item">💯 <strong>سقف نمرات:</strong> ۱۲۰ امتیاز (هر مهارت ۳۰ امتیاز)</div>
+                    <div class="meta-item">🎙 <strong>بخش گفتاری:</strong> ضبط صدا از طریق میکروفون</div>
+                    <div class="meta-item">💻 <strong>نحوه تصحیح:</strong> تلفیق هوش مصنوعی و تصحیح انسانی</div>
+                </div>
+
+                <div class="exam-section-title">🎯 ویژگی متمایز دوره‌های تافل ملل:</div>
+                <p class="exam-paragraphs">
+                    از آنجا که در آزمون تافل مهارت‌ها به صورت ترکیبی (Integrated) سنجیده می‌شوند (مثلاً باید متنی را بخوانید، به فایلی گوش دهید و سپس درباره آن بنویسید یا صحبت کنید)، ما در آکادمی ملل نرم‌افزارهای شبیه‌ساز اصلی آزمون را در اختیار زبان‌آموزان قرار می‌دهیم تا استرس کار با کامپیوتر و مدیریت زمان در آزمون واقعی کاملاً از بین برود.
+                </p>
+            </div>
+
+
+            <!-- ۴. راهنمای دوره و آزمون خروجی TTC -->
+            <div class="exam-detailed-card" style="border-right-color: #805ad5; margin-bottom: 0;">
+                <span class="exam-badge" style="background: #faf5ff; color: #805ad5;">دپارتمان تربیت مدرس حرفه‌ای</span>
+                <h3 style="font-size: 24px; color: var(--text-dark); margin: 0 0 15px 0; font-weight: 800;">دوره و آزمون بین‌المللی TTC (Teacher Training Course)</h3>
+                
+                <p class="exam-paragraphs">
+                    دوره TTC یک آزمون تئوری نیست، بلکه یک زنجیره کارگاهی و عملی برای کسانی است که سطح زبان بالایی دارند و مایلند به عنوان مدرس زبان انگلیسی وارد بازار کار پردرآمد شوند. در این دوره، اصول علمی تدریس (Methodology)، نحوه مدیریت کلاس (Class Management)، روش‌های خلاقانه تدریس گرامر و واژگان و متدهای نوین تدریس به کودکان و بزرگسالان آموزش داده می‌شود.
+                </p>
+
+                <div class="exam-meta-grid">
+                    <div class="meta-item">📋 <strong>آزمون پایانی:</strong> دمو عملی (Demo) در حضور اساتید ارشد</div>
+                    <div class="meta-item">📜 <strong>مدرک اعطایی:</strong> گواهینامه معتبر تدریس با کد رهگیری</div>
+                    <div class="meta-item">💼 <strong>موقعیت شغلی:</strong> جذب نفرات برتر در شعب آکادمی ملل</div>
+                </div>
+
+                <p class="exam-paragraphs" style="margin-bottom: 0;">
+                    شرکت‌کنندگان در پایان دوره باید یک کلاس واقعی را شبیه‌سازی کرده و متد دریافتی را به صورت زنده تدریس کنند. ارزیابی نهایی بر اساس استانداردهای بین‌المللی CELTA صورت می‌گیرد تا صلاحیت تدریس شما به طور کامل تایید شود.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-bottom" style="border: none; padding: 0;">&copy; ۲۰۲۶ تمامی حقوق مادی و معنوی متعلق به آموزشگاه زبان آفرینش می‌باشد.</div>
+    </footer>
+
+</body>
+</html>

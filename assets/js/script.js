@@ -1,0 +1,837 @@
+document.addEventListener("DOMContentLoaded", function () {
+    
+    const hamburgerBtn = document.querySelector(".hamburger-btn");
+    const navLinks = document.querySelector(".nav-links");
+
+    if (hamburgerBtn && navLinks) {
+        hamburgerBtn.addEventListener("click", function () {
+            navLinks.classList.toggle("active");
+            
+            // انیمیشن ساده دکمه همبرگری
+            this.classList.toggle("open");
+        });
+
+        // بستن منو پس از کلیک روی هر لینک
+        document.querySelectorAll(".nav-links a").forEach(link => {
+            link.addEventListener("click", () => {
+                navLinks.classList.remove("active");
+            });
+        });
+    }
+    // ۱. فرآیند ثبت‌نام آنلاین (با پشتیبانی کامل از پرونده ۱۰ فیلدی)
+    const registerForm = document.getElementById("melalRegisterForm");
+    if (registerForm) {
+        registerForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const firstName = document.getElementById("firstName").value.trim();
+            const lastName = document.getElementById("lastName").value.trim();
+            const fatherName = document.getElementById("fatherName").value.trim();
+            const nationalId = document.getElementById("nationalId").value.trim();
+            const birthDate = document.getElementById("birthDate").value.trim();
+            const education = document.getElementById("education").value.trim();
+            const schoolName = document.getElementById("schoolName").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const address = document.getElementById("address").value.trim();
+            const ageCategory = document.getElementById("ageCategory").value;
+
+            let amount = "";
+            let categoryName = "";
+            if (ageCategory === "kids") {
+                amount = "۱,۴۸۰,۰۰۰ تومان";
+                categoryName = "کودکان (Kids)";
+            } else if (ageCategory === "teens") {
+                amount = "۱,۵۸۰,۰۰۰ تومان";
+                categoryName = "نوجوانان (Teens)";
+            } else if (ageCategory === "adults") {
+                amount = "۱,۶۸۰,۰۰۰ تومان";
+                categoryName = "بزرگسالان (Adults)";
+            }
+
+            const newStudent = {
+                id: Date.now(),
+                name: firstName + " " + lastName,
+                firstName: firstName,
+                lastName: lastName,
+                fatherName: fatherName,
+                nationalId: nationalId,
+                birthDate: birthDate,
+                education: education,
+                schoolName: schoolName || "ثبت نشده",
+                phone: phone,
+                address: address,
+                category: categoryName,
+                fee: amount,
+                date: new Date().toLocaleDateString('fa-IR')
+            };
+
+            let studentList = JSON.parse(localStorage.getItem("melal_students")) || [];
+            studentList.push(newStudent);
+            localStorage.setItem("melal_students", JSON.stringify(studentList));
+
+            alert(`🎉 ثبت‌نام با موفقیت انجام شد!\nپرونده آموزشی ${firstName} ${lastName} جهت بررسی و تأیید نهایی به پنل مدیریت ارسال گردید.`);
+            registerForm.reset();
+            window.location.href = "index.html";
+        });
+    }
+
+    // ۲. ثبت درخواست تعیین سطح (هماهنگ با فرم جدید و قدیم)
+    const placementForm = document.getElementById("placementRequestForm") || document.getElementById("placementBookingForm");
+    if (placementForm) {
+        placementForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const pName = (document.getElementById("plName") || document.getElementById("pName"))?.value.trim();
+            const pPhone = (document.getElementById("plPhone") || document.getElementById("pPhone"))?.value.trim();
+            const pNationalCode = document.getElementById("plNationalCode")?.value.trim() || "ثبت نشده";
+            
+            // دریافت نوع تعیین سطح
+            let pType = typeof selectedPlacementType !== "undefined" ? selectedPlacementType : "تلفنی";
+            const pTypeEl = document.getElementById("pType");
+            if (pTypeEl) {
+                pType = pTypeEl.value === "phone" ? "تلفنی (۵ الی ۷ دقیقه)" : "حضوری (۵ الی ۷ دقیقه)";
+            }
+
+            // دریافت رده سنی
+            let pAgeGroupText = "";
+            const ageGroupEl = document.getElementById("plAgeGroup") || document.getElementById("pAgeGroup");
+            if (ageGroupEl) {
+                pAgeGroupText = ageGroupEl.options[ageGroupEl.selectedIndex]?.text || ageGroupEl.value;
+            }
+            const newPlacementRequest = {
+                id: Date.now(),
+                name: pName,
+                phone: pPhone,
+                nationalCode: pNationalCode,
+                type: pType,
+                ageGroup: pAgeGroupText,
+                date: new Date().toLocaleDateString('fa-IR')
+            };
+
+            let placementList = JSON.parse(localStorage.getItem("melal_placements")) || [];
+            placementList.push(newPlacementRequest);
+            localStorage.setItem("melal_placements", JSON.stringify(placementList));
+
+            alert(`✅ درخواست تعیین سطح با موفقیت ثبت شد!\nکارشناسان آموزشگاه آفرینش به‌زودی جهت هماهنگی زمان با شما تماس خواهند گرفت.`);
+            placementForm.reset();
+            window.location.href = "index.html";
+        });
+    }
+
+    // ۳. سیستم ورود (مدیریت یا زبان‌آموز)
+    const loginForm = document.getElementById("adminLoginForm");
+    if (loginForm) {
+        loginForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const usernameInput = document.getElementById("username").value.trim();
+            const passwordInput = document.getElementById("password").value.trim();
+
+            // ورود مدیر
+            if (usernameInput === "admin123" && passwordInput === "paria405") {
+                sessionStorage.setItem("admin_logged_in", "true");
+                window.location.href = "admin-panel.html";
+                return;
+            }
+
+            // بررسی ورود زبان‌آموزان به پنل شخصی
+            const approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
+            const foundUser = approved.find(s => s.username === usernameInput && s.password === passwordInput);
+
+            if (foundUser) {
+                sessionStorage.setItem("user_logged_in", "true");
+                sessionStorage.setItem("current_user_id", foundUser.id);
+                window.location.href = "user-panel.html";
+            } else {
+                alert("❌ نام کاربری یا رمز عبور اشتباه است!");
+            }
+        });
+    }
+
+    // ۴. لود داده‌ها در پنل مدیریت
+    const studentTableBody = document.getElementById("studentTableBody");
+    const approvedTableBody = document.getElementById("approvedTableBody");
+    const placementTableBody = document.getElementById("placementTableBody");
+
+    if (studentTableBody || approvedTableBody || placementTableBody) {
+        if (sessionStorage.getItem("admin_logged_in") !== "true") {
+            window.location.href = "admin-login.html";
+            return;
+        }
+
+        function loadStudents() {
+            if (!studentTableBody) return;
+            const students = JSON.parse(localStorage.getItem("melal_students")) || [];
+            studentTableBody.innerHTML = "";
+
+            if (students.length === 0) {
+                studentTableBody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding: 20px; color: #86868b;">هیچ ثبت‌نام جدیدی در انتظار بررسی وجود ندارد.</td></tr>`;
+                return;
+            }
+
+            students.forEach((student, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td style="font-weight:bold;">${student.name}</td>
+                    <td>${student.phone}</td>
+                    <td>${student.nationalId}</td>
+                    <td>${student.category}</td>
+                    <td style="color:#e61c23; font-weight:bold;">${student.fee}</td>
+                    <td>${student.date}</td>
+                    <td>
+                        <button class="btn" style="padding: 5px 10px; font-size:12px; background:#0071e3; color:white; border-radius:6px; cursor:pointer;" onclick="showStudentDetails(${student.id}, 'pending')">📋 پرونده</button></td>
+                    <td>
+                        <button class="btn-confirm" style="cursor:pointer;" onclick="openCredModal(${student.id}, '${student.name}')">✅ تأیید و ساخت پنل</button>
+                    </td>
+                    <td>
+                        <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px; cursor:pointer;" onclick="deleteStudent(${student.id}, 'pending')">حذف</button>
+                    </td>
+                `;
+                studentTableBody.appendChild(row);
+            });
+        }
+
+        function loadApprovedStudents() {
+            if (!approvedTableBody) return;
+            const approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
+            approvedTableBody.innerHTML = "";
+            if (approved.length === 0) {
+                approvedTableBody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding: 20px; color: #86868b;">هنوز هیچ زبان‌آموزی تأیید نهایی نشده است.</td></tr>`;
+                return;
+            }
+
+    approved.forEach((student, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td style="font-weight:bold; color:#27ae60;">${student.name}</td>
+            <td style="font-weight:bold;">${student.username || '-'}</td>
+            <td><code>${student.password || '-'}</code></td>
+            <td>${student.category}</td>
+            <td style="color:#27ae60; font-weight:bold;">${student.fee}</td>
+            <td>${student.approvedDate || student.date}</td>
+            <td>
+                <button class="btn" style="padding: 5px 10px; font-size:12px; background:#0071e3; color:white; border-radius:6px;" onclick="showStudentDetails(${student.id}, 'approved')">📋 پرونده</button>
+            </td>
+            <td>
+            <button onclick="showStudentHistory(${student.id})" class="btn" style="background:#6c5ce7; color:white; padding:5px 10px; font-size:12px; border-radius:6px; border:none; cursor:pointer;">📜 تاریخچه ثبت‌نام</button>
+            </td>
+            <td>
+                <button class="btn" style="padding: 5px 10px; font-size:12px; background:#27ae60; color:white; border-radius:6px;" onclick="openGradeModal(${student.id}, '${student.name}')">➕ افزودن نمره</button>
+            </td>
+            <td>
+                <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px;" onclick="deleteStudent(${student.id}, 'approved')">حذف</button>
+            </td>
+        `;
+        approvedTableBody.appendChild(row);
+    });
+}
+
+        // باز کردن مودال ساخت نام‌کاربری
+        window.openCredModal = function(id, name) {
+            document.getElementById("targetStudentId").value = id;
+            document.getElementById("targetStudentName").innerText = name;
+            let students = JSON.parse(localStorage.getItem("melal_students")) || [];
+            let st = students.find(s => s.id === id);
+            if(st) {
+                document.getElementById("newStudentUsername").value = st.phone || "";
+                document.getElementById("newStudentPassword").value = st.nationalId || "123456";
+            }
+            document.getElementById("createCredentialsModal").style.display = "flex";
+        };
+
+        window.closeCredModal = function() {
+            document.getElementById("createCredentialsModal").style.display = "none";
+        };
+
+        // فرم تایید نهایی و ساخت پنل
+        const credForm = document.getElementById("credForm");
+        if(credForm) {
+            credForm.addEventListener("submit", function(e) {
+                e.preventDefault();
+                const id = parseInt(document.getElementById("targetStudentId").value);
+                const uName = document.getElementById("newStudentUsername").value.trim();
+                const pWord = document.getElementById("newStudentPassword").value.trim();
+
+                let students = JSON.parse(localStorage.getItem("melal_students")) || [];
+                let approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
+                const studentToApprove = students.find(s => s.id === id);
+                if (studentToApprove) {
+                    studentToApprove.username = uName;
+                    studentToApprove.password = pWord;
+                    studentToApprove.approvedDate = new Date().toLocaleDateString('fa-IR');
+                    
+                    approved.push(studentToApprove);
+                    students = students.filter(s => s.id !== id);
+
+                    localStorage.setItem("melal_students", JSON.stringify(students));
+                    localStorage.setItem("melal_approved_students", JSON.stringify(approved));
+
+                    alert(`✅ ثبت‌نام تایید و پنل شخصی زبان‌آموز ساخته شد!\nنام کاربری: ${uName}\nرمز عبور: ${pWord}`);
+                    closeCredModal();
+                    loadStudents();
+                    loadApprovedStudents();
+                }
+            });
+        }
+
+        // باز و بسته کردن مودال ثبت نمره
+window.openGradeModal = function(id, name) {
+    document.getElementById("gradeStudentId").value = id;
+    document.getElementById("gradeStudentName").innerText = name;
+    document.getElementById("examName").value = "";
+    document.getElementById("examScore").value = "";
+    document.getElementById("addGradeModal").style.display = "flex";
+};
+
+window.closeGradeModal = function() {
+    document.getElementById("addGradeModal").style.display = "none";
+};
+
+// ثبت نمره و ذخیره در LocalStorage
+const gradeForm = document.getElementById("gradeForm");
+if (gradeForm) {
+    gradeForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const id = parseInt(document.getElementById("gradeStudentId").value);
+        const examName = document.getElementById("examName").value.trim();
+        const examScore = document.getElementById("examScore").value.trim();
+
+        let approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
+        let student = approved.find(s => String(s.id) === String(id));
+
+        if (student) {
+            if (!student.grades) {
+                student.grades = [];
+            }
+
+            student.grades.push({
+                id: Date.now(),
+                examName: examName,
+                score: examScore,
+                date: new Date().toLocaleDateString('fa-IR')
+            });
+
+            localStorage.setItem("melal_approved_students", JSON.stringify(approved));
+            alert(`✅ نمره آزمون با موفقیت برای ${student.name} ثبت و ارسال شد.`);
+            closeGradeModal();
+        }
+    });
+}
+
+        window.showStudentDetails = function(id, type) {
+            const key = (type === 'approved') ? "melal_approved_students" : "melal_students";
+            const students = JSON.parse(localStorage.getItem(key)) || [];
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+
+            const modalBody = document.getElementById("modalBodyDetails");
+            if (modalBody) {
+                modalBody.innerHTML = `
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; text-align:right; font-size:14px; line-height:1.8;">
+                        <div><strong>👤 نام و نام خانوادگی:</strong> ${student.name}</div>
+                        <div><strong>👨‍👦 نام پدر:</strong> ${student.fatherName || 'ثبت نشده'}</div>
+                        <div><strong>🆔 کد ملی:</strong> ${student.nationalId}</div>
+                        <div><strong>🎂 تاریخ تولد:</strong> ${student.birthDate || 'ثبت نشده'}</div>
+                        <div><strong>📞 شماره تماس:</strong> ${student.phone}</div>
+                        <div><strong>🎓 میزان تحصیلات:</strong> ${student.education || 'ثبت نشده'}</div>
+                        <div><strong>🏫 نام مدرسه / محل تحصیل:</strong> ${student.schoolName || 'ثبت نشده'}</div>
+                        <div><strong>📚 دوره ثبت‌نامی:</strong> ${student.category}</div>
+                        <div><strong>💳 شهریه پرداختی:</strong> ${student.fee}</div>
+                        <div><strong>📅 تاریخ ثبت‌نام:</strong> ${student.date}</div>
+                        <div style="grid-column: 1 / -1; margin-top:10px; background:#f5f5f7; padding:10px; border-radius:8px;">
+                            <strong>🏠 آدرس کامل منزل:</strong><br>${student.address || 'ثبت نشده'}
+                        </div>
+                    </div>
+                `;
+                document.getElementById("studentModal").style.display = "flex";
+            }
+        };
+
+        window.closeModal = function() {
+            const modal = document.getElementById("studentModal");
+            if (modal) modal.style.display = "none";
+        };
+
+        function loadPlacements() {
+            if (!placementTableBody) return;
+            const placements = JSON.parse(localStorage.getItem("melal_placements")) || [];
+            placementTableBody.innerHTML = "";
+
+            if (placements.length === 0) {
+                placementTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 20px; color: #86868b;">هیچ درخواست تعیین سطحی ثبت نشده است.</td></tr>`;
+                return;
+            }
+
+            placements.forEach((item, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td style="font-weight:bold;">${item.name}</td>
+                    <td>${item.phone}</td>
+                    <td>${item.nationalCode || 'ثبت نشده'}</td>
+                    <td style="color:#0071e3; font-weight:bold;">${item.type}</td>
+                    <td>${item.ageGroup}</td>
+                    <td>${item.date}</td>
+                    <td>
+                        <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px; cursor:pointer;" onclick="deletePlacement(${item.id})">حذف</button>
+                    </td>
+                `;
+                placementTableBody.appendChild(row);
+            });
+        }
+
+        window.deleteStudent = function (id, type) {
+            if (confirm("آیا از حذف این پرونده مطمئن هستید؟")) {
+                const key = (type === 'approved') ? "melal_approved_students" : "melal_students";
+                let students = JSON.parse(localStorage.getItem(key)) || [];
+                students = students.filter(s => s.id !== id);
+                localStorage.setItem(key, JSON.stringify(students));
+                loadStudents();
+                loadApprovedStudents();
+            }
+        };
+
+        window.deletePlacement = function (id) {
+            if (confirm("آیا از حذف این درخواست تعیین سطح مطمئن هستید؟")) {
+                let placements = JSON.parse(localStorage.getItem("melal_placements")) || [];
+                placements = placements.filter(p => p.id !== id);
+                localStorage.setItem("melal_placements", JSON.stringify(placements));
+                loadPlacements();
+            }
+        };
+
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", function () {
+                sessionStorage.removeItem("admin_logged_in");
+                window.location.href = "index.html";
+            });
+        }
+
+        loadStudents();
+        loadApprovedStudents();
+        loadPlacements();
+    }
+
+
+// ۵. لود داده‌ها در پنل شخصی زبان‌آموز
+    const studentProfileDetails = document.getElementById("studentProfileDetails");
+    if (studentProfileDetails) {
+        if (sessionStorage.getItem("user_logged_in") !== "true") {
+            window.location.href = "admin-login.html";
+            return;
+        }
+
+        const currentUserId = sessionStorage.getItem("current_user_id");
+        const approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
+        // تبدیل IDها به String برای جلوگیری از خطای عدم تطابق نوع داده
+        const student = approved.find(s => String(s.id) === String(currentUserId));
+
+        if (student) {
+            document.getElementById("studentWelcomeTitle").innerText = `خوش آمدید، ${student.name} عزیز 🌺`;
+
+            studentProfileDetails.innerHTML = `
+                <div><strong>👤 نام و نام خانوادگی:</strong> ${student.name}</div>
+                <div><strong>👨‍👦 نام پدر:</strong> ${student.fatherName || 'ثبت نشده'}</div>
+                <div><strong>🆔 کد ملی:</strong> ${student.nationalId}</div>
+                <div><strong>📞 شماره تماس:</strong> ${student.phone}</div>
+                <div><strong>🏫 نام محل تحصیل:</strong> ${student.schoolName || 'ثبت نشده'}</div>
+                <div><strong>🎓 میزان تحصیلات:</strong> ${student.education || 'ثبت نشده'}</div>
+            `;
+
+            // لود جدول نمرات
+            const studentGradesTable = document.getElementById("studentGradesTable");
+            if (studentGradesTable) {
+                const grades = student.grades || [];
+                studentGradesTable.innerHTML = "";
+
+                if (grades.length === 0) {
+                    studentGradesTable.innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 15px; color: #86868b;">هنوز هیچ نمره‌ای برای شما ثبت نشده است.</td></tr>`;
+                } else {
+                    grades.forEach((g, idx) => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${idx + 1}</td>
+                            <td style="font-weight:bold;">${g.examName}</td>
+                            <td style="color:#0071e3; font-weight:bold; font-size:15px;">${g.score}</td>
+                            <td>${g.date}</td>
+                        `;
+                        studentGradesTable.appendChild(row);
+                    });
+                }
+            }
+
+            // لود سوابق ثبت‌نام و تمدیدها
+            const historyTable = document.getElementById("studentHistoryTable");
+            if (historyTable) {
+                historyTable.innerHTML = "";
+                
+                // مقداردهی اولیه سوابق در صورت خالی بودن
+                if (!student.history) {
+                    student.history = [{
+                        id: Date.now(),
+                        category: student.category,
+                        fee: student.fee,
+                        date: student.date,
+                        status: 'تأییدشده',
+                        type: 'ثبت‌نام اولیه'
+                    }];
+                    localStorage.setItem("melal_approved_students", JSON.stringify(approved));
+                }
+
+                student.history.forEach((h, idx) => {
+                    let statusBadge = '';
+                    if (h.status === 'تأییدشده') {
+                        statusBadge = `<span style="background:#e6fffa; color:#38a169; padding:4px 10px; border-radius:12px; font-weight:bold; font-size:12px;">تأییدشده</span>`;
+                    } else if (h.status === 'ردشده') {
+                        statusBadge = `<span style="background:#ffe5e5; color:#e61c23; padding:4px 10px; border-radius:12px; font-weight:bold; font-size:12px;">ردشده</span>`;
+                    } else {
+                        statusBadge = `<span style="background:#fffaf0; color:#dd6b20; padding:4px 10px; border-radius:12px; font-weight:bold; font-size:12px;">در انتظار تأیید</span>`;
+                    }
+
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${idx + 1}</td><td style="font-weight:bold; color:#0071e3;">${h.category} (${h.type || 'ثبت‌نام'})</td>
+                        <td style="color:#27ae60; font-weight:bold;">${h.fee}</td>
+                        <td>${h.date}</td>
+                        <td>${h.status === 'تأییدشده' ? (student.approvedDate || h.date) : '-'}</td>
+                        <td>${statusBadge}</td>
+                    `;
+                    historyTable.appendChild(row);
+                });
+            }
+        }
+
+        const userLogoutBtn = document.getElementById("userLogoutBtn");
+        if (userLogoutBtn) {
+            userLogoutBtn.addEventListener("click", function () {
+                sessionStorage.removeItem("user_logged_in");
+                sessionStorage.removeItem("current_user_id");
+                window.location.href = "admin-login.html";
+            });
+        }
+    }
+});
+/* ===================================================
+   سیستم ترجمه اختصاصی و هوشمند ۶ زبانه (بدون گوگل)
+   =================================================== */
+
+const translations = {
+    fa: {
+        welcome: "به آکادمی تخصصی زبان آفرینش خوش آمدید",
+        home: "خانه",
+        classes: "کلاس‌های زبان",
+        exams: "آزمون‌ها",
+        olympiad: "المپیاد",
+        achievements: "دستاوردها",
+        events: "ایونت‌ها",
+        azmoon: "آزمونک",
+        contact: "مشاوره و تماس",
+        loginBtn: "ورود به پنل شخصی",
+        registerBtn: "ثبت‌نام آنلاین",
+        heroBadge: "🌐 آکادمی بین‌المللی زبان‌های خارجی",
+        heroTitle: "شروع نسخه بین‌المللی تو...",
+        heroDesc: "برگزاری دوره‌های تخصصی و عمومی مکالمه، آمادگی آزمون‌های بین‌المللی بدون محدودیت سنی و متناسب با سطح شما تحت نظارت مستقیم سوپروایزر برتر مجموعه سرکار خانم پریا پوراحمد",
+        startBtn: "شروع یادگیری و ثبت نام",
+        coursesBtn: "مشاهده دوره‌ها"
+    },
+    en: {
+        welcome: "Welcome to Afarinesh Language Academy",
+        home: "Home",
+        classes: "Classes",
+        exams: "Exams",
+        olympiad: "Olympiad",
+        achievements: "Achievements",
+        events: "Events",
+        azmoon: "Quiz",
+        contact: "Contact Us",
+        loginBtn: "Student Login",
+        registerBtn: "Online Register",
+        heroBadge: "🌐 International Language Academy",
+        heroTitle: "...Start Your International Version",
+        heroDesc: "Specialized and general conversation courses, preparation for international exams for all ages under the supervision of Supervisor Mrs. Paria Pourahmada",
+        startBtn: "Start Learning & Register",
+        coursesBtn: "View Courses"
+    },
+    de: {
+        welcome: "Willkommen in der Sprachakademie Afarinesh",
+        home: "Startseite",
+        classes: "Sprachkurse",
+        exams: "Prüfungen",
+        olympiad: "Olympiade",
+        achievements: "Erfolge",
+        events: "Events",
+        azmoon: "Quiz",
+        contact: "Kontakt",
+        loginBtn: "Anmelden",
+        registerBtn: "Online-Registrierung",
+        heroBadge: "🌐 Internationale Sprachakademie",
+        heroTitle: "...Starten Sie Ihre internationale Version",
+        heroDesc: "Spezialisierte Sprachkurse und Vorbereitung auf internationale Prüfungen für alle Altersgruppen",
+        startBtn: "Jetzt starten & Anmelden",
+        coursesBtn: "Kurse anzeigen"
+    },
+    tr: {
+        welcome: "Afarinesh Dil Akademisine Hoş Geldiniz",
+        home: "Anasayfa",
+        classes: "Kurslar",
+        exams: "Sınavlar",
+        olympiad: "Olimpiyat",
+        achievements: "Başarılar",
+        events: "Etkinlikler",
+        azmoon: "Bilgi Yarışması",
+        contact: "İletişim",
+        loginBtn: "Giriş Yap",
+        registerBtn: "Online Kayıt",
+        heroBadge: "🌐 Uluslararası Dil Akademisi",
+        heroTitle: "...Uluslararası Versiyonunuzu Başlatın",
+        heroDesc: "Her yaşa uygun özel ve genel konuşma kursları ve uluslararası sınavlara hazırlık",
+        startBtn: "Öğrenmeye Başla ve Kaydol",
+        coursesBtn: "Kursları İncele"
+    },
+    fr: {
+        welcome: "Bienvenue à l'Académie de Langues Afarinesh",
+        home: "Accueil",
+        classes: "Cours",
+        exams: "Examens",
+        olympiad: "Olympiade",
+        achievements: "Réalisations",
+        events: "Événements",
+        azmoon: "Questionnaire",
+        contact: "Contact",
+        loginBtn: "Espace Personnel",
+        registerBtn: "Inscription en Ligne",
+        heroBadge: "🌐 Académie Internationale de Langues",
+        heroTitle: "...Commencez Votre Version Internationale",
+        heroDesc: "Cours de conversation spécialisés et préparation aux examens internationaux pour tous les âges",
+        startBtn: "Commencer & S'inscrire",
+        coursesBtn: "Voir les Cours"},
+    zh: {
+        welcome: "欢迎来到 Afarinesh 外语学院",
+        home: "首页",
+        classes: "语言课程",
+        exams: "考试",
+        olympiad: "竞赛",
+        achievements: "成就",
+        events: "活动",
+        azmoon: "測驗",
+        contact: "联系我们",
+        loginBtn: "个人中心登录",
+        registerBtn: "在线报名",
+        heroBadge: "🌐 国际外语学院",
+        heroTitle: "...开启你的国际化之旅",
+        heroDesc: "面向所有年龄段的专业对话课程及国际考试备考课程",
+        startBtn: "开始学习并报名",
+        coursesBtn: "查看课程"
+    }
+};
+
+function changeLanguage(langCode, dir) {
+    document.documentElement.dir = dir;
+    document.documentElement.lang = langCode;
+
+    const langData = translations[langCode] || translations['fa'];
+
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (langData[key]) {
+            element.textContent = langData[key];
+        }
+    });
+
+    localStorage.setItem('selected_lang', langCode);
+    localStorage.setItem('selected_dir', dir);
+}
+
+
+const savedLang = localStorage.getItem('selected_lang') || 'fa';
+const savedDir = localStorage.getItem('selected_dir') || 'rtl';
+changeLanguage(savedLang, savedDir);
+
+
+
+/* ===================================================
+   سیستم تمدید ترم و مدیریت تاریخچه ثبت‌نام‌ها
+   =================================================== */
+
+// ۱. تابع ثبت درخواست تمدید ترم توسط دانش‌آموز
+window.renewTerm = function () {
+    const currentUserId = sessionStorage.getItem("current_user_id");
+    if (!currentUserId) return;
+
+    let approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
+    let studentIndex = approved.findIndex(s => String(s.id) === String(currentUserId));
+
+    if (studentIndex !== -1) {
+        let student = approved[studentIndex];
+
+        // ایجاد آرایه سوابق در صورت عدم وجود
+        if (!student.history) {
+            student.history = [{
+                id: Date.now() - 1000,
+                category: student.category,
+                fee: student.fee,
+                date: student.date,
+                status: 'تأییدشده',
+                type: 'ثبت‌نام اولیه'
+            }];
+        }
+
+        // چک کردن اینکه آیا درخواست فعال در انتظار دارد یا خیر
+        const hasPending = student.history.some(h => h.status === 'در انتظار تأیید');
+        if (hasPending) {
+            alert("⚠️ شما یک درخواست تمدید در انتظار تأیید دارید. لطفاً منتظر بررسی مدیریت باشید.");
+            return;
+        }
+
+        // ثبت تمدید جدید
+        const newRenewal = {
+            id: Date.now(),
+            category: student.category,
+            fee: student.fee,
+            date: new Date().toLocaleDateString('fa-IR'),
+            status: 'در انتظار تأیید',
+            type: 'تمدید ترم'
+        };
+
+        student.history.push(newRenewal);
+        approved[studentIndex] = student;
+        localStorage.setItem("melal_approved_students", JSON.stringify(approved));
+
+        alert("✅ تمدید ثبت‌نام کلاس زبان با موفقیت انجام شد و جهت تأیید به مدیریت ارسال گردید.");
+        location.reload();
+    }
+};
+
+// ۲. لود لیست افراد در انتظار تمدید ترم در پنل مدیریت
+function loadRenewals() {
+    const renewalTableBody = document.getElementById("renewalTableBody");
+    if (!renewalTableBody) return;
+
+    const approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
+    renewalTableBody.innerHTML = "";
+
+    let pendingCount = 0;
+
+    approved.forEach(student => {
+        if (student.history) {
+            student.history.forEach(item => {
+                if (item.status === 'در انتظار تأیید') {
+                    pendingCount++;
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${pendingCount}</td>
+                        <td style="font-weight:bold; color:#d9534f;">${student.name}</td>
+                        <td>${student.phone}</td>
+                        <td>${item.category}</td>
+                        <td style="color:#27ae60; font-weight:bold;">${item.fee}</td>
+                        <td>${item.date}</td>
+                        <td>
+                            <button class="btn" style="padding: 5px 10px; font-size:12px; background:#27ae60; color:white; border-radius:6px; cursor:pointer;" margin-left:5px;" onclick="approveRenewal(${student.id}, ${item.id})">✅ تأیید تمدید</button>
+                            <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px; cursor:pointer;" onclick="rejectRenewal(${student.id}, ${item.id})">❌ رد درخواست</button>
+                        </td>
+                    `;
+                    renewalTableBody.appendChild(row);
+                }
+            });
+        }
+    });
+
+    if (pendingCount === 0) {
+        renewalTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 15px; color: #86868b;">هیچ درخواست تمدید ترمی در انتظار تأیید وجود ندارد.</td></tr>`;
+    }
+}
+
+// ۳. تأیید تمدید ترم توسط مدیر
+window.approveRenewal = function (studentId, historyId) {
+    let approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
+    let student = approved.find(s => String(s.id) === String(studentId));
+
+    if (student && student.history) {let item = student.history.find(h => String(h.id) === String(historyId));
+        if (item) {
+            item.status = 'تأییدشده';
+            localStorage.setItem("melal_approved_students", JSON.stringify(approved));
+            alert(`✅ تمدید ترم برای ${student.name} با موفقیت تأیید شد.`);
+            loadRenewals();
+            if (typeof loadApprovedStudents === 'function') loadApprovedStudents();
+        }
+    }
+};
+
+// ۴. رد تمدید ترم توسط مدیر
+window.rejectRenewal = function (studentId, historyId) {
+    if (!confirm("آیا از رد این درخواست تمدید مطمئن هستید؟")) return;
+
+    let approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
+    let student = approved.find(s => String(s.id) === String(studentId));
+
+    if (student && student.history) {
+        let item = student.history.find(h => String(h.id) === String(historyId));
+        if (item) {
+            item.status = 'ردشده';
+            localStorage.setItem("melal_approved_students", JSON.stringify(approved));
+            alert(`❌ درخواست تمدید ترم برای ${student.name} رد شد.`);
+            loadRenewals();
+            if (typeof window.loadApprovedStudents === 'function') window.loadApprovedStudents();
+        }
+    }
+};
+
+// ۴. نمایش مودال تاریخچه کامل ثبت‌نام‌ها برای مدیر
+window.showStudentHistory = function (studentId) {
+    const approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
+    const student = approved.find(s => String(s.id) === String(studentId));
+    if (!student) return;
+
+    let historyHtml = `
+        <h3 style="margin-bottom:15px; color:#1d1d1f;">📜 تاریخچه کامل ثبت‌نام‌های ${student.name}</h3>
+        <table style="width:100%; border-collapse:collapse; text-align:right;">
+            <thead>
+                <tr style="background:#f8fafc;">
+                    <th style="padding:8px; border-bottom:1px solid #ddd;">ردیف</th>
+                    <th style="padding:8px; border-bottom:1px solid #ddd;">نوع درخواست</th>
+                    <th style="padding:8px; border-bottom:1px solid #ddd;">دوره / رده</th>
+                    <th style="padding:8px; border-bottom:1px solid #ddd;">شهریه</th>
+                    <th style="padding:8px; border-bottom:1px solid #ddd;">تاریخ ثبت</th>
+                    <th style="padding:8px; border-bottom:1px solid #ddd;">وضعیت</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    const historyList = student.history || [{
+        category: student.category,
+        fee: student.fee,
+        date: student.date,
+        status: 'تأییدشده',
+        type: 'ثبت‌نام اولیه'
+    }];
+
+    historyList.forEach((h, idx) => {
+        const badgeColor = h.status === 'تأییدشده' ? '#38a169' : '#dd6b20';
+        const badgeBg = h.status === 'تأییدشده' ? '#e6fffa' : '#fffaf0';
+        historyHtml += `
+            <tr>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${idx + 1}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee; font-weight:bold;">${h.type || 'ثبت‌نام'}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${h.category}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee; color:#27ae60;">${h.fee}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${h.date}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">
+                    <span style="background:${badgeBg}; color:${badgeColor}; padding:3px 8px; border-radius:10px; font-size:12px; font-weight:bold;">${h.status}</span>
+                </td>
+            </tr>
+        `;
+    });
+
+    historyHtml += `</tbody></table>`;
+
+    const modalBody = document.getElementById("modalBodyDetails");
+    if (modalBody) {
+        modalBody.innerHTML = historyHtml;
+        document.getElementById("studentModal").style.display = "flex";
+    }
+};
+
+loadRenewals();

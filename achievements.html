@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دستاوردها و تالار افتخارات | آموزشگاه آفرینش</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Modern Styles for Olympiad Achievements Section */
+        .olympiad-section {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 2px dashed #e2e8f0;
+        }
+
+        .olympiad-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .olympiad-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+
+        .olympiad-img-wrapper {
+            width: 100%;
+            height: 240px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f7fafc;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .olympiad-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .olympiad-card:hover .olympiad-img-wrapper img {
+            transform: scale(1.04);
+        }
+
+        .olympiad-tag {
+            display: inline-block;
+            background: #e61c23;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .olympiad-card-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .olympiad-card-desc {
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- هدر بالایی: پرچم‌های چندزبانه تعاملی -->
+    <div class="top-flag-bar">
+        <span>دستاورد های آموزشگاه آفرینش</span>
+        <div class="flags-container" style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+            <img src="https://flagcdn.com/w40/ir.png" alt="فارسی" title="فارسی (Persian)" onclick="changeLanguage('fa', 'rtl')">
+        <!-- انگلیسی (بریتانیا) -->
+            <img src="https://flagcdn.com/w40/gb.png" alt="English" title="English" onclick="changeLanguage('en', 'ltr')">
+        <!-- آلمانی -->
+            <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" title="Deutsch" onclick="changeLanguage('de', 'ltr')">
+        <!-- ترکی استانبولی -->
+            <img src="https://flagcdn.com/w40/tr.png" alt="Türkçe" title="Türkçe" onclick="changeLanguage('tr', 'ltr')">
+        <!-- فرانسوی -->
+            <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français" onclick="changeLanguage('fr', 'ltr')">
+        <!-- چینی -->
+            <img src="https://flagcdn.com/w40/cn.png" alt="中文" title="آکادمی چینی (Chinese)" onclick="changeLanguage('zh', 'ltr')">
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="main-navbar">
+        <a href="index.html" class="logo-area">
+            <img src="assets/images/logo.jpg" alt="لوگو ملل">
+            <span>آموزشگاه آفرینش</span>
+        </a>
+        <button class="hamburger-btn" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">خانه</a></li>
+            <li><a href="classes.html">کلاس‌ها</a></li>
+            <li><a href="exams.html">آزمون‌ها</a></li>
+            <li><a href="olympiad.html">المپیاد</a></li>
+            <li><a href="achievements.html" class="active">دستاوردها</a></li>
+            <li><a href="events.html">ایونت‌ها</a></li>
+            <li><a href="azmoon-intro.html" data-i18n="azmoon">آزمونک</a></li>
+            <li><a href="contact.html">مشاوره و تماس</a></li>
+        </ul>
+        <div class="nav-btns">
+            <a href="admin-login.html" class="btn btn-secondary">ورود به پنل شخصی</a>
+            <a href="register.html" class="btn btn-primary">ثبت‌نام آنلاین</a>
+        </div>
+    </nav>
+
+    <!-- Main Section -->
+    <section class="section-padding bg-light-section">
+        <h2 class="section-title">آمارها و کارهای برجسته آموزشگاه آفرینش</h2>
+
+        <!-- Numeric Statistics Grid -->
+        <div class="grid-container" style="margin-bottom: 60px;">
+            <div class="modern-card" style="text-align: center; border-top: 4px solid var(--primary); background: white;">
+                <h2 style="font-size: 40px; color: var(--primary);">۴ تا ۹۹ سال</h2>
+                <p style="color: var(--text-dark); font-weight: bold; margin-top: 10px;">آموزش تخصصی بدون محدودیت سنی</p>
+            </div>
+            <div class="modern-card" style="text-align: center; border-top: 4px solid var(--primary); background: white;">
+                <h2 style="font-size: 40px; color: var(--primary);">+۵۰</h2>
+                <p style="color: var(--text-dark); font-weight: bold; margin-top: 10px;">کارنامه قبولی آیلتس و تافل</p>
+            </div>
+            <div class="modern-card" style="text-align: center; border-top: 4px solid var(--primary); background: white;">
+                <h2 style="font-size: 40px; color: var(--primary);">۱۰۰٪</h2>
+                <p style="color: var(--text-dark); font-weight: bold; margin-top: 10px;">رضایت فرآیند پایش سوپروایزر</p>
+            </div>
+        </div>
+
+        <!-- Student Reviews Section -->
+        <h3 style="text-align: center; font-weight: 800; margin-bottom: 30px;">نظرات و رضایت‌نامه زبان‌آموزان موفق آفرینش</h3>
+        <div class="grid-container">
+            
+            <div class="modern-card glass-card" style="padding: 30px; position: relative;">
+                <span style="font-size: 50px; color: var(--primary); position: absolute; top: 10px; left: 20px; opacity: 0.2; font-family: sans-serif;">“</span>
+                <h4 style="font-size: 18px; margin-bottom: 10px; color: var(--text-dark);">کسب نمره آیلتس 7 آکادمیک</h4>
+                <p style="color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 15px;">«با کمک متدهای طلایی و برنامه‌ریزی فشرده سرکار خانم پوراحمد توانستم در کمتر از ۲۰ ماه از سطح مقدماتی به نمره دلخواهم در آزمون آیلتس برسم. سیستم پایش هفتگی فوق‌العاده بود.»</p>
+                <div style="font-weight: bold; font-size: 13px; color: var(--primary);">- به نقل از زبان‌آموز دوره آیلتس</div>
+            </div>
+
+            <div class="modern-card glass-card" style="padding: 30px; position: relative;">
+                <span style="font-size: 50px; color: var(--primary); position: absolute; top: 10px; left: 20px; opacity: 0.2; font-family: sans-serif;">“</span>
+                <h4 style="font-size: 18px; margin-bottom: 10px; color: var(--text-dark);">پیشرفت خیره‌کننده در مکالمه کودک</h4>
+                <p style="color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 15px;">«سیستم چندحسی (Multi-sensory) آکادمی آوای ملل باعث شد فرزند ۷ ساله من بدون خستگی و با اشتیاق فراوان تمام کتاب‌های مستر باگز را یاد بگیرد و الان به راحتی جملات انگلیسی می‌گوید.»</p>
+                <div style="font-weight: bold; font-size: 13px; color: var(--primary);">- به نقل از اولیای زبان‌آموز (دوره کیدز)</div>
+            </div>
+
+        </div>
+
+        <!-- NEW SECTION: International Olympiad Results & Certificates -->
+        <div class="olympiad-section">
+            <div style="text-align: center; margin-bottom: 35px;">
+                <span style="background: #e61c23; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold;">افتخارات بین‌المللی</span>
+                <h3 style="font-size: 26px; font-weight: 800; margin-top: 10px; color: #1a202c;">نتایج و درخشش زبان‌آموزان در المپیادهای جهانی (KGL & SIL)</h3>
+                <p style="color: #718096; font-size: 14px; margin-top: 5px;">اسناد رسمی، گواهی‌ها و نتایج راهیابی نمایندگان آفرینش به مراحل کشوری و بین‌المللی</p>
+            </div>
+
+            <div class="grid-container">
+
+                <!-- Olympiad Card 1: KGL Stage 2 Results -->
+                <!-- Image Name: kgl-stage2-results.png -->
+                <div class="olympiad-card">
+                    <div>
+                        <div class="olympiad-img-wrapper">
+                            <img src="assets/images/kgl-stage2-results.png" alt="نتایج مرحله دوم المپیاد KGL">
+                        </div>
+                        <span class="olympiad-tag">المپیاد جهانی KGL 2026</span>
+                        <h4 class="olympiad-card-title">نتایج مرحله دوم المپیاد زبان انگلیسی KGL</h4>
+                        <p class="olympiad-card-desc">
+                            قبولی و کسب مقام برنز و «Certificate of Achievement» توسط زبان‌آموزان برتر آموزشگاه آفرینش در سطح PreA1 موسسه اردوش (نماینده انحصاری KGL در ایران).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Olympiad Card 2: Medalists & Honors List -->
+                <!-- Image Name: olympiad-honors-list.png -->
+                <div class="olympiad-card">
+                    <div>
+                        <div class="olympiad-img-wrapper">
+                            <img src="assets/images/olympiad-honors-list.png" alt="مدال‌آوران و جدول امتیازات المپیاد">
+                        </div>
+                        <span class="olympiad-tag" style="background: #0071e3;">کسب گواهی معتبر دیپلم افتخار از دانشگاه آکسفورد</span>
+                        <h4 class="olympiad-card-title">جدول رسمی مدال‌آوران و امتیازات درخشان</h4>
+                        <p class="olympiad-card-desc">
+                            کسب مدال‌های برنز (Bronze Award) و گواهی دیپلم افتخار توسط افرا ارگنی در رقابت‌های فشرده بین‌المللی توسط آکادمی آفرینش.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Olympiad Card 3: PARSA BABALOO Certificate -->
+                <!-- Image Name: kgl-certificate-parsa.jpg -->
+                <div class="olympiad-card">
+                    <div>
+                        <div class="olympiad-img-wrapper">
+                            <img src="assets/images/kgl-certificate-parsa.jpg" alt="گواهینامه بین‌المللی پارسا بابالو KGL">
+                        </div>
+                        <span class="olympiad-tag" style="background: #34c759;">مقام نقره بین‌المللی</span>
+                        <h4 class="olympiad-card-title">گواهی رسمی KGL Contest - سطح B1</h4>
+                        <p class="olympiad-card-desc">
+                            اعطای گواهینامه معتبر International Testing Alliance به زبان‌آموز ممتاز **پارسا بابالو** با امتیاز 70٪ در مرحله اول المپیاد KGL.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <div class="footer-bottom" style="border: none; padding: 0;">
+            &copy; ۲۰۲۶ تمامی حقوق مادی و معنوی این سایت متعلق به آموزشگاه زبان آفرینش می‌باشد.
+        </div>
+    </footer>
+
+</body>
+</html>
