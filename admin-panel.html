@@ -220,6 +220,26 @@
             </form>
         </div>
     </div>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<!-- ۲. تنظیمات و راه‌اندازی فایربیس -->
+<script>
+  const firebaseConfig = {
+    apiKey: "مقدار_اختصاصی_شما",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  // راه‌اندازی اولیه
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const db = firebase.firestore();
+</script>
     <script src="assets/js/script.js"></script>
 </body>
 </html>
