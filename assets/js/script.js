@@ -35,62 +35,60 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
     // ۱. فرآیند ثبت‌نام آنلاین (با پشتیبانی کامل از پرونده ۱۰ فیلدی)
-    const registerForm = document.getElementById("melalRegisterForm");
-    if (registerForm) {
-        registerForm.addEventListener("submit", function (e) {
-            e.preventDefault();
+    // جایگزین بخش ثبت‌نام در script.js
+const registerForm = document.getElementById("melalRegisterForm");
+if (registerForm) {
+    registerForm.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-            const firstName = document.getElementById("firstName").value.trim();
-            const lastName = document.getElementById("lastName").value.trim();
-            const fatherName = document.getElementById("fatherName").value.trim();
-            const nationalId = document.getElementById("nationalId").value.trim();
-            const birthDate = document.getElementById("birthDate").value.trim();
-            const education = document.getElementById("education").value.trim();
-            const schoolName = document.getElementById("schoolName").value.trim();
-            const phone = document.getElementById("phone").value.trim();
-            const address = document.getElementById("address").value.trim();
-            const ageCategory = document.getElementById("ageCategory").value;
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
+        const fatherName = document.getElementById("fatherName").value.trim();
+        const nationalId = document.getElementById("nationalId").value.trim();
+        const birthDate = document.getElementById("birthDate").value.trim();
+        const education = document.getElementById("education").value.trim();
+        const schoolName = document.getElementById("schoolName").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const address = document.getElementById("address").value.trim();
+        const ageCategory = document.getElementById("ageCategory").value;
 
-            let amount = "";
-            let categoryName = "";
-            if (ageCategory === "kids") {
-                amount = "۱,۴۸۰,۰۰۰ تومان";
-                categoryName = "کودکان (Kids)";
-            } else if (ageCategory === "teens") {
-                amount = "۱,۵۸۰,۰۰۰ تومان";
-                categoryName = "نوجوانان (Teens)";
-            } else if (ageCategory === "adults") {
-                amount = "۱,۶۸۰,۰۰۰ تومان";
-                categoryName = "بزرگسالان (Adults)";
-            }
+        let amount = "";
+        let categoryName = "";
+        if (ageCategory === "kids") {
+            amount = "۱,۴۸۰,۰۰۰ تومان";
+            categoryName = "کودکان (Kids)";
+        } else if (ageCategory === "teens") {
+            amount = "۱,۵۸۰,۰۰۰ تومان";
+            categoryName = "نوجوانان (Teens)";
+        } else if (ageCategory === "adults") {
+            amount = "۱,۶۸۰,۰۰۰ تومان";
+            categoryName = "بزرگسالان (Adults)";
+        }
 
-            const newStudent = {
-                id: Date.now(),
-                name: firstName + " " + lastName,
-                firstName: firstName,
-                lastName: lastName,
-                fatherName: fatherName,
-                nationalId: nationalId,
-                birthDate: birthDate,
-                education: education,
-                schoolName: schoolName || "ثبت نشده",
-                phone: phone,
-                address: address,
-                category: categoryName,
-                fee: amount,
-                date: new Date().toLocaleDateString('fa-IR')
-            };
-
-            let studentList = JSON.parse(localStorage.getItem("melal_students")) || [];
-            studentList.push(newStudent);
-            localStorage.setItem("melal_students", JSON.stringify(studentList));
-
-            alert(`🎉 ثبت‌نام با موفقیت انجام شد!\nپرونده آموزشی ${firstName} ${lastName} جهت بررسی و تأیید نهایی به پنل مدیریت ارسال گردید.`);
+        // ذخیره مستقیم در دیتابیس آنلاین فایربیس
+        db.collection("students").add({
+            name: firstName + " " + lastName,
+            firstName: firstName,
+            lastName: lastName,
+            fatherName: fatherName,
+            nationalId: nationalId,
+            birthDate: birthDate,
+            education: education,
+            schoolName: schoolName || "ثبت نشده",
+            phone: phone,
+            address: address,
+            category: categoryName,
+            fee: amount,
+            createdAt: new Date()
+        }).then(() => {
+            alert(🎉 ثبت‌نام با موفقیت در دیتابیس آنلاین انجام شد!\nپرونده ${firstName} ${lastName} ثبت گردید.);
             registerForm.reset();
             window.location.href = "index.html";
+        }).catch((error) => {
+            alert("خطا در ذخیره‌سازی آنلاین: " + error.message);
         });
-    }
-
+    });
+}
     // ۲. ثبت درخواست تعیین سطح (هماهنگ با فرم جدید و قدیم)
     const placementForm = document.getElementById("placementRequestForm") || document.getElementById("placementBookingForm");
     if (placementForm) {
@@ -135,33 +133,41 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ۳. سیستم ورود (مدیریت یا زبان‌آموز)
-    const loginForm = document.getElementById("adminLoginForm");
-    if (loginForm) {
-        loginForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            const usernameInput = document.getElementById("username").value.trim();
-            const passwordInput = document.getElementById("password").value.trim();
+    // جایگزین بخش بررسی ورود در script.js
+const loginForm = document.getElementById("adminLoginForm");
+if (loginForm) {
+    loginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const usernameInput = document.getElementById("username").value.trim();
+        const passwordInput = document.getElementById("password").value.trim();
 
-            // ورود مدیر
-            if (usernameInput === "admin123" && passwordInput === "paria405") {
-                sessionStorage.setItem("admin_logged_in", "true");
-                window.location.href = "admin-panel.html";
-                return;
-            }
+        // ۱. ورود مدیر
+        if (usernameInput === "admin123" && passwordInput === "paria405") {
+            sessionStorage.setItem("admin_logged_in", "true");
+            window.location.href = "admin-panel.html";
+            return;
+        }
 
-            // بررسی ورود زبان‌آموزان به پنل شخصی
-            const approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
-            const foundUser = approved.find(s => s.username === usernameInput && s.password === passwordInput);
-
-            if (foundUser) {
-                sessionStorage.setItem("user_logged_in", "true");
-                sessionStorage.setItem("current_user_id", foundUser.id);
-                window.location.href = "user-panel.html";
-            } else {
-                alert("❌ نام کاربری یا رمز عبور اشتباه است!");
-            }
-        });
-    }
+        // ۲. بررسی ورود زبان‌آموز از طریق دیتابیس فایربیس
+        db.collection("students")
+          .where("username", "==", usernameInput)
+          .where("password", "==", passwordInput)
+          .get()
+          .then((snapshot) => {
+              if (!snapshot.empty) {
+                  const userDoc = snapshot.docs[0];
+                  sessionStorage.setItem("user_logged_in", "true");
+                  sessionStorage.setItem("current_user_id", userDoc.id);
+                  window.location.href = "user-panel.html";
+              } else {
+                  alert("❌ نام کاربری یا رمز عبور اشتباه است!");
+              }
+          })
+          .catch((error) => {
+              alert("خطا در برقراری ارتباط با دیتابیس: " + error.message);
+          });
+    });
+}
 
     // ۴. لود داده‌ها در پنل مدیریت
     const studentTableBody = document.getElementById("studentTableBody");
