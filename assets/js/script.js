@@ -81,7 +81,7 @@ if (registerForm) {
             fee: amount,
             createdAt: new Date()
         }).then(() => {
-            alert(🎉 ثبت‌نام با موفقیت در دیتابیس آنلاین انجام شد!\nپرونده ${firstName} ${lastName} ثبت گردید.);
+            alert(`🎉 ثبت‌نام با موفقیت در دیتابیس آنلاین انجام شد!\nپرونده ${firstName} ${lastName} ثبت گردید.`);
             registerForm.reset();
             window.location.href = "index.html";
         }).catch((error) => {
