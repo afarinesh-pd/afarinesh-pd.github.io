@@ -1,3 +1,19 @@
+// تنظیمات اختصاصی فایربیس شما
+const firebaseConfig = {
+  apiKey: "AIzaSyAQGiYEEvxm9F6_A2LlBX4JaUyH40iFYYg",
+  authDomain: "afarinesh-pd.firebaseapp.com",
+  projectId: "afarinesh-pd",
+  storageBucket: "afarinesh-pd.firebasestorage.app",
+  messagingSenderId: "908378238877",
+  appId: "1:908378238877:web:b3c414b115921a830d0974",
+  measurementId: "G-NBL6T5N16L"
+};
+
+// راه اندازی فایربیس و اتصال به دیتابیس آنلاین
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+
 document.addEventListener("DOMContentLoaded", function () {
     
     const hamburgerBtn = document.querySelector(".hamburger-btn");
