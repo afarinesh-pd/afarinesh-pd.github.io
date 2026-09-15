@@ -67,7 +67,7 @@ if (registerForm) {
                 registerForm.reset();
                 window.location.href = "index.html";
             } else {
-                const errorMsg = data.message  data.error  "پاسخ معتبری از سرور دریافت نشد.";
+                const errorMsg = data.message || data.error  "پاسخ معتبری از سرور دریافت نشد.";
                 alert("خطا در ثبت اطلاعات: " + errorMsg);
             }
         })
