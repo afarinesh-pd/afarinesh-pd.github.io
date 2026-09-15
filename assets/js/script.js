@@ -62,14 +62,16 @@ if (registerForm) {
         })
         .then(res => res.json())
         .then(data => {
-            if (data.success) {
+            if (data && data.success) {
                 alert(`پرونده ${firstName} ${lastName} با موفقیت ثبت گردید.`);
                 registerForm.reset();
                 window.location.href = "index.html";
             } else {
-                alert("خطا در ثبت اطلاعات: " + data.message);
+                const errorMsg = data.message  data.error  "پاسخ معتبری از سرور دریافت نشد.";
+                alert("خطا در ثبت اطلاعات: " + errorMsg);
             }
         })
+        // --------------------------------------------------------
         .catch(error => alert("خطا در برقراری ارتباط با سرور: " + error.message));
     });
 }
