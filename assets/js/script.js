@@ -21,25 +21,25 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
     // ۱. فرآیند ثبت‌نام آنلاین (با پشتیبانی کامل از پرونده ۱۰ فیلدی)
-    // جایگزین بخش ثبت‌نام در script.js
 const registerForm = document.getElementById("melalRegisterForm");
 if (registerForm) {
     registerForm.addEventListener("submit", function (e) {
         e.preventDefault();
 
-        const firstName = document.getElementById("firstName").value.trim();
-        const lastName = document.getElementById("lastName").value.trim();
-        const fatherName = document.getElementById("fatherName").value.trim();
-        const nationalId = document.getElementById("nationalId").value.trim();
-        const birthDate = document.getElementById("birthDate").value.trim();
-        const education = document.getElementById("education").value.trim();
-        const schoolName = document.getElementById("schoolName").value.trim();
-        const phone = document.getElementById("phone").value.trim();
-        const address = document.getElementById("address").value.trim();
-        const ageCategory = document.getElementById("ageCategory").value;
+        const firstName = document.getElementById("firstName")?.value.trim() || "";
+        const lastName = document.getElementById("lastName")?.value.trim() || "";
+        const fatherName = document.getElementById("fatherName")?.value.trim() || "";
+        const nationalId = document.getElementById("nationalId")?.value.trim() || "";
+        const birthDate = document.getElementById("birthDate")?.value.trim() || "";
+        const education = document.getElementById("education")?.value.trim() || "";
+        const schoolName = document.getElementById("schoolName")?.value.trim() || "ثبت نشده";
+        const phone = document.getElementById("phone")?.value.trim() || "";
+        const address = document.getElementById("address")?.value.trim() || "";
+        const ageCategory = document.getElementById("ageCategory")?.value || "";
 
         let amount = "";
         let categoryName = "";
+
         if (ageCategory === "kids") {
             amount = "۱,۴۸۰,۰۰۰ تومان";
             categoryName = "کودکان (Kids)";
@@ -52,25 +52,26 @@ if (registerForm) {
         }
 
         fetch(`${API_URL}/api/students/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-        firstName, lastName, fatherName, nationalId, birthDate,
-        education, schoolName: schoolName || "ثبت نشده", phone, address,
-        category: categoryName, fee: amount
-    })
-})
-.then(res => res.json())
-.then(data => {
-    if (data.success) {
-        alert(`🎉 ثبت‌نام با موفقیت انجام شد!\nپرونده ${firstName} ${lastName} ثبت گردید.`);
-        registerForm.reset();
-        window.location.href = "index.html";
-    } else {
-        alert("خطا در ثبت اطلاعات: " + data.message);
-    }
-})
-.catch(error => alert("خطا در برقراری ارتباط با سرور: " + error.message));
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                firstName, lastName, fatherName, nationalId, birthDate,
+                education, schoolName, phone, address,
+                category: categoryName, fee: amount
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert(`پرونده ${firstName} ${lastName} با موفقیت ثبت گردید.`);
+                registerForm.reset();
+                window.location.href = "index.html";
+            } else {
+                alert("خطا در ثبت اطلاعات: " + data.message);
+            }
+        })
+        .catch(error => alert("خطا در برقراری ارتباط با سرور: " + error.message));
+    });
 }
 
                                   
@@ -152,6 +153,7 @@ if (loginForm) {
         .catch(error => {
             alert("خطا در برقراری ارتباط با سرور: " + error.message);
         });
+});
 }
 
     // ۴. لود داده‌ها در پنل مدیریت
