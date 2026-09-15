@@ -1,4 +1,4 @@
-const API_URL = "https://afarinesh-api.parsababalo1403.workers.dev/";
+const API_URL = "https://afarinesh-api.parsababalo1403.workers.dev";
 
 document.addEventListener("DOMContentLoaded", function () {
     
