@@ -310,25 +310,25 @@
         </div>
     </footer>
     <!-- اسکریپت‌های اتصال به فایربیس -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
-<!-- ۲. تنظیمات و راه‌اندازی فایربیس -->
+<!-- ۲. اتصال به دیتابیس پروژه شما -->
 <script>
   const firebaseConfig = {
-    apiKey: "مقدار_اختصاصی_شما",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyAQGIyEEvxm9F6_A2LiBX4JaUyH40iFYYg",
+    authDomain: "afarinesh-pd.firebaseapp.com",
+    projectId: "afarinesh-pd",
+    storageBucket: "afarinesh-pd.firebasestorage.app",
+    messagingSenderId: "908378238877",
+    appId: "1:908378238877:web:b3c414b115921a830d0974",
+    measurementId: "G-NBL6T5N16L"
   };
 
-  // راه‌اندازی اولیه
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
-  const db = firebase.firestore();
+  var db = firebase.firestore();
 </script>
     <script src="assets/js/script.js"></script>
 </body>
