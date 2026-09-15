@@ -1,3 +1,4 @@
+const API_URL = "https://afarinesh-api.parsababalo1403.workers.dev/";
 
 document.addEventListener("DOMContentLoaded", function () {
     
@@ -50,30 +51,29 @@ if (registerForm) {
             categoryName = "بزرگسالان (Adults)";
         }
 
-        // ذخیره مستقیم در دیتابیس آنلاین فایربیس
-        db.collection("students").add({
-            name: firstName + " " + lastName,
-            firstName: firstName,
-            lastName: lastName,
-            fatherName: fatherName,
-            nationalId: nationalId,
-            birthDate: birthDate,
-            education: education,
-            schoolName: schoolName || "ثبت نشده",
-            phone: phone,
-            address: address,
-            category: categoryName,
-            fee: amount,
-            createdAt: new Date()
-        }).then(() => {
-            alert(` 🎉 ثبت‌نام با موفقیت در دیتابیس آنلاین انجام شد!\nپرونده ${firstName} ${lastName} ثبت گردید. `);
-            registerForm.reset();
-            window.location.href = "index.html";
-        }).catch((error) => {
-            alert("خطا در ذخیره‌سازی آنلاین: " + error.message);
-        });
-    });
+        fetch(`${API_URL}/api/students/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        firstName, lastName, fatherName, nationalId, birthDate,
+        education, schoolName: schoolName || "ثبت نشده", phone, address,
+        category: categoryName, fee: amount
+    })
+})
+.then(res => res.json())
+.then(data => {
+    if (data.success) {
+        alert(`🎉 ثبت‌نام با موفقیت انجام شد!\nپرونده ${firstName} ${lastName} ثبت گردید.`);
+        registerForm.reset();
+        window.location.href = "index.html";
+    } else {
+        alert("خطا در ثبت اطلاعات: " + data.message);
+    }
+})
+.catch(error => alert("خطا در برقراری ارتباط با سرور: " + error.message));
 }
+
+                                  
     // ۲. ثبت درخواست تعیین سطح (هماهنگ با فرم جدید و قدیم)
     const placementForm = document.getElementById("placementRequestForm") || document.getElementById("placementBookingForm");
     if (placementForm) {
@@ -133,25 +133,25 @@ if (loginForm) {
             return;
         }
 
-        // ۲. بررسی ورود زبان‌آموز از طریق دیتابیس فایربیس
-        db.collection("students")
-          .where("username", "==", usernameInput)
-          .where("password", "==", passwordInput)
-          .get()
-          .then((snapshot) => {
-              if (!snapshot.empty) {
-                  const userDoc = snapshot.docs[0];
-                  sessionStorage.setItem("user_logged_in", "true");
-                  sessionStorage.setItem("current_user_id", userDoc.id);
-                  window.location.href = "user-panel.html";
-              } else {
-                  alert("❌ نام کاربری یا رمز عبور اشتباه است!");
-              }
-          })
-          .catch((error) => {
-              alert("خطا در برقراری ارتباط با دیتابیس: " + error.message);
-          });
-    });
+        // ۲. بررسی ورود زبان‌آموز از طریق API کلادفلر
+        fetch(`${API_URL}/api/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username: usernameInput, password: passwordInput })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                sessionStorage.setItem("user_logged_in", "true");
+                sessionStorage.setItem("current_user_id", data.user.id);
+                window.location.href = "user-panel.html";
+            } else {
+                alert("❌ نام کاربری یا رمز عبور اشتباه است!");
+            }
+        })
+        .catch(error => {
+            alert("خطا در برقراری ارتباط با سرور: " + error.message);
+        });
 }
 
     // ۴. لود داده‌ها در پنل مدیریت
@@ -165,74 +165,91 @@ if (loginForm) {
             return;
         }
 
-        function loadStudents() {
+        // ۱. دریافت لیست ثبت‌نام‌های جدید از کلادفلر
+        async function loadStudents() {
             if (!studentTableBody) return;
-            const students = JSON.parse(localStorage.getItem("melal_students")) || [];
-            studentTableBody.innerHTML = "";
+            studentTableBody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding: 20px;">در حال دریافت اطلاعات...</td></tr>`;
 
-            if (students.length === 0) {
-                studentTableBody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding: 20px; color: #86868b;">هیچ ثبت‌نام جدیدی در انتظار بررسی وجود ندارد.</td></tr>`;
-                return;
+            try {
+                const res = await fetch(`${API_URL}/api/admin/pending-students`);
+                const students = await res.json();
+                studentTableBody.innerHTML = "";
+
+                if (!students || students.length === 0) {
+                    studentTableBody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding: 20px; color: #86868b;">هیچ ثبت‌نام جدیدی در انتظار بررسی وجود ندارد.</td></tr>`;
+                    return;
+                }
+
+                students.forEach((student, index) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td style="font-weight:bold;">${student.name}</td>
+                        <td>${student.phone}</td>
+                        <td>${student.nationalId}</td>
+                        <td>${student.category}</td>
+                        <td style="color:#e61c23; font-weight:bold;">${student.fee}</td>
+                        <td>${student.date}</td>
+                        <td>
+                            <button class="btn" style="padding: 5px 10px; font-size:12px; background:#0071e3; color:white; border-radius:6px; cursor:pointer;" onclick="showStudentDetails(${student.id}, 'pending')">📋 پرونده</button>
+                        </td>
+                        <td>
+                            <button class="btn-confirm" style="cursor:pointer;" onclick="openCredModal(${student.id}, '${student.name}')">✅ تأیید و ساخت پنل</button>
+                        </td>
+                        <td>
+                            <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px; cursor:pointer;" onclick="deleteStudent(${student.id}, 'pending')">حذف</button>
+                        </td>
+                    `;
+                    studentTableBody.appendChild(row);
+                });
+            } catch (error) {
+                studentTableBody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding: 20px; color: #e61c23;">خطا در دریافت اطلاعات از سرور</td></tr>`;
             }
-
-            students.forEach((student, index) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td style="font-weight:bold;">${student.name}</td>
-                    <td>${student.phone}</td>
-                    <td>${student.nationalId}</td>
-                    <td>${student.category}</td>
-                    <td style="color:#e61c23; font-weight:bold;">${student.fee}</td>
-                    <td>${student.date}</td>
-                    <td>
-                        <button class="btn" style="padding: 5px 10px; font-size:12px; background:#0071e3; color:white; border-radius:6px; cursor:pointer;" onclick="showStudentDetails(${student.id}, 'pending')">📋 پرونده</button></td>
-                    <td>
-                        <button class="btn-confirm" style="cursor:pointer;" onclick="openCredModal(${student.id}, '${student.name}')">✅ تأیید و ساخت پنل</button>
-                    </td>
-                    <td>
-                        <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px; cursor:pointer;" onclick="deleteStudent(${student.id}, 'pending')">حذف</button>
-                    </td>
-                `;
-                studentTableBody.appendChild(row);
-            });
         }
 
-        function loadApprovedStudents() {
+        // ۲. دریافت لیست زبان‌آموزان تأییدشده از کلادفلر
+        async function loadApprovedStudents() {
             if (!approvedTableBody) return;
-            const approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
-            approvedTableBody.innerHTML = "";
-            if (approved.length === 0) {
-                approvedTableBody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding: 20px; color: #86868b;">هنوز هیچ زبان‌آموزی تأیید نهایی نشده است.</td></tr>`;
-                return;
-            }
+            approvedTableBody.innerHTML = `<tr><td colspan="11" style="text-align:center; padding: 20px;">در حال دریافت اطلاعات...</td></tr>`;
 
-    approved.forEach((student, index) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td style="font-weight:bold; color:#27ae60;">${student.name}</td>
-            <td style="font-weight:bold;">${student.username || '-'}</td>
-            <td><code>${student.password || '-'}</code></td>
-            <td>${student.category}</td>
-            <td style="color:#27ae60; font-weight:bold;">${student.fee}</td>
-            <td>${student.approvedDate || student.date}</td>
-            <td>
-                <button class="btn" style="padding: 5px 10px; font-size:12px; background:#0071e3; color:white; border-radius:6px;" onclick="showStudentDetails(${student.id}, 'approved')">📋 پرونده</button>
-            </td>
-            <td>
-            <button onclick="showStudentHistory(${student.id})" class="btn" style="background:#6c5ce7; color:white; padding:5px 10px; font-size:12px; border-radius:6px; border:none; cursor:pointer;">📜 تاریخچه ثبت‌نام</button>
-            </td>
-            <td>
-                <button class="btn" style="padding: 5px 10px; font-size:12px; background:#27ae60; color:white; border-radius:6px;" onclick="openGradeModal(${student.id}, '${student.name}')">➕ افزودن نمره</button>
-            </td>
-            <td>
-                <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px;" onclick="deleteStudent(${student.id}, 'approved')">حذف</button>
-            </td>
-        `;
-        approvedTableBody.appendChild(row);
-    });
-}
+            try {
+                const res = await fetch(`${API_URL}/api/admin/approved-students`);
+                const approved = await res.json();
+                approvedTableBody.innerHTML = "";
+
+                if (!approved || approved.length === 0) {
+                    approvedTableBody.innerHTML = `<tr><td colspan="11" style="text-align:center; padding: 20px; color: #86868b;">هنوز هیچ زبان‌آموزی تأیید نهایی نشده است.</td></tr>`;
+                    return;
+                }
+
+                approved.forEach((student, index) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td style="font-weight:bold; color:#27ae60;">${student.name}</td>
+                        <td style="font-weight:bold;">${student.username || '-'}</td>
+                        <td><code>${student.password || '-'}</code></td>
+                        <td>${student.category}</td>
+                        <td style="color:#27ae60; font-weight:bold;">${student.fee}</td><td>${student.approvedDate || student.date}</td>
+                        <td>
+                            <button class="btn" style="padding: 5px 10px; font-size:12px; background:#0071e3; color:white; border-radius:6px;" onclick="showStudentDetails(${student.id}, 'approved')">📋 پرونده</button>
+                        </td>
+                        <td>
+                            <button onclick="showStudentHistory(${student.id})" class="btn" style="background:#6c5ce7; color:white; padding:5px 10px; font-size:12px; border-radius:6px; border:none; cursor:pointer;">📜 تاریخچه ثبت‌نام</button>
+                        </td>
+                        <td>
+                            <button class="btn" style="padding: 5px 10px; font-size:12px; background:#27ae60; color:white; border-radius:6px;" onclick="openGradeModal(${student.id}, '${student.name}')">➕ افزودن نمره</button>
+                        </td>
+                        <td>
+                            <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px;" onclick="deleteStudent(${student.id}, 'approved')">حذف</button>
+                        </td>
+                    `;
+                    approvedTableBody.appendChild(row);
+                });
+            } catch (error) {
+                approvedTableBody.innerHTML = `<tr><td colspan="11" style="text-align:center; padding: 20px; color: #e61c23;">خطا در دریافت اطلاعات از سرور</td></tr>`;
+            }
+        }
 
         // باز کردن مودال ساخت نام‌کاربری
         window.openCredModal = function(id, name) {
@@ -253,34 +270,32 @@ if (loginForm) {
 
         // فرم تایید نهایی و ساخت پنل
         const credForm = document.getElementById("credForm");
-        if(credForm) {
-            credForm.addEventListener("submit", function(e) {
-                e.preventDefault();
-                const id = parseInt(document.getElementById("targetStudentId").value);
-                const uName = document.getElementById("newStudentUsername").value.trim();
-                const pWord = document.getElementById("newStudentPassword").value.trim();
+if (credForm) {
+    credForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const id = document.getElementById("targetStudentId").value;
+        const uName = document.getElementById("newStudentUsername").value.trim();
+        const pWord = document.getElementById("newStudentPassword").value.trim();
 
-                let students = JSON.parse(localStorage.getItem("melal_students")) || [];
-                let approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
-                const studentToApprove = students.find(s => s.id === id);
-                if (studentToApprove) {
-                    studentToApprove.username = uName;
-                    studentToApprove.password = pWord;
-                    studentToApprove.approvedDate = new Date().toLocaleDateString('fa-IR');
-                    
-                    approved.push(studentToApprove);
-                    students = students.filter(s => s.id !== id);
-
-                    localStorage.setItem("melal_students", JSON.stringify(students));
-                    localStorage.setItem("melal_approved_students", JSON.stringify(approved));
-
-                    alert(`✅ ثبت‌نام تایید و پنل شخصی زبان‌آموز ساخته شد!\nنام کاربری: ${uName}\nرمز عبور: ${pWord}`);
-                    closeCredModal();
-                    loadStudents();
-                    loadApprovedStudents();
-                }
-            });
-        }
+        fetch(`${API_URL}/api/admin/approve-student`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, username: uName, password: pWord })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert(`✅ ثبت‌نام تایید و پنل شخصی زبان‌آموز ساخته شد!\nنام کاربری: ${uName}\nرمز عبور: ${pWord}`);
+                closeCredModal();
+                loadStudents();
+                loadApprovedStudents();
+            } else {
+                alert("خطا در تایید ثبت‌نام: " + data.message);
+            }
+        })
+        .catch(err => alert("خطا در ارتباط با سرور: " + err.message));
+    });
+}
 
         // باز و بسته کردن مودال ثبت نمره
 window.openGradeModal = function(id, name) {
@@ -298,34 +313,30 @@ window.closeGradeModal = function() {
 // ثبت نمره و ذخیره در LocalStorage
 const gradeForm = document.getElementById("gradeForm");
 if (gradeForm) {
-    gradeForm.addEventListener("submit", function(e) {
+    gradeForm.addEventListener("submit", function (e) {
         e.preventDefault();
-        const id = parseInt(document.getElementById("gradeStudentId").value);
+        const id = document.getElementById("gradeStudentId").value;
         const examName = document.getElementById("examName").value.trim();
         const examScore = document.getElementById("examScore").value.trim();
 
-        let approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
-        let student = approved.find(s => String(s.id) === String(id));
-
-        if (student) {
-            if (!student.grades) {
-                student.grades = [];
+        fetch(`${API_URL}/api/grades/add`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ studentId: id, examName, score: examScore })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("✅ نمره آزمون با موفقیت ثبت شد.");
+                closeGradeModal();
+                loadApprovedStudents();
+            } else {
+                alert("خطا در ثبت نمره: " + data.message);
             }
-
-            student.grades.push({
-                id: Date.now(),
-                examName: examName,
-                score: examScore,
-                date: new Date().toLocaleDateString('fa-IR')
-            });
-
-            localStorage.setItem("melal_approved_students", JSON.stringify(approved));
-            alert(`✅ نمره آزمون با موفقیت برای ${student.name} ثبت و ارسال شد.`);
-            closeGradeModal();
-        }
+        })
+        .catch(err => alert("خطا در ارتباط با سرور: " + err.message));
     });
 }
-
         window.showStudentDetails = function(id, type) {
             const key = (type === 'approved') ? "melal_approved_students" : "melal_students";
             const students = JSON.parse(localStorage.getItem(key)) || [];
@@ -389,24 +400,45 @@ if (gradeForm) {
         }
 
         window.deleteStudent = function (id, type) {
-            if (confirm("آیا از حذف این پرونده مطمئن هستید؟")) {
-                const key = (type === 'approved') ? "melal_approved_students" : "melal_students";
-                let students = JSON.parse(localStorage.getItem(key)) || [];
-                students = students.filter(s => s.id !== id);
-                localStorage.setItem(key, JSON.stringify(students));
+    if (confirm("آیا از حذف این پرونده مطمئن هستید؟")) {
+        fetch(`${API_URL}/api/admin/delete-student`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, type })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("✅ پرونده با موفقیت حذف شد.");
                 loadStudents();
                 loadApprovedStudents();
+            } else {
+                alert("خطا در حذف پرونده: " + data.message);
             }
-        };
+        })
+        .catch(err => alert("خطا در برقراری ارتباط: " + err.message));
+    }
+};
 
-        window.deletePlacement = function (id) {
-            if (confirm("آیا از حذف این درخواست تعیین سطح مطمئن هستید؟")) {
-                let placements = JSON.parse(localStorage.getItem("melal_placements")) || [];
-                placements = placements.filter(p => p.id !== id);
-                localStorage.setItem("melal_placements", JSON.stringify(placements));
-                loadPlacements();
+window.deletePlacement = function (id) {
+    if (confirm("آیا از حذف این درخواست تعیین سطح مطمئن هستید؟")) {
+        fetch(`${API_URL}/api/admin/delete-placement`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("✅ درخواست تعیین سطح حذف شد.");
+                if (typeof loadPlacements === 'function') loadPlacements();
+            } else {
+                alert("خطا در حذف درخواست: " + data.message);
             }
-        };
+        })
+        .catch(err => alert("خطا در برقراری ارتباط: " + err.message));
+    }
+};
 
         const logoutBtn = document.getElementById("logoutBtn");
         if (logoutBtn) {
@@ -423,19 +455,21 @@ if (gradeForm) {
 
 
 // ۵. لود داده‌ها در پنل شخصی زبان‌آموز
-    const studentProfileDetails = document.getElementById("studentProfileDetails");
-    if (studentProfileDetails) {
-        if (sessionStorage.getItem("user_logged_in") !== "true") {
-            window.location.href = "admin-login.html";
-            return;
-        }
+    // ۵. لود داده‌ها در پنل شخصی زبان‌آموز
+const studentProfileDetails = document.getElementById("studentProfileDetails");
+if (studentProfileDetails) {
+    if (sessionStorage.getItem("user_logged_in") !== "true") {
+        window.location.href = "admin-login.html";
+        return;
+    }
 
-        const currentUserId = sessionStorage.getItem("current_user_id");
-        const approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
-        // تبدیل IDها به String برای جلوگیری از خطای عدم تطابق نوع داده
-        const student = approved.find(s => String(s.id) === String(currentUserId));
+    const currentUserId = sessionStorage.getItem("current_user_id");
 
-        if (student) {
+    fetch(`${API_URL}/api/student/profile?id=${currentUserId}`)
+        .then(res => res.json())
+        .then(student => {
+            if (!student) return;
+
             document.getElementById("studentWelcomeTitle").innerText = `خوش آمدید، ${student.name} عزیز 🌺`;
 
             studentProfileDetails.innerHTML = `
@@ -469,25 +503,21 @@ if (gradeForm) {
                 }
             }
 
-            // لود سوابق ثبت‌نام و تمدیدها
+            // لود جدول سوابق ثبت‌نام و تمدیدها
             const historyTable = document.getElementById("studentHistoryTable");
             if (historyTable) {
                 historyTable.innerHTML = "";
                 
-                // مقداردهی اولیه سوابق در صورت خالی بودن
-                if (!student.history) {
-                    student.history = [{
-                        id: Date.now(),
-                        category: student.category,
-                        fee: student.fee,
-                        date: student.date,
-                        status: 'تأییدشده',
-                        type: 'ثبت‌نام اولیه'
-                    }];
-                    localStorage.setItem("melal_approved_students", JSON.stringify(approved));
-                }
+                const historyList = student.history || [{
+                    id: Date.now(),
+                    category: student.category,
+                    fee: student.fee,
+                    date: student.date,
+                    status: 'تأییدشده',
+                    type: 'ثبت‌نام اولیه'
+                }];
 
-                student.history.forEach((h, idx) => {
+                historyList.forEach((h, idx) => {
                     let statusBadge = '';
                     if (h.status === 'تأییدشده') {
                         statusBadge = `<span style="background:#e6fffa; color:#38a169; padding:4px 10px; border-radius:12px; font-weight:bold; font-size:12px;">تأییدشده</span>`;
@@ -499,8 +529,8 @@ if (gradeForm) {
 
                     const row = document.createElement("tr");
                     row.innerHTML = `
-                        <td>${idx + 1}</td><td style="font-weight:bold; color:#0071e3;">${h.category} (${h.type || 'ثبت‌نام'})</td>
-                        <td style="color:#27ae60; font-weight:bold;">${h.fee}</td>
+                        <td>${idx + 1}</td>
+                        <td style="font-weight:bold; color:#0071e3;">${h.category} (${h.type || 'ثبت‌نام'})</td><td style="color:#27ae60; font-weight:bold;">${h.fee}</td>
                         <td>${h.date}</td>
                         <td>${h.status === 'تأییدشده' ? (student.approvedDate || h.date) : '-'}</td>
                         <td>${statusBadge}</td>
@@ -508,17 +538,18 @@ if (gradeForm) {
                     historyTable.appendChild(row);
                 });
             }
-        }
+        })
+        .catch(err => console.error("خطا در دریافت اطلاعات زبان‌آموز:", err));
 
-        const userLogoutBtn = document.getElementById("userLogoutBtn");
-        if (userLogoutBtn) {
-            userLogoutBtn.addEventListener("click", function () {
-                sessionStorage.removeItem("user_logged_in");
-                sessionStorage.removeItem("current_user_id");
-                window.location.href = "admin-login.html";
-            });
-        }
+    const userLogoutBtn = document.getElementById("userLogoutBtn");
+    if (userLogoutBtn) {
+        userLogoutBtn.addEventListener("click", function () {
+            sessionStorage.removeItem("user_logged_in");
+            sessionStorage.removeItem("current_user_id");
+            window.location.href = "admin-login.html";
+        });
     }
+}
 });
 /* ===================================================
    سیستم ترجمه اختصاصی و هوشمند ۶ زبانه (بدون گوگل)
