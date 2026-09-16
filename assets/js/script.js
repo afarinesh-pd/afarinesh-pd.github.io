@@ -198,7 +198,7 @@ if (loginForm) {
                             <button class="btn" style="padding: 5px 10px; font-size:12px; background:#0071e3; color:white; border-radius:6px; cursor:pointer;" onclick="showStudentDetails(${student.id}, 'pending')">📋 پرونده</button>
                         </td>
                         <td>
-                            <button class="btn-confirm" style="cursor:pointer;" onclick="openCredModal(${student.id}, '${student.name}')">✅ تأیید و ساخت پنل</button>
+                            <button class="btn-confirm" style="cursor:pointer;" onclick="openCredModal(${student.id}, '${student.name}', '${student.phone}', '${student.nationalId}')">✅ تأیید و ساخت پنل</button>
                         </td>
                         <td>
                             <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px; cursor:pointer;" onclick="deleteStudent(${student.id}, 'pending')">حذف</button>
@@ -256,20 +256,12 @@ if (loginForm) {
         }
 
         // باز کردن مودال ساخت نام‌کاربری
-        window.openCredModal = function(id, name) {
+        window.openCredModal = function(id, name, phone, nationalId) {
             document.getElementById("targetStudentId").value = id;
             document.getElementById("targetStudentName").innerText = name;
-            let students = JSON.parse(localStorage.getItem("melal_students")) || [];
-            let st = students.find(s => s.id === id);
-            if(st) {
-                document.getElementById("newStudentUsername").value = st.phone || "";
-                document.getElementById("newStudentPassword").value = st.nationalId || "123456";
-            }
+            document.getElementById("newStudentUsername").value = phone || "";
+            document.getElementById("newStudentPassword").value = nationalId || "123456";
             document.getElementById("createCredentialsModal").style.display = "flex";
-        };
-
-        window.closeCredModal = function() {
-            document.getElementById("createCredentialsModal").style.display = "none";
         };
 
         // فرم تایید نهایی و ساخت پنل
@@ -341,15 +333,14 @@ if (gradeForm) {
         .catch(err => alert("خطا در ارتباط با سرور: " + err.message));
     });
 }
-        window.showStudentDetails = function(id, type) {
-            const key = (type === 'approved') ? "melal_approved_students" : "melal_students";
-            const students = JSON.parse(localStorage.getItem(key)) || [];
-            const student = students.find(s => s.id === id);
-            if (!student) return;
-
-            const modalBody = document.getElementById("modalBodyDetails");
-            if (modalBody) {
-                modalBody.innerHTML = `
+        window.showStudentDetails = function(id) {
+            fetch(`${API_URL}/api/student/details?id=${id}`)
+            .then(res => res.json())
+            .then(student => {
+                if (!student) return;
+                const modalBody = document.getElementById("modalBodyDetails");
+                if (modalBody) {
+                    modalBody.innerHTML = `
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; text-align:right; font-size:14px; line-height:1.8;">
                         <div><strong>👤 نام و نام خانوادگی:</strong> ${student.name}</div>
                         <div><strong>👨‍👦 نام پدر:</strong> ${student.fatherName || 'ثبت نشده'}</div>
@@ -360,7 +351,7 @@ if (gradeForm) {
                         <div><strong>🏫 نام مدرسه / محل تحصیل:</strong> ${student.schoolName || 'ثبت نشده'}</div>
                         <div><strong>📚 دوره ثبت‌نامی:</strong> ${student.category}</div>
                         <div><strong>💳 شهریه پرداختی:</strong> ${student.fee}</div>
-                        <div><strong>📅 تاریخ ثبت‌نام:</strong> ${student.date}</div>
+                        <div><strong>📅 تاریخ ثبت‌نام:</strong> ${student.date || '-'}</div>
                         <div style="grid-column: 1 / -1; margin-top:10px; background:#f5f5f7; padding:10px; border-radius:8px;">
                             <strong>🏠 آدرس کامل منزل:</strong><br>${student.address || 'ثبت نشده'}
                         </div>
@@ -368,40 +359,46 @@ if (gradeForm) {
                 `;
                 document.getElementById("studentModal").style.display = "flex";
             }
-        };
+        });
+};
 
         window.closeModal = function() {
             const modal = document.getElementById("studentModal");
             if (modal) modal.style.display = "none";
         };
 
-        function loadPlacements() {
-            if (!placementTableBody) return;
-            const placements = JSON.parse(localStorage.getItem("melal_placements")) || [];
-            placementTableBody.innerHTML = "";
+        async function loadPlacements() {
+    if (!placementTableBody) return;
+    try {
+        const res = await fetch(`${API_URL}/api/placements`);
+        const placements = await res.json();
+        placementTableBody.innerHTML = "";
 
-            if (placements.length === 0) {
-                placementTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 20px; color: #86868b;">هیچ درخواست تعیین سطحی ثبت نشده است.</td></tr>`;
-                return;
-            }
-
-            placements.forEach((item, index) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td style="font-weight:bold;">${item.name}</td>
-                    <td>${item.phone}</td>
-                    <td>${item.nationalCode || 'ثبت نشده'}</td>
-                    <td style="color:#0071e3; font-weight:bold;">${item.type}</td>
-                    <td>${item.ageGroup}</td>
-                    <td>${item.date}</td>
-                    <td>
-                        <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px; cursor:pointer;" onclick="deletePlacement(${item.id})">حذف</button>
-                    </td>
-                `;
-                placementTableBody.appendChild(row);
-            });
+        if (!placements || placements.length === 0) {
+            placementTableBody.innerHTML = <tr><td colspan="8" style="text-align:center; padding: 20px; color: #86868b;">هیچ درخواست تعیین سطحی ثبت نشده است.</td></tr>;
+            return;
         }
+
+        placements.forEach((item, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td style="font-weight:bold;">${item.name}</td>
+                <td>${item.phone}</td>
+                <td>${item.nationalCode || 'ثبت نشده'}</td>
+                <td style="color:#0071e3; font-weight:bold;">${item.type}</td>
+                <td>${item.ageGroup}</td>
+                <td>${item.date || '-'}</td>
+                <td>
+                    <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px; cursor:pointer;" onclick="deletePlacement(${item.id})">حذف</button>
+                </td>
+            `;
+            placementTableBody.appendChild(row);
+        });
+    } catch (err) {
+        placementTableBody.innerHTML = <tr><td colspan="8" style="text-align:center; padding: 20px; color: #e61c23;">خطا در دریافت لیست تعیین سطح</td></tr>;
+    }
+}
 
         window.deleteStudent = function (id, type) {
     if (confirm("آیا از حذف این پرونده مطمئن هستید؟")) {
@@ -822,58 +819,58 @@ window.rejectRenewal = function (studentId, historyId) {
 
 // ۴. نمایش مودال تاریخچه کامل ثبت‌نام‌ها برای مدیر
 window.showStudentHistory = function (studentId) {
-    const approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
-    const student = approved.find(s => String(s.id) === String(studentId));
-    if (!student) return;
+    fetch(`${API_URL}/api/student/details?id=${studentId}`)
+        .then(res => res.json())
+        .then(student => {
+            if (!student) return;
 
-    let historyHtml = `
-        <h3 style="margin-bottom:15px; color:#1d1d1f;">📜 تاریخچه کامل ثبت‌نام‌های ${student.name}</h3>
-        <table style="width:100%; border-collapse:collapse; text-align:right;">
-            <thead>
-                <tr style="background:#f8fafc;">
-                    <th style="padding:8px; border-bottom:1px solid #ddd;">ردیف</th>
-                    <th style="padding:8px; border-bottom:1px solid #ddd;">نوع درخواست</th>
-                    <th style="padding:8px; border-bottom:1px solid #ddd;">دوره / رده</th>
-                    <th style="padding:8px; border-bottom:1px solid #ddd;">شهریه</th>
-                    <th style="padding:8px; border-bottom:1px solid #ddd;">تاریخ ثبت</th>
-                    <th style="padding:8px; border-bottom:1px solid #ddd;">وضعیت</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
+            let historyHtml = `
+                <h3 style="margin-bottom:15px; color:#1d1d1f;">📜 تاریخچه کامل ثبت‌نام‌های ${student.name}</h3>
+                <table style="width:100%; border-collapse:collapse; text-align:right;">
+                    <thead>
+                        <tr style="background:#f8fafc;">
+                            <th style="padding:8px; border-bottom:1px solid #ddd;">ردیف</th>
+                            <th style="padding:8px; border-bottom:1px solid #ddd;">نوع درخواست</th>
+                            <th style="padding:8px; border-bottom:1px solid #ddd;">دوره / رده</th>
+                            <th style="padding:8px; border-bottom:1px solid #ddd;">شهریه</th>
+                            <th style="padding:8px; border-bottom:1px solid #ddd;">تاریخ ثبت</th>
+                            <th style="padding:8px; border-bottom:1px solid #ddd;">وضعیت</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
 
-    const historyList = student.history || [{
-        category: student.category,
-        fee: student.fee,
-        date: student.date,
-        status: 'تأییدشده',
-        type: 'ثبت‌نام اولیه'
-    }];
+            const historyList = student.history && student.history.length > 0 ? student.history : [{
+                category: student.category,
+                fee: student.fee,
+                date: student.date || '-',
+                status: 'تأییدشده',
+                type: 'ثبت‌نام اولیه'
+            }];
 
-    historyList.forEach((h, idx) => {
-        const badgeColor = h.status === 'تأییدشده' ? '#38a169' : '#dd6b20';
-        const badgeBg = h.status === 'تأییدشده' ? '#e6fffa' : '#fffaf0';
-        historyHtml += `
-            <tr>
-                <td style="padding:8px; border-bottom:1px solid #eee;">${idx + 1}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee; font-weight:bold;">${h.type || 'ثبت‌نام'}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">${h.category}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee; color:#27ae60;">${h.fee}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">${h.date}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">
-                    <span style="background:${badgeBg}; color:${badgeColor}; padding:3px 8px; border-radius:10px; font-size:12px; font-weight:bold;">${h.status}</span>
-                </td>
-            </tr>
-        `;
-    });
+            historyList.forEach((h, idx) => {
+                historyHtml += `
+                    <tr>
+                        <td style="padding:8px; border-bottom:1px solid #eee;">${idx + 1}</td>
+                        <td style="padding:8px; border-bottom:1px solid #eee; font-weight:bold;">${h.type || 'ثبت‌نام'}</td>
+                        <td style="padding:8px; border-bottom:1px solid #eee;">${h.category}</td>
+                        <td style="padding:8px; border-bottom:1px solid #eee; color:#27ae60;">${h.fee}</td>
+                        <td style="padding:8px; border-bottom:1px solid #eee;">${h.date || '-'}</td>
+                        <td style="padding:8px; border-bottom:1px solid #eee;">
+                            <span style="background:#e6fffa; color:#38a169; padding:3px 8px; border-radius:10px; font-size:12px; font-weight:bold;">${h.status || 'تأییدشده'}</span>
+                        </td>
+                    </tr>
+                `;
+            });
 
-    historyHtml += `</tbody></table>`;
+            historyHtml += `</tbody></table>`;
 
-    const modalBody = document.getElementById("modalBodyDetails");
-    if (modalBody) {
-        modalBody.innerHTML = historyHtml;
-        document.getElementById("studentModal").style.display = "flex";
-    }
+            const modalBody = document.getElementById("modalBodyDetails");
+            if (modalBody) {
+                modalBody.innerHTML = historyHtml;
+                document.getElementById("studentModal").style.display = "flex";
+            }
+        });
 };
 
 loadRenewals();
