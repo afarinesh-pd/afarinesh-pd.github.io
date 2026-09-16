@@ -77,48 +77,53 @@ if (registerForm) {
 }
 
                                   
-    // ۲. ثبت درخواست تعیین سطح (هماهنگ با فرم جدید و قدیم)
-    const placementForm = document.getElementById("placementRequestForm") || document.getElementById("placementBookingForm");
-    if (placementForm) {
-        placementForm.addEventListener("submit", function (e) {
-            e.preventDefault();
+    // اصلاح بخش ۲: ارسال درخواست تعیین سطح به سرور API (به جای LocalStorage)
+const placementForm = document.getElementById("placementRequestForm") || document.getElementById("placementBookingForm");
+if (placementForm) {
+    placementForm.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-            const pName = (document.getElementById("plName") || document.getElementById("pName"))?.value.trim();
-            const pPhone = (document.getElementById("plPhone") || document.getElementById("pPhone"))?.value.trim();
-            const pNationalCode = document.getElementById("plNationalCode")?.value.trim() || "ثبت نشده";
-            
-            // دریافت نوع تعیین سطح
-            let pType = typeof selectedPlacementType !== "undefined" ? selectedPlacementType : "تلفنی";
-            const pTypeEl = document.getElementById("pType");
-            if (pTypeEl) {
-                pType = pTypeEl.value === "phone" ? "تلفنی (۵ الی ۷ دقیقه)" : "حضوری (۵ الی ۷ دقیقه)";
-            }
+        const pName = (document.getElementById("plName") || document.getElementById("pName"))?.value.trim();
+        const pPhone = (document.getElementById("plPhone") || document.getElementById("pPhone"))?.value.trim();
+        const pNationalCode = document.getElementById("plNationalCode")?.value.trim() || "ثبت نشده";
+        
+        let pType = typeof selectedPlacementType !== "undefined" ? selectedPlacementType : "تلفنی";
+        const pTypeEl = document.getElementById("pType");
+        if (pTypeEl) {
+            pType = pTypeEl.value === "phone" ? "تلفنی (۵ الی ۷ دقیقه)" : "حضوری (۵ الی ۷ دقیقه)";
+        }
 
-            // دریافت رده سنی
-            let pAgeGroupText = "";
-            const ageGroupEl = document.getElementById("plAgeGroup") || document.getElementById("pAgeGroup");
-            if (ageGroupEl) {
-                pAgeGroupText = ageGroupEl.options[ageGroupEl.selectedIndex]?.text || ageGroupEl.value;
-            }
-            const newPlacementRequest = {
-                id: Date.now(),
+        let pAgeGroupText = "";
+        const ageGroupEl = document.getElementById("plAgeGroup") || document.getElementById("pAgeGroup");
+        if (ageGroupEl) {
+            pAgeGroupText = ageGroupEl.options[ageGroupEl.selectedIndex]?.text || ageGroupEl.value;
+        }
+
+        // ارسال مستقیم به API کلادفلر
+        fetch(`${API_URL}/api/placements/add`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
                 name: pName,
                 phone: pPhone,
                 nationalCode: pNationalCode,
                 type: pType,
-                ageGroup: pAgeGroupText,
-                date: new Date().toLocaleDateString('fa-IR')
-            };
-
-            let placementList = JSON.parse(localStorage.getItem("melal_placements")) || [];
-            placementList.push(newPlacementRequest);
-            localStorage.setItem("melal_placements", JSON.stringify(placementList));
-
-            alert(`✅ درخواست تعیین سطح با موفقیت ثبت شد!\nکارشناسان آموزشگاه آفرینش به‌زودی جهت هماهنگی زمان با شما تماس خواهند گرفت.`);
-            placementForm.reset();
-            window.location.href = "index.html";
-        });
-    }
+                ageGroup: pAgeGroupText
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success || data.id) {
+                alert(`✅ درخواست تعیین سطح با موفقیت ثبت شد!`);
+                placementForm.reset();
+                window.location.href = "index.html";
+            } else {
+                alert("خطا در ثبت تعیین سطح: " + (data.message || "خطای نا مشخص"));
+            }
+        })
+        .catch(err => alert("خطا در برقراری ارتباط با سرور: " + err.message));
+    });
+}
 
     // ۳. سیستم ورود (مدیریت یا زبان‌آموز)
     // جایگزین بخش بررسی ورود در script.js
@@ -396,7 +401,7 @@ if (gradeForm) {
             placementTableBody.appendChild(row);
         });
     } catch (err) {
-        placementTableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 20px; color: #e61c23;">خطا در دریافت لیست تعیین سطح</td></tr>`;
+        placementTableBody.innerHTML =`<tr><td colspan="8" style="text-align:center; padding: 20px; color: #e61c23;">خطا در دریافت لیست تعیین سطح</td></tr>`;
     }
 }
 
@@ -452,6 +457,7 @@ window.deletePlacement = function (id) {
         loadStudents();
         loadApprovedStudents();
         loadPlacements();
+        loadRenewals();
     }
 
 
@@ -753,7 +759,7 @@ async function loadRenewals() {
             renewalTableBody.appendChild(row);
         });
     } catch (err) {
-        renewalTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 15px; color: #e61c23;">خطا در دریافت تمدیدی‌ها</td></tr>`;
+        renewalTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 15px; color: #e61c23;">خطا در دریافت تمدیدی‌ها</td></tr>`   ;
     }
 }
 
@@ -887,5 +893,3 @@ window.showStudentHistory = function (studentId) {
         })
         .catch(err => alert("خطا در دریافت تاریخچه: " + err.message));
 };
-
-loadRenewals();
