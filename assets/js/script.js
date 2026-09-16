@@ -753,7 +753,7 @@ async function loadRenewals() {
             renewalTableBody.appendChild(row);
         });
     } catch (err) {
-        renewalTableBody.innerHTML = <tr><td colspan="7" style="text-align:center; padding: 15px; color: #e61c23;">خطا در دریافت تمدیدی‌ها</td></tr>;
+        renewalTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 15px; color: #e61c23;">خطا در دریافت تمدیدی‌ها</td></tr>`;
     }
 }
 
