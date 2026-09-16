@@ -375,7 +375,7 @@ if (gradeForm) {
         placementTableBody.innerHTML = "";
 
         if (!placements || placements.length === 0) {
-            placementTableBody.innerHTML = <tr><td colspan="8" style="text-align:center; padding: 20px; color: #86868b;">هیچ درخواست تعیین سطحی ثبت نشده است.</td></tr>;
+            placementTableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 20px; color: #86868b;">هیچ درخواست تعیین سطحی ثبت نشده است.</td></tr>`;
             return;
         }
 
@@ -697,132 +697,155 @@ changeLanguage(savedLang, savedDir);
 // ۱. تابع ثبت درخواست تمدید ترم توسط دانش‌آموز
 window.renewTerm = function () {
     const currentUserId = sessionStorage.getItem("current_user_id");
-    if (!currentUserId) return;
+    if (!currentUserId) {
+        alert("لطفاً ابتدا وارد پنل شوید.");
+        return;
+    }
 
-    let approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
-    let studentIndex = approved.findIndex(s => String(s.id) === String(currentUserId));
-
-    if (studentIndex !== -1) {
-        let student = approved[studentIndex];
-
-        // ایجاد آرایه سوابق در صورت عدم وجود
-        if (!student.history) {
-            student.history = [{
-                id: Date.now() - 1000,
-                category: student.category,
-                fee: student.fee,
-                date: student.date,
-                status: 'تأییدشده',
-                type: 'ثبت‌نام اولیه'
-            }];
-        }
-
-        // چک کردن اینکه آیا درخواست فعال در انتظار دارد یا خیر
-        const hasPending = student.history.some(h => h.status === 'در انتظار تأیید');
-        if (hasPending) {
-            alert("⚠️ شما یک درخواست تمدید در انتظار تأیید دارید. لطفاً منتظر بررسی مدیریت باشید.");
-            return;
-        }
-
-        // ثبت تمدید جدید
-        const newRenewal = {
-            id: Date.now(),
-            category: student.category,
-            fee: student.fee,
-            date: new Date().toLocaleDateString('fa-IR'),
-            status: 'در انتظار تأیید',
-            type: 'تمدید ترم'
-        };
-
-        student.history.push(newRenewal);
-        approved[studentIndex] = student;
-        localStorage.setItem("melal_approved_students", JSON.stringify(approved));
-
-        alert("✅ تمدید ثبت‌نام کلاس زبان با موفقیت انجام شد و جهت تأیید به مدیریت ارسال گردید.");
-        location.reload();
+    if (confirm("آیا از ارسال درخواست تمدید ترم مطمئن هستید؟")) {
+        fetch(`${API_URL}/api/student/renew`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ studentId: currentUserId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("✅ درخواست تمدید ترم با موفقیت ثبت شد و به مدیریت ارسال گردید.");
+                location.reload();
+            } else {
+                alert("توجه: " + (data.message || "خطا در ثبت تمدید"));
+            }
+        })
+        .catch(err => alert("خطا در برقراری ارتباط: " + err.message));
     }
 };
 
 // ۲. لود لیست افراد در انتظار تمدید ترم در پنل مدیریت
-function loadRenewals() {
+async function loadRenewals() {
     const renewalTableBody = document.getElementById("renewalTableBody");
     if (!renewalTableBody) return;
 
-    const approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
-    renewalTableBody.innerHTML = "";
+    try {
+        const res = await fetch(`${API_URL}/api/admin/renewals`);
+        const renewals = await res.json();
+        renewalTableBody.innerHTML = "";
 
-    let pendingCount = 0;
-
-    approved.forEach(student => {
-        if (student.history) {
-            student.history.forEach(item => {
-                if (item.status === 'در انتظار تأیید') {
-                    pendingCount++;
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${pendingCount}</td>
-                        <td style="font-weight:bold; color:#d9534f;">${student.name}</td>
-                        <td>${student.phone}</td>
-                        <td>${item.category}</td>
-                        <td style="color:#27ae60; font-weight:bold;">${item.fee}</td>
-                        <td>${item.date}</td>
-                        <td>
-                            <button class="btn" style="padding: 5px 10px; font-size:12px; background:#27ae60; color:white; border-radius:6px; cursor:pointer;" margin-left:5px;" onclick="approveRenewal(${student.id}, ${item.id})">✅ تأیید تمدید</button>
-                            <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px; cursor:pointer;" onclick="rejectRenewal(${student.id}, ${item.id})">❌ رد درخواست</button>
-                        </td>
-                    `;
-                    renewalTableBody.appendChild(row);
-                }
-            });
+        if (!renewals || renewals.length === 0) {
+            renewalTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 15px; color: #86868b;">هیچ درخواست تمدید ترمی در انتظار تأیید وجود ندارد.</td></tr>`;
+            return;
         }
-    });
 
-    if (pendingCount === 0) {
-        renewalTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 15px; color: #86868b;">هیچ درخواست تمدید ترمی در انتظار تأیید وجود ندارد.</td></tr>`;
+        renewals.forEach((item, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td style="font-weight:bold; color:#d9534f;">${item.name}</td>
+                <td>${item.phone}</td>
+                <td>${item.category}</td>
+                <td style="color:#27ae60; font-weight:bold;">${item.fee}</td>
+                <td>${item.date || '-'}</td>
+                <td>
+                    <button class="btn" style="padding: 5px 10px; font-size:12px; background:#27ae60; color:white; border-radius:6px; cursor:pointer;" onclick="approveRenewal(${item.studentId}, ${item.id})">✅ تأیید تمدید</button>
+                    <button class="btn" style="padding: 5px 10px; font-size:12px; background:#ff3b30; color:white; border-radius:6px; cursor:pointer;" onclick="rejectRenewal(${item.studentId}, ${item.id})">❌ رد درخواست</button>
+                </td>
+            `;
+            renewalTableBody.appendChild(row);
+        });
+    } catch (err) {
+        renewalTableBody.innerHTML = <tr><td colspan="7" style="text-align:center; padding: 15px; color: #e61c23;">خطا در دریافت تمدیدی‌ها</td></tr>;
     }
 }
 
 // ۳. تأیید تمدید ترم توسط مدیر
 window.approveRenewal = function (studentId, historyId) {
-    let approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
-    let student = approved.find(s => String(s.id) === String(studentId));
-
-    if (student && student.history) {let item = student.history.find(h => String(h.id) === String(historyId));
-        if (item) {
-            item.status = 'تأییدشده';
-            localStorage.setItem("melal_approved_students", JSON.stringify(approved));
-            alert(`✅ تمدید ترم برای ${student.name} با موفقیت تأیید شد.`);
+    fetch(`${API_URL}/api/admin/approve-renewal`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ studentId, historyId })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("✅ تمدید ترم با موفقیت تأیید شد.");
             loadRenewals();
             if (typeof loadApprovedStudents === 'function') loadApprovedStudents();
         }
-    }
+    })
+    .catch(err => alert("خطا در برقراری ارتباط: " + err.message));
 };
 
 // ۴. رد تمدید ترم توسط مدیر
 window.rejectRenewal = function (studentId, historyId) {
     if (!confirm("آیا از رد این درخواست تمدید مطمئن هستید؟")) return;
 
-    let approved = JSON.parse(localStorage.getItem("melal_approved_students")) || [];
-    let student = approved.find(s => String(s.id) === String(studentId));
-
-    if (student && student.history) {
-        let item = student.history.find(h => String(h.id) === String(historyId));
-        if (item) {
-            item.status = 'ردشده';
-            localStorage.setItem("melal_approved_students", JSON.stringify(approved));
-            alert(`❌ درخواست تمدید ترم برای ${student.name} رد شد.`);
+    fetch(`${API_URL}/api/admin/reject-renewal`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ studentId, historyId })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("❌ درخواست تمدید ترم رد شد.");
             loadRenewals();
-            if (typeof window.loadApprovedStudents === 'function') window.loadApprovedStudents();
+            if (typeof loadApprovedStudents === 'function') loadApprovedStudents();
         }
-    }
+    })
+    .catch(err => alert("خطا در برقراری ارتباط: " + err.message));
 };
 
 // ۴. نمایش مودال تاریخچه کامل ثبت‌نام‌ها برای مدیر
+window.showStudentDetails = function(id) {
+    fetch(`${API_URL}/api/student/details?id=${id}`)
+        .then(res => res.json())
+        .then(student => {
+            if (!student) return;
+            const modalBody = document.getElementById("modalBodyDetails");
+            if (modalBody) {
+                modalBody.innerHTML = `
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; text-align:right; font-size:14px; line-height:1.8;">
+                        <div><strong>👤 نام و نام خانوادگی:</strong> ${student.name}</div>
+                        <div><strong>👨‍👦 نام پدر:</strong> ${student.fatherName || 'ثبت نشده'}</div>
+                        <div><strong>🆔 کد ملی:</strong> ${student.nationalId}</div>
+                        <div><strong>🎂 تاریخ تولد:</strong> ${student.birthDate || 'ثبت نشده'}</div>
+                        <div><strong>📞 شماره تماس:</strong> ${student.phone}</div>
+                        <div><strong>🎓 میزان تحصیلات:</strong> ${student.education || 'ثبت نشده'}</div>
+                        <div><strong>🏫 نام مدرسه / محل تحصیل:</strong> ${student.schoolName || 'ثبت نشده'}</div>
+                        <div><strong>📚 دوره ثبت‌نامی:</strong> ${student.category}</div>
+                        <div><strong>💳 شهریه پرداختی:</strong> ${student.fee}</div>
+                        <div><strong>📅 تاریخ ثبت‌نام:</strong> ${student.date || '-'}</div>
+                        <div style="grid-column: 1 / -1; margin-top:10px; background:#f5f5f7; padding:10px; border-radius:8px;">
+                            <strong>🏠 آدرس کامل منزل:</strong><br>${student.address || 'ثبت نشده'}
+                        </div>
+                    </div>
+                `;
+                document.getElementById("studentModal").style.display = "flex";
+            }
+        })
+        .catch(err => alert("خطا در دریافت جزئیات پرونده: " + err.message));
+};
+
 window.showStudentHistory = function (studentId) {
     fetch(`${API_URL}/api/student/details?id=${studentId}`)
         .then(res => res.json())
         .then(student => {
             if (!student) return;
+
+            let historyList = [];
+            try {
+                historyList = typeof student.history === 'string' ? JSON.parse(student.history) : (student.history || []);
+            } catch(e) { historyList = []; }
+
+            if (historyList.length === 0) {
+                historyList = [{
+                    category: student.category,
+                    fee: student.fee,
+                    date: student.date || '-',
+                    status: 'تأییدشده',
+                    type: 'ثبت‌نام اولیه'
+                }];
+            }
 
             let historyHtml = `
                 <h3 style="margin-bottom:15px; color:#1d1d1f;">📜 تاریخچه کامل ثبت‌نام‌های ${student.name}</h3>
@@ -840,19 +863,10 @@ window.showStudentHistory = function (studentId) {
                     <tbody>
             `;
 
-            const historyList = student.history && student.history.length > 0 ? student.history : [{
-                category: student.category,
-                fee: student.fee,
-                date: student.date || '-',
-                status: 'تأییدشده',
-                type: 'ثبت‌نام اولیه'
-            }];
-
             historyList.forEach((h, idx) => {
                 historyHtml += `
                     <tr>
-                        <td style="padding:8px; border-bottom:1px solid #eee;">${idx + 1}</td>
-                        <td style="padding:8px; border-bottom:1px solid #eee; font-weight:bold;">${h.type || 'ثبت‌نام'}</td>
+                        <td style="padding:8px; border-bottom:1px solid #eee;">${idx + 1}</td><td style="padding:8px; border-bottom:1px solid #eee; font-weight:bold;">${h.type || 'ثبت‌نام'}</td>
                         <td style="padding:8px; border-bottom:1px solid #eee;">${h.category}</td>
                         <td style="padding:8px; border-bottom:1px solid #eee; color:#27ae60;">${h.fee}</td>
                         <td style="padding:8px; border-bottom:1px solid #eee;">${h.date || '-'}</td>
@@ -870,7 +884,8 @@ window.showStudentHistory = function (studentId) {
                 modalBody.innerHTML = historyHtml;
                 document.getElementById("studentModal").style.display = "flex";
             }
-        });
+        })
+        .catch(err => alert("خطا در دریافت تاریخچه: " + err.message));
 };
 
 loadRenewals();
