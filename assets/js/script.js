@@ -396,7 +396,7 @@ if (gradeForm) {
             placementTableBody.appendChild(row);
         });
     } catch (err) {
-        placementTableBody.innerHTML = <tr><td colspan="8" style="text-align:center; padding: 20px; color: #e61c23;">خطا در دریافت لیست تعیین سطح</td></tr>;
+        placementTableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 20px; color: #e61c23;">خطا در دریافت لیست تعیین سطح</td></tr>`;
     }
 }
 
