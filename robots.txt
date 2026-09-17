@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://afarinesh-pd.github.io/sitemap.xml
