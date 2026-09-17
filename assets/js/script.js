@@ -2,24 +2,34 @@ const API_URL = "https://vercel-rho-orcin-83.vercel.app";
 
 document.addEventListener("DOMContentLoaded", function () {
     
-    const hamburgerBtn = document.querySelector(".hamburger-btn");
-    const navLinks = document.querySelector(".nav-links");
+    // کدهای جدید و اصلاح‌شده منوی همبرگری (Event Delegation)
+    document.addEventListener("click", function (e) {
+        const hamburgerBtn = e.target.closest(".hamburger-btn");
+        const navLinks = document.querySelector(".nav-links");
 
-    if (hamburgerBtn && navLinks) {
-        hamburgerBtn.addEventListener("click", function () {
+        // اگر روی دکمه همبرگری یا خطوط داخل آن کلیک شد
+        if (hamburgerBtn && navLinks) {
+            e.stopPropagation();
             navLinks.classList.toggle("active");
-            
-            // انیمیشن ساده دکمه همبرگری
-            this.classList.toggle("open");
-        });
+            hamburgerBtn.classList.toggle("open");
+            return;
+        }
 
-        // بستن منو پس از کلیک روی هر لینک
-        document.querySelectorAll(".nav-links a").forEach(link => {
-            link.addEventListener("click", () => {
-                navLinks.classList.remove("active");
-            });
-        });
-    }
+        // اگر روی لینک‌های داخل منو کلیک شد، منو را ببند
+        if (e.target.closest(".nav-links a")) {
+            if (navLinks) navLinks.classList.remove("active");
+            const btn = document.querySelector(".hamburger-btn");
+            if (btn) btn.classList.remove("open");
+            return;
+        }
+
+        // اگر خارج از منو کلیک شد، منو بسته شود
+        if (navLinks && navLinks.classList.contains("active") && !e.target.closest(".main-navbar")) {
+            navLinks.classList.remove("active");
+            const btn = document.querySelector(".hamburger-btn");
+            if (btn) btn.classList.remove("open");
+        }
+    });
     // ۱. فرآیند ثبت‌نام آنلاین (با پشتیبانی کامل از پرونده ۱۰ فیلدی)
 const registerForm = document.getElementById("melalRegisterForm");
 if (registerForm) {
