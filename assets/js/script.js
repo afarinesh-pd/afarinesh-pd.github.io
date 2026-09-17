@@ -269,6 +269,14 @@ if (loginForm) {
             document.getElementById("createCredentialsModal").style.display = "flex";
         };
 
+        // بستن مودال ساخت نام‌کاربری
+        window.closeCredModal = function() {
+            const modal = document.getElementById("createCredentialsModal");
+            if (modal) {
+                modal.style.display = "none";
+            }
+        };
+
         // فرم تایید نهایی و ساخت پنل
         const credForm = document.getElementById("credForm");
 if (credForm) {
