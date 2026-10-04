@@ -51,13 +51,13 @@ if (registerForm) {
         let categoryName = "";
 
         if (ageCategory === "kids") {
-            amount = "۱,۴۸۰,۰۰۰ تومان";
+            amount = "۱,۸۰۰,۰۰۰ تومان";
             categoryName = "کودکان (Kids)";
         } else if (ageCategory === "teens") {
-            amount = "۱,۵۸۰,۰۰۰ تومان";
+            amount = "۲,۰۰۰,۰۰۰ تومان";
             categoryName = "نوجوانان (Teens)";
         } else if (ageCategory === "adults") {
-            amount = "۱,۶۸۰,۰۰۰ تومان";
+            amount = "۲,۲۰۰,۰۰۰ تومان";
             categoryName = "بزرگسالان (Adults)";
         }
 
